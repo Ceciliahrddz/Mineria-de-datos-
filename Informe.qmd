@@ -4,6 +4,12 @@ format: html
 editor: visual
 ---
 
+```{r}
+library(summarytools)
+datos <- read.csv("Social_media_impact_on_life.csv")
+```
+
+
 ## Introducción
 h
 
@@ -18,4 +24,17 @@ dim(datos)
 ```{r}
 head(datos)
 ```
+## Descripcion de las variables
+ Describir cada variable y que valores posibles toman
 
+
+## Estudio univariante
+```{r}
+(dfSummary(datos))
+```
+```{r}
+prop.table(table(datos$Sleep_Quality_Score))
+```
+
+
+##
