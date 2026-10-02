@@ -6,7 +6,9 @@ editor: visual
 
 ```{r}
 library(summarytools)
-datos <- read.csv("Social_media_impact_on_life.csv")
+library(ggplot2)
+library(caret)
+datos <- load(datos.Rdata)
 ```
 
 
@@ -27,6 +29,8 @@ head(datos)
 ## Descripcion de las variables
  Describir cada variable y que valores posibles toman
 
+## Partición de los datos
+Dada la cantidad de datos decidimos una partición train(0,7)-test (0.15) -validación (0.15)
 
 ## Estudio univariante
 ```{r}
@@ -35,6 +39,28 @@ head(datos)
 ```{r}
 prop.table(table(datos$Sleep_Quality_Score))
 ```
+```{r}
+summary(datos)
+```
 
 
-##
+## Análisis exploratorio de datos
+
+Que preguntas tengo sobre mis datos, objetivos que tengo.
+
+* ¿Existe diferencia entre la calidad de sueño para hombres y mujeres?
+* etc
+
+##¿Existe diferencia entre la longitud del sueño y la edad?
+
+Vamos a estudiar la longitud del sueño dependiendo de la edad
+
+```{r}
+ggplot(datos, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue") +
+  labs(title = "Duración del Sueño por Edad", 
+       x = "Edad", 
+       y = "Horas de Sueño") +
+  theme_minimal()
+```
+
