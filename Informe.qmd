@@ -11,11 +11,12 @@ library(caret)
 datos <- load(datos.Rdata)
 ```
 
-
 ## Introducción
+
 h
 
 ## Datos
+
 ...
 
 El conjunto de datos...
@@ -23,33 +24,55 @@ El conjunto de datos...
 ```{r}
 dim(datos)
 ```
+
 ```{r}
 head(datos)
 ```
+
 ## Descripcion de las variables
- Describir cada variable y que valores posibles toman
+
+Describir cada variable y que valores posibles toman
+
+- **Student_ID**: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio.
+- **Age**: Edad del estudiante. Toma valores numéricos enteros.
+- **Academic_Level**: Nivel académico o educativo. Variable categórica.
+- **Primary_Platform**: Plataforma de redes sociales principal que utiliza el usuario. Variable categórica.
+- **Daily_Usage_Hours**: Promedio de horas diarias dedicadas al uso de redes sociales, es una variable numérica continua.
+- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana.
+- **Device_Type**: Dispositivo principal desde el que accede a las redes, variable categórica.
+- **Sleep_Duration_Hours**: Duración media del sueño por noche en horas. Variable numérica continua.
+- **Sleep_Quality_Score**: Puntuación sobre la calidad del sueño. Toma valores numéricos enteros entre 1 y 5, donde los valores más bajos indican peor descanso.
+- **Late_Night_Usage**: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable booleana.
+- **Social_Comparison_Frequency**: Frecuencia con la que el estudiante se compara con otros en las redes sociales, variable categórica.
+- **Perceived_Stress_Score**: Nivel o puntuación de estrés. Es una variable numérica basada en escalas psicométricas.
+- **Mental_Health_Index**: Índice general de salud mental del estudiante. Variable numérica.
+- **Academic_Performance_GPA**: Calificación o promedio académico. Variable numérica continua.
+- **Overall_Impact**: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.
 
 ## Partición de los datos
+
 Dada la cantidad de datos decidimos una partición train(0,7)-test (0.15) -validación (0.15)
 
 ## Estudio univariante
+
 ```{r}
 (dfSummary(datos))
 ```
+
 ```{r}
 prop.table(table(datos$Sleep_Quality_Score))
 ```
+
 ```{r}
 summary(datos)
 ```
-
 
 ## Análisis exploratorio de datos
 
 Que preguntas tengo sobre mis datos, objetivos que tengo.
 
-* ¿Existe diferencia entre la calidad de sueño para hombres y mujeres?
-* etc
+- ¿Existe diferencia entre la calidad de sueño para hombres y mujeres?
+- etc
 
 ##¿Existe diferencia entre la longitud del sueño y la edad?
 
@@ -63,4 +86,3 @@ ggplot(datos, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
        y = "Horas de Sueño") +
   theme_minimal()
 ```
-
