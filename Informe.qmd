@@ -4,11 +4,13 @@ format: html
 editor: visual
 ---
 
+
+
 ```{r}
 library(summarytools)
 library(ggplot2)
 library(caret)
-datos <- load(datos.Rdata)
+load("~/Mineria-de-datos-/datos.Rdata") # investigar más
 ```
 
 ## Introducción
@@ -49,9 +51,7 @@ Describir cada variable y que valores posibles toman
 - **Academic_Performance_GPA**: Calificación o promedio académico. Variable numérica continua.
 - **Overall_Impact**: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.
 
-## Partición de los datos
 
-Dada la cantidad de datos decidimos una partición train(0,7)-test (0.15) -validación (0.15)
 
 ## Estudio univariante
 
@@ -67,22 +67,107 @@ prop.table(table(datos$Sleep_Quality_Score))
 summary(datos)
 ```
 
+En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar.
+
+
+## Partición de los datos
+
+Dada la cantidad de datos decidimos una partición train(0.65)-test (0.2) -validación (0.15).
+
+```{r}
+set.seed(54685)
+idx_train <- createDataPartition(datos$Overall_Impact, p=0.65)
+train <- datos[idx_train$Resample1, ]
+test_valid <- datos[-idx_train$Resample1, ]
+
+idx_test <- createDataPartition(test_valid$Overall_Impact, p=0.60)
+test <- test_valid[idx_test$Resample1, ]
+valid <- test_valid[-idx_test$Resample1, ]
+```
+
+A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el análisis exploratorio de datos. Usaremos test para ir evaluando y estudiando la capacidad de generalización de los modelos que entrenemos en train. Por último, dejaremos la partición de validación para el final del todo del proyecto: una vez tengamos un modelo final seleccionado estudiaremos su rendimiento en esta partición de validación. Esto nos permitirá simular un caso real en el que podamos estudiar cómo funciona nuestro modelo final ante datos nunca vistos.
+
 ## Análisis exploratorio de datos
+
+```{r}
+summary(train)
+```
+Como la cantidad de NA's es pequeña decicimos no trabajar con dichas observaciones.
+```{r}
+train <- na.omit(train)
+```
+
+
+
+
+Como no tenemos un target binario y tenemos dudas entre 2 posibles candidatos para variable objetivo, vamos a estudiar su comportamiento y relación.
+
+```{r}
+boxplot(train$Academic_Performance_GPA ~ train$Overall_Impact)
+```
+Ya hemos solventado la duda que teníamos sobre si Overall_Impact podría ser una categorización de Academic_Performance_GPA. El boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral.
+
+Así, decidimos que nuestro target será Academic_Performance_GPA. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.
+
+```{r}
+hist(train$Academic_Performance_GPA)
+```
+Nos planteamos binarizar en 3.5 para distinguir entre aquellos estudiantes que tienen muy buenas notas y los que tienen malas o intermedias.
+```{r}
+train$target <- cut(train$Academic_Performance_GPA, breaks=c(-Inf,3.5,Inf))
+# Hay que quitar la variable Academic_Performance_GPA
+```
+
 
 Que preguntas tengo sobre mis datos, objetivos que tengo.
 
-- ¿Existe diferencia entre la calidad de sueño para hombres y mujeres?
-- etc
+  *  ¿Cuál es la proporción de estudiantes con muy buenas notas?   
+  * ¿Existe diferencia entre la calidad de sueño y el género?
+  * ¿Existe diferencia entre la calidad de sueño en función de las notas (target)?
+  * ¿Cómo se relaciona la edad con el número de horas de consumo RRSS?
+  * Relación entre horas de uso y mental health
+  * 
+  
+Nos interesa estudiar la relación entre todas las variables y el target.
+  
+  
+
 
 ##¿Existe diferencia entre la longitud del sueño y la edad?
 
 Vamos a estudiar la longitud del sueño dependiendo de la edad
 
 ```{r}
-ggplot(datos, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
+ggplot(train, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
   geom_boxplot(fill = "skyblue", color = "darkblue") +
   labs(title = "Duración del Sueño por Edad", 
        x = "Edad", 
        y = "Horas de Sueño") +
   theme_minimal()
 ```
+
+
+
+```{r}
+ggplot(train, aes(x = Gender, y = Sleep_Duration_Hours)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue") +
+  labs(title = "Duración del Sueño por Edad", 
+       x = "Edad", 
+       y = "Horas de Sueño") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(train, aes(x = target, y = Sleep_Duration_Hours)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue") +
+  labs(title = "Duración del Sueño por Edad", 
+       x = "Edad", 
+       y = "Horas de Sueño") +
+  theme_minimal()
+```
+
+```{r}
+plot(train$Mental_Health_Index, train$Daily_Usage_Hours, col=train$target)
+```
+
+

@@ -107,9 +107,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(summarytools)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: 패키지 'summarytools'는 R 버전 4.5.3에서 작성되었습니다</code></pre>
+<pre><code>Warning: package 'summarytools' was built under R version 4.5.3</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Social_media_impact_on_life.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'caret' was built under R version 4.5.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Cargando paquete requerido: lattice</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"~/Mineria-de-datos-/datos.Rdata"</span>) <span class="co"># investigar más</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="introducción" class="level2">
 <h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
@@ -120,13 +128,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>…</p>
 <p>El conjunto de datos…</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4500   16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Student_ID Age Gender Academic_Level Primary_Platform Daily_Usage_Hours
 1 STU_2024000  19 Female  Undergraduate         Snapchat               7.5
@@ -143,12 +151,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5                 2.6  Smartphone                  7.6                   4
 6                 1.6  Smartphone                  5.9                   1
   Late_Night_Usage Social_Comparison_Frequency Perceived_Stress_Score
-1             True                      Always                     20
-2             True                   Sometimes                     17
-3             True                  Frequently                     18
-4             True                   Sometimes                     15
-5             True                       Never                     16
-6            False                      Rarely                     10
+1               Sí                      Always                     20
+2               Sí                   Sometimes                     17
+3               Sí                  Frequently                     18
+4               Sí                   Sometimes                     15
+5               Sí                       Never                     16
+6               No                      Rarely                     10
   Mental_Health_Index Academic_Performance_GPA Overall_Impact
 1                  73                     2.73        Neutral
 2                  90                     3.21     Beneficial
@@ -162,11 +170,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="descripcion-de-las-variables" class="level2">
 <h2 class="anchored" data-anchor-id="descripcion-de-las-variables">Descripcion de las variables</h2>
 <p>Describir cada variable y que valores posibles toman</p>
+<ul>
+<li><strong>Student_ID</strong>: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio.</li>
+<li><strong>Age</strong>: Edad del estudiante. Toma valores numéricos enteros.</li>
+<li><strong>Academic_Level</strong>: Nivel académico o educativo. Variable categórica.</li>
+<li><strong>Primary_Platform</strong>: Plataforma de redes sociales principal que utiliza el usuario. Variable categórica.</li>
+<li><strong>Daily_Usage_Hours</strong>: Promedio de horas diarias dedicadas al uso de redes sociales, es una variable numérica continua.</li>
+<li><strong>Weekend_Extra_Hours</strong>: Horas adicionales de consumo digital durante los findes de semana.</li>
+<li><strong>Device_Type</strong>: Dispositivo principal desde el que accede a las redes, variable categórica.</li>
+<li><strong>Sleep_Duration_Hours</strong>: Duración media del sueño por noche en horas. Variable numérica continua.</li>
+<li><strong>Sleep_Quality_Score</strong>: Puntuación sobre la calidad del sueño. Toma valores numéricos enteros entre 1 y 5, donde los valores más bajos indican peor descanso.</li>
+<li><strong>Late_Night_Usage</strong>: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable booleana.</li>
+<li><strong>Social_Comparison_Frequency</strong>: Frecuencia con la que el estudiante se compara con otros en las redes sociales, variable categórica.</li>
+<li><strong>Perceived_Stress_Score</strong>: Nivel o puntuación de estrés. Es una variable numérica basada en escalas psicométricas.</li>
+<li><strong>Mental_Health_Index</strong>: Índice general de salud mental del estudiante. Variable numérica.</li>
+<li><strong>Academic_Performance_GPA</strong>: Calificación o promedio académico. Variable numérica continua.</li>
+<li><strong>Overall_Impact</strong>: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.</li>
+</ul>
 </section>
 <section id="estudio-univariante" class="level2">
 <h2 class="anchored" data-anchor-id="estudio-univariante">Estudio univariante</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">dfSummary</span>(datos))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">dfSummary</span>(datos))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data Frame Summary  
 datos  
@@ -195,16 +220,16 @@ No   Variable                      Stats / Values            Freqs (% of Valid) 
                                                                                    : : : : : : : .                           
 
 3    Gender                        1. Female                 2234 (49.6%)          IIIIIIIII             4500       0        
-     [character]                   2. Male                   2051 (45.6%)          IIIIIIIII             (100.0%)   (0.0%)   
+     [factor]                      2. Male                   2051 (45.6%)          IIIIIIIII             (100.0%)   (0.0%)   
                                    3. Non-Binary              122 ( 2.7%)                                                    
                                    4. Prefer not to say        93 ( 2.1%)                                                    
 
 4    Academic_Level                1. High School            1477 (32.8%)          IIIIII                4500       0        
-     [character]                   2. Postgraduate            246 ( 5.5%)          I                     (100.0%)   (0.0%)   
-                                   3. Undergraduate          2777 (61.7%)          IIIIIIIIIIII                              
+     [ordered,                     2. Undergraduate          2777 (61.7%)          IIIIIIIIIIII          (100.0%)   (0.0%)   
+     factor]                       3. Postgraduate            246 ( 5.5%)          I                                         
 
 5    Primary_Platform              1. Instagram              1453 (32.3%)          IIIIII                4500       0        
-     [character]                   2. LinkedIn                 96 ( 2.1%)                                (100.0%)   (0.0%)   
+     [factor]                      2. LinkedIn                 96 ( 2.1%)                                (100.0%)   (0.0%)   
                                    3. Reddit                  229 ( 5.1%)          I                                         
                                    4. Snapchat                472 (10.5%)          II                                        
                                    5. TikTok                 1226 (27.2%)          IIIII                                     
@@ -224,7 +249,7 @@ No   Variable                      Stats / Values            Freqs (% of Valid) 
                                                                                    . : : : : : .                             
 
 8    Device_Type                   1. Laptop/PC               596 (13.2%)          II                    4500       0        
-     [character]                   2. Smartphone             3775 (83.9%)          IIIIIIIIIIIIIIII      (100.0%)   (0.0%)   
+     [factor]                      2. Smartphone             3775 (83.9%)          IIIIIIIIIIIIIIII      (100.0%)   (0.0%)   
                                    3. Tablet                  129 ( 2.9%)                                                    
 
 9    Sleep_Duration_Hours          Mean (sd) : 6.7 (1.2)     73 distinct values              :           4500       0        
@@ -239,14 +264,14 @@ No   Variable                      Stats / Values            Freqs (% of Valid) 
                                    IQR (CV) : 1 (0.4)        4 :  621 (13.8%)      II                                        
                                                              5 :   91 ( 2.0%)                                                
 
-11   Late_Night_Usage              1. False                  1856 (41.2%)          IIIIIIII              4500       0        
-     [character]                   2. True                   2644 (58.8%)          IIIIIIIIIII           (100.0%)   (0.0%)   
+11   Late_Night_Usage              1. Sí                     2644 (58.8%)          IIIIIIIIIII           4500       0        
+     [factor]                      2. No                     1856 (41.2%)          IIIIIIII              (100.0%)   (0.0%)   
 
-12   Social_Comparison_Frequency   1. Always                  632 (14.0%)          II                    4500       0        
-     [character]                   2. Frequently             1248 (27.7%)          IIIII                 (100.0%)   (0.0%)   
-                                   3. Never                   260 ( 5.8%)          I                                         
-                                   4. Rarely                  766 (17.0%)          III                                       
-                                   5. Sometimes              1594 (35.4%)          IIIIIII                                   
+12   Social_Comparison_Frequency   1. Never                   260 ( 5.8%)          I                     4500       0        
+     [ordered,                     2. Rarely                  766 (17.0%)          III                   (100.0%)   (0.0%)   
+     factor]                       3. Sometimes              1594 (35.4%)          IIIIIII                                   
+                                   4. Frequently             1248 (27.7%)          IIIII                                     
+                                   5. Always                  632 (14.0%)          II                                        
 
 13   Perceived_Stress_Score        Mean (sd) : 13.5 (7.1)    41 distinct values      . :                 4454       46       
      [numeric]                     min &lt; med &lt; max:                                  : : .               (99.0%)    (1.0%)   
@@ -266,23 +291,229 @@ No   Variable                      Stats / Values            Freqs (% of Valid) 
                                    IQR (CV) : 0.5 (0.1)                                    . : : : : :                       
                                                                                        . : : : : : : :                       
 
-16   Overall_Impact                1. Beneficial             3681 (81.8%)          IIIIIIIIIIIIIIII      4500       0        
-     [character]                   2. Negative                165 ( 3.7%)                                (100.0%)   (0.0%)   
-                                   3. Neutral                 654 (14.5%)          II                                        
+16   Overall_Impact                1. Negative                165 ( 3.7%)                                4500       0        
+     [ordered,                     2. Neutral                 654 (14.5%)          II                    (100.0%)   (0.0%)   
+     factor]                       3. Beneficial             3681 (81.8%)          IIIIIIIIIIIIIIII                          
 -----------------------------------------------------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>Sleep_Quality_Score))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>Sleep_Quality_Score))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
          1          2          3          4          5 
 0.20755556 0.29133333 0.34288889 0.13800000 0.02022222 </code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(datos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Student_ID             Age                     Gender    
+ Length:4500        Min.   :15.0   Female           :2234  
+ Class :character   1st Qu.:17.0   Male             :2051  
+ Mode  :character   Median :19.0   Non-Binary       : 122  
+                    Mean   :18.7   Prefer not to say:  93  
+                    3rd Qu.:20.0                           
+                    Max.   :26.0                           
+                                                           
+       Academic_Level    Primary_Platform Daily_Usage_Hours Weekend_Extra_Hours
+ High School  :1477   Instagram  :1453    Min.   : 0.900    Min.   :0.000      
+ Undergraduate:2777   LinkedIn   :  96    1st Qu.: 3.400    1st Qu.:1.300      
+ Postgraduate : 246   Reddit     : 229    Median : 4.700    Median :1.800      
+                      Snapchat   : 472    Mean   : 5.296    Mean   :1.797      
+                      TikTok     :1226    3rd Qu.: 6.600    3rd Qu.:2.300      
+                      X (Twitter): 206    Max.   :14.000    Max.   :4.500      
+                      YouTube    : 818                                         
+     Device_Type   Sleep_Duration_Hours Sleep_Quality_Score Late_Night_Usage
+ Laptop/PC : 596   Min.   : 3.000       Min.   :1.000       Sí:2644         
+ Smartphone:3775   1st Qu.: 6.000       1st Qu.:2.000       No:1856         
+ Tablet    : 129   Median : 6.800       Median :3.000                       
+                   Mean   : 6.701       Mean   :2.472                       
+                   3rd Qu.: 7.500       3rd Qu.:3.000                       
+                   Max.   :10.500       Max.   :5.000                       
+                                                                            
+ Social_Comparison_Frequency Perceived_Stress_Score Mental_Health_Index
+ Never     : 260             Min.   : 0.00          Min.   :32.00      
+ Rarely    : 766             1st Qu.: 9.00          1st Qu.:72.00      
+ Sometimes :1594             Median :13.00          Median :82.00      
+ Frequently:1248             Mean   :13.51          Mean   :79.87      
+ Always    : 632             3rd Qu.:18.00          3rd Qu.:89.00      
+                             Max.   :40.00          Max.   :98.00      
+                             NA's   :46                                
+ Academic_Performance_GPA    Overall_Impact
+ Min.   :1.900            Negative  : 165  
+ 1st Qu.:3.200            Neutral   : 654  
+ Median :3.460            Beneficial:3681  
+ Mean   :3.429                             
+ 3rd Qu.:3.720                             
+ Max.   :4.000                             
+ NA's   :85                                </code></pre>
+</div>
+</div>
+<p>En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar.</p>
 </section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
+<section id="partición-de-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="partición-de-los-datos">Partición de los datos</h2>
+<p>Dada la cantidad de datos decidimos una partición train(0.65)-test (0.2) -validación (0.15).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">54685</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>idx_train <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(datos<span class="sc">$</span>Overall_Impact, <span class="at">p=</span><span class="fl">0.65</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> datos[idx_train<span class="sc">$</span>Resample1, ]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>test_valid <span class="ot">&lt;-</span> datos[<span class="sc">-</span>idx_train<span class="sc">$</span>Resample1, ]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>idx_test <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(test_valid<span class="sc">$</span>Overall_Impact, <span class="at">p=</span><span class="fl">0.60</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test_valid[idx_test<span class="sc">$</span>Resample1, ]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>valid <span class="ot">&lt;-</span> test_valid[<span class="sc">-</span>idx_test<span class="sc">$</span>Resample1, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el análisis exploratorio de datos. Usaremos test para ir evaluando y estudiando la capacidad de generalización de los modelos que entrenemos en train. Por último, dejaremos la partición de validación para el final del todo del proyecto: una vez tengamos un modelo final seleccionado estudiaremos su rendimiento en esta partición de validación. Esto nos permitirá simular un caso real en el que podamos estudiar cómo funciona nuestro modelo final ante datos nunca vistos.</p>
+</section>
+<section id="análisis-exploratorio-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-exploratorio-de-datos">Análisis exploratorio de datos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Student_ID             Age                      Gender    
+ Length:2927        Min.   :15.00   Female           :1461  
+ Class :character   1st Qu.:17.00   Male             :1328  
+ Mode  :character   Median :19.00   Non-Binary       :  83  
+                    Mean   :18.72   Prefer not to say:  55  
+                    3rd Qu.:20.00                           
+                    Max.   :26.00                           
+                                                            
+       Academic_Level    Primary_Platform Daily_Usage_Hours Weekend_Extra_Hours
+ High School  : 945   Instagram  :933     Min.   : 0.900    Min.   :0.0        
+ Undergraduate:1811   LinkedIn   : 62     1st Qu.: 3.400    1st Qu.:1.3        
+ Postgraduate : 171   Reddit     :137     Median : 4.700    Median :1.8        
+                      Snapchat   :321     Mean   : 5.289    Mean   :1.8        
+                      TikTok     :806     3rd Qu.: 6.600    3rd Qu.:2.3        
+                      X (Twitter):143     Max.   :14.000    Max.   :4.5        
+                      YouTube    :525                                          
+     Device_Type   Sleep_Duration_Hours Sleep_Quality_Score Late_Night_Usage
+ Laptop/PC : 381   Min.   : 3.0         Min.   :1.00        Sí:1717         
+ Smartphone:2460   1st Qu.: 6.0         1st Qu.:2.00        No:1210         
+ Tablet    :  86   Median : 6.8         Median :3.00                        
+                   Mean   : 6.7         Mean   :2.48                        
+                   3rd Qu.: 7.5         3rd Qu.:3.00                        
+                   Max.   :10.5         Max.   :5.00                        
+                                                                            
+ Social_Comparison_Frequency Perceived_Stress_Score Mental_Health_Index
+ Never     : 155             Min.   : 0.00          Min.   :32.0       
+ Rarely    : 492             1st Qu.: 9.00          1st Qu.:72.0       
+ Sometimes :1038             Median :13.00          Median :82.0       
+ Frequently: 823             Mean   :13.56          Mean   :79.9       
+ Always    : 419             3rd Qu.:18.00          3rd Qu.:89.0       
+                             Max.   :40.00          Max.   :98.0       
+                             NA's   :33                                
+ Academic_Performance_GPA    Overall_Impact
+ Min.   :1.900            Negative  : 108  
+ 1st Qu.:3.200            Neutral   : 426  
+ Median :3.460            Beneficial:2393  
+ Mean   :3.427                             
+ 3rd Qu.:3.720                             
+ Max.   :4.000                             
+ NA's   :46                                </code></pre>
+</div>
+</div>
+<p>Como la cantidad de NA’s es pequeña decicimos no trabajar con dichas observaciones.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Como no tenemos un target binario y tenemos dudas entre 2 posibles candidatos para variable objetivo, vamos a estudiar su comportamiento y relación.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(train<span class="sc">$</span>Academic_Performance_GPA <span class="sc">~</span> train<span class="sc">$</span>Overall_Impact)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ya hemos solventado la duda que teníamos sobre si Overall_Impact podría ser una categorización de Academic_Performance_GPA. El boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral.</p>
+<p>Así, decidimos que nuestro target será Academic_Performance_GPA. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(train<span class="sc">$</span>Academic_Performance_GPA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nos planteamos binarizar en 3.5 para distinguir entre aquellos estudiantes que tienen muy buenas notas y los que tienen malas o intermedias.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>train<span class="sc">$</span>target <span class="ot">&lt;-</span> <span class="fu">cut</span>(train<span class="sc">$</span>Academic_Performance_GPA, <span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>,<span class="fl">3.5</span>,<span class="cn">Inf</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hay que quitar la variable Academic_Performance_GPA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Que preguntas tengo sobre mis datos, objetivos que tengo.</p>
+<ul>
+<li>¿Cuál es la proporción de estudiantes con muy buenas notas?<br>
+</li>
+<li>¿Existe diferencia entre la calidad de sueño y el género?</li>
+<li>¿Existe diferencia entre la calidad de sueño en función de las notas (target)?</li>
+<li>¿Cómo se relaciona la edad con el número de horas de consumo RRSS?</li>
+<li>Relación entre horas de uso y mental health</li>
+<li></li>
+</ul>
+<p>Nos interesa estudiar la relación entre todas las variables y el target.</p>
+<p>##¿Existe diferencia entre la longitud del sueño y la edad?</p>
+<p>Vamos a estudiar la longitud del sueño dependiendo de la edad</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(train, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(Age), <span class="at">y =</span> Sleep_Duration_Hours)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Duración del Sueño por Edad"</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Edad"</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Horas de Sueño"</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(train, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Sleep_Duration_Hours)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Duración del Sueño por Edad"</span>, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Edad"</span>, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Horas de Sueño"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(train, <span class="fu">aes</span>(<span class="at">x =</span> target, <span class="at">y =</span> Sleep_Duration_Hours)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Duración del Sueño por Edad"</span>, </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Edad"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Horas de Sueño"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(train<span class="sc">$</span>Mental_Health_Index, train<span class="sc">$</span>Daily_Usage_Hours, <span class="at">col=</span>train<span class="sc">$</span>target)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 
 </main>
