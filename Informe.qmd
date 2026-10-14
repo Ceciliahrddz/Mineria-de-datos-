@@ -4,19 +4,16 @@ format: html
 editor: visual
 ---
 
-
-
 ```{r}
 library(summarytools)
 library(ggplot2)
 library(caret)
 library(dplyr)
-load("~/Mineria-de-datos-/datos.Rdata") # investigar más
+#load("~/Mineria-de-datos-/datos.Rdata")
+load("datos.Rdata") # investigar más
 ```
 
 ## Introducción
-
-h
 
 ## Datos
 
@@ -52,8 +49,6 @@ Describir cada variable y que valores posibles toman
 - **Academic_Performance_GPA**: Calificación o promedio académico. Variable numérica continua.
 - **Overall_Impact**: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.
 
-
-
 ## Estudio univariante
 
 ```{r}
@@ -69,7 +64,6 @@ summary(datos)
 ```
 
 En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar.
-
 
 ## Partición de los datos
 
@@ -93,19 +87,19 @@ A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el 
 ```{r}
 summary(train)
 ```
+
 Como la cantidad de NA's es pequeña decicimos no trabajar con dichas observaciones.
+
 ```{r}
 train <- na.omit(train)
 ```
-
-
-
 
 Como no tenemos un target binario y tenemos dudas entre 2 posibles candidatos para variable objetivo, vamos a estudiar su comportamiento y relación.
 
 ```{r}
 boxplot(train$Academic_Performance_GPA ~ train$Overall_Impact)
 ```
+
 Ya hemos solventado la duda que teníamos sobre si Overall_Impact podría ser una categorización de Academic_Performance_GPA. El boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral.
 
 Así, decidimos que nuestro target será Academic_Performance_GPA. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.
@@ -113,64 +107,233 @@ Así, decidimos que nuestro target será Academic_Performance_GPA. Como es una v
 ```{r}
 hist(train$Academic_Performance_GPA)
 ```
+
 Nos planteamos binarizar en 3.5 para distinguir entre aquellos estudiantes que tienen muy buenas notas y los que tienen malas o intermedias.
+
 ```{r}
 train$target <- cut(train$Academic_Performance_GPA, breaks=c(-Inf,3.5,Inf),labels = c("Rendimiento_bajo_medio", "Rendimiento_alto") )
 # Hay que quitar la variable Academic_Performance_GPA
 ```
 
-
 Que preguntas tengo sobre mis datos, objetivos que tengo.
 
-  *  ¿Cuál es la proporción de estudiantes con muy buenas notas?   
-  * ¿Existe diferencia entre la calidad de sueño y el género?
-  * ¿Existe diferencia entre la calidad de sueño en función de las notas (target)?
-  * ¿Cómo se relaciona la edad con el número de horas de consumo RRSS?
-  * Relación entre horas de uso y mental health
-  * 
-  
+- ¿Cuál es la proporción de estudiantes con muy buenas notas?\
+- ¿Existe diferencia entre la calidad de sueño y el género?
+- ¿Existe diferencia entre la calidad de sueño en función de las notas (target)?
+- ¿Cómo se relaciona la edad con el número de horas de consumo RRSS?
+- Relación entre horas de uso y mental health
+- 
+
 Nos interesa estudiar la relación entre todas las variables y el target.
-  
-  
 
+### Relaciones entre el target y el resto de variables.
 
-##¿Existe diferencia entre la longitud del sueño y la edad?
-
-Vamos a estudiar la longitud del sueño dependiendo de la edad
-
+#### Comparación de Age y Target
 ```{r}
-ggplot(train, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
-  labs(title = "Duración del Sueño por Edad", 
-       x = "Edad", 
-       y = "Horas de Sueño") +
+ggplot(train, aes(x = target, y = Age, fill = target)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
+  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  labs(
+    title = "Edad según el rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Edad"
+  ) +
   theme_minimal()
 ```
-# Comparación de Horas de sueño y Género
 
 
+Test estadístico (Wilcoxon)
 ```{r}
-ggplot(train, aes(x = Gender, y = Sleep_Duration_Hours)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
-  labs(title = "Duración del Sueño por Edad", 
-       x = "Edad", 
-       y = "Horas de Sueño") +
+wilcox.test(Age ~ target, data = train)
+```
+
+#### Comparación de Daily_Usage_Hours y Target
+```{r}
+ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
+  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  labs(
+    title = "Horas de uso diario de redes sociales según el rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Horas de uso diario"
+  ) +
   theme_minimal()
 ```
-# Comparación de Horas de Sueño y Target
+Test estadístico (Wilcoxon)
 ```{r}
-ggplot(train, aes(x = target, y = Sleep_Duration_Hours)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
-  labs(title = "Duración del Sueño por Edad", 
-       x = "Edad", 
-       y = "Horas de Sueño") +
+# 
+wilcox.test(Daily_Usage_Hours ~ target, data = train)
+```
+
+#### Comparación de Device_Type y Target
+
+```{r}
+ggplot(train, aes(x = Device_Type, fill = target)) +
+  geom_bar(
+    aes(y = after_stat(prop), group = target), 
+    position = position_dodge(width = 0.8), 
+    width = 0.7,
+    color = "darkblue"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_fill_manual(
+    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    labels = c("Bajo / Medio", "Alto")
+  ) +
+  labs(
+    title = "Rendimiento académico según el tipo de dispositivo",
+    x = "Tipo de dispositivo",
+    y = "Porcentaje dentro de cada categoría",
+    fill = "Rendimiento"
+  ) +
   theme_minimal()
 ```
-# Comparación de Índice de salud mental y Horas de uso diarias
+Test de independencia Chi-cuadrado
 ```{r}
-plot(train$Mental_Health_Index, train$Daily_Usage_Hours, col=train$target)
+chisq.test(table(train$Device_Type, train$target))
 ```
-# Comparación de Género y Target
+
+#### Comparación de Sleep_Quality_Score y Target
+
+```{r}
+ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
+  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  labs(
+    title = "Puntuación de calidad de sueño según el rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Calidad de sueño (1-5)"
+  ) +
+  theme_minimal()
+```
+Test estadístico (Wilcoxon)
+```{r}
+wilcox.test(Sleep_Quality_Score ~ target, data = train)
+```
+
+#### Comparación de Late_Night_Usage y Target
+
+```{r}
+ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
+  geom_bar(
+    aes(y = after_stat(prop), group = target), 
+    position = position_dodge(width = 0.8), 
+    width = 0.7,
+    color = "darkblue"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_fill_manual(
+    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    labels = c("Bajo / Medio", "Alto")
+  ) +
+  labs(
+    title = "Rendimiento académico según el uso nocturno de redes",
+    x = "Uso nocturno",
+    y = "Porcentaje dentro de cada categoría",
+    fill = "Rendimiento"
+  ) +
+  theme_minimal()
+```
+
+Test de independencia Chi-cuadrado
+```{r}
+chisq.test(table(train$Late_Night_Usage, train$target))
+```
+
+#### Comparación de Social_Comparison_Frequency y Target
+
+```{r}
+ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
+  geom_bar(
+    aes(y = after_stat(prop), group = target), 
+    position = position_dodge(width = 0.8), 
+    width = 0.7,
+    color = "darkblue"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_fill_manual(
+    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    labels = c("Bajo / Medio", "Alto")
+  ) +
+  labs(
+    title = "Rendimiento académico según la frecuencia de comparación social",
+    x = "Frecuencia de comparación social",
+    y = "Porcentaje dentro de cada categoría",
+    fill = "Rendimiento"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+Test de independencia Chi-cuadrado
+```{r}
+chisq.test(table(train$Social_Comparison_Frequency, train$target))
+```
+
+#### Comparación de Perceived_Stress_Score y Target
+
+```{r}
+ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
+  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  labs(
+    title = "Puntuación de estrés percibido según el rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Estrés percibido"
+  ) +
+  theme_minimal()
+```
+
+Test estadístico (Wilcoxon)
+```{r}
+wilcox.test(Perceived_Stress_Score ~ target, data = train)
+```
+
+#### Comparación de Mental_Health_Index y Target
+
+```{r}
+ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
+  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  labs(
+    title = "Índice de salud mental según el rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Índice de salud mental"
+  ) +
+  theme_minimal()
+```
+
+Test estadístico (Wilcoxon)
+
+```{r}
+wilcox.test(Mental_Health_Index ~ target, data = train)
+```
+
+
+
+#### Comparación de Horas de Sueño y Target
+
+```{r}
+ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
+  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
+  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  labs(title = "Duración del sueño según rendimiento académico", x = "Rendimiento académico", y = "Horas de sueño") +
+  theme_minimal()
+```
+
+Test estadístico (Wilcoxon)
+```{r}
+wilcox.test(Sleep_Duration_Hours ~ target, data = train)
+```
+
+
+#### Comparación de Género y Target
 
 ```{r}
 ggplot(train, aes(x = Gender, fill = target, group = target)) +
@@ -193,6 +356,14 @@ ggplot(train, aes(x = Gender, fill = target, group = target)) +
   ) +
   theme_minimal()
 ```
+
+Test Estadístico (Chi cuadrado)
+```{r}
+chisq.test(table(train$Gender, train$target))
+```
+
+
+
 La relación observada a simple vista no nos permite distinguir si existe diferencia significativa entre rendimiento alto y bajo por genero, para ello hagamos un test binomial.
 
 ```{r}
@@ -211,8 +382,11 @@ resultados_binomiales <- train %>%
 
 print(resultados_binomiales)
 ```
+
 Los resultados nos indican que la diferencia entre Female y Male, sí es significativa, mientras que la diferencia en Non-Binary y Prefered not to Say no lo es.
-# Comparación de Nivel Académico y Target
+
+#### Comparación de Nivel Académico y Target
+
 ```{r}
 ggplot(train, aes(x = Academic_Level, fill = target)) +
   geom_bar(position = position_dodge(width = 0.8), width = 0.7) +
@@ -229,9 +403,17 @@ ggplot(train, aes(x = Academic_Level, fill = target)) +
   theme_minimal()
 ```
 
-# Comparación de Plataforma principal y Target
+
+Test Estadístico (Chi cuadrado)
 ```{r}
-ggplot(train, aes(x = Primary_Platform, fill = target, by = Primary_Platform)) +
+chisq.test(table(train$Academic_Level, train$target))
+```
+
+
+#### Comparación de Plataforma principal y Target
+
+```{r}
+ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
   geom_bar(
     aes(y = after_stat(prop)), 
     position = position_dodge(width = 0.8), 
@@ -246,23 +428,66 @@ ggplot(train, aes(x = Primary_Platform, fill = target, by = Primary_Platform)) +
   labs(
     title = "Rendimiento académico según la plataforma principal",
     x = "Plataforma principal",
-    y = "Porcentaje dentro de cada plataforma",
+    y = "Porcentaje",
     fill = "Rendimiento"
   ) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Rotación por si las plataformas tienen nombres largos
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1), # Rota los nombres para que no se solapen
+    legend.position = "right"
+  )
 ```
+Test Estadístico (Chi cuadrado)
+```{r}
+chisq.test(table(train$Primary_Platform, train$target))
+```
+
+
+#### Comparación entre Horas extra y el target.
 
 ```{r}
 ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
   geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
   scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
   scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
-  labs(
-    title = "Horas extra en fin de semana según rendimiento académico",
-    x = "Rendimiento académico",
-    y = "Horas extra en fin de semana"
-  ) +
+  labs(title = "Horas extra en fin de semana según rendimiento académico", x = "Rendimiento académico", y = "Horas extra fin de semana") +
   theme_minimal()
 ```
 
+Test Estadístico (Wilcox)
+```{r}
+wilcox.test(Weekend_Extra_Hours ~ target, data = train)
+```
+
+
+### Preguntas interesantes y relaciones entre variables que no son el target.
+
+##¿Existe diferencia entre la longitud del sueño y la edad?
+
+Vamos a estudiar la longitud del sueño dependiendo de la edad
+
+```{r}
+ggplot(train, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue") +
+  labs(title = "Duración del Sueño por Edad", 
+       x = "Edad", 
+       y = "Horas de Sueño") +
+  theme_minimal()
+```
+
+# Comparación de Horas de sueño y Género
+
+```{r}
+ggplot(train, aes(x = Gender, y = Sleep_Duration_Hours)) +
+  geom_boxplot(fill = "skyblue", color = "darkblue") +
+  labs(title = "Duración del Sueño por Edad", 
+       x = "Edad", 
+       y = "Horas de Sueño") +
+  theme_minimal()
+```
+
+# Comparación de Índice de salud mental y Horas de uso diarias
+
+```{r}
+plot(train$Mental_Health_Index, train$Daily_Usage_Hours, col=train$target)
+```
