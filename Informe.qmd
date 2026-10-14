@@ -10,6 +10,7 @@ editor: visual
 library(summarytools)
 library(ggplot2)
 library(caret)
+library(dplyr)
 load("~/Mineria-de-datos-/datos.Rdata") # investigar más
 ```
 
@@ -172,7 +173,7 @@ plot(train$Mental_Health_Index, train$Daily_Usage_Hours, col=train$target)
 # Comparación de Género y Target
 
 ```{r}
-ggplot(train, aes(x = Gender, fill = target, by = Gender)) +
+ggplot(train, aes(x = Gender, fill = target, group = target)) +
   geom_bar(
     aes(y = after_stat(prop)), 
     position = position_dodge(width = 0.8), 
@@ -192,6 +193,25 @@ ggplot(train, aes(x = Gender, fill = target, by = Gender)) +
   ) +
   theme_minimal()
 ```
+La relación observada a simple vista no nos permite distinguir si existe diferencia significativa entre rendimiento alto y bajo por genero, para ello hagamos un test binomial.
+
+```{r}
+resultados_binomiales <- train %>%
+  group_by(Gender) %>%
+  summarise(
+    n_bajo_medio = sum(target == "Rendimiento_bajo_medio"),
+    n_alto = sum(target == "Rendimiento_alto"),
+    total = n()
+  ) %>%
+  rowwise() %>%
+  mutate(
+    p_value = binom.test(n_alto, total, p = 0.5)$p.value,
+    es_significativo = p_value < 0.05
+  )
+
+print(resultados_binomiales)
+```
+Los resultados nos indican que la diferencia entre Female y Male, sí es significativa, mientras que la diferencia en Non-Binary y Prefered not to Say no lo es.
 # Comparación de Nivel Académico y Target
 ```{r}
 ggplot(train, aes(x = Academic_Level, fill = target)) +
