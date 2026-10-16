@@ -2,6 +2,10 @@
 title: "Informe"
 format: html
 editor: visual
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -15,9 +19,11 @@ load("datos.Rdata") # investigar más
 
 ## Introducción
 
-## Datos
+Este trabajo aborda el análisis exploratorio de datos sobre el conjunto de datos \`Social_media_impact_on_life.csv´. Cada observación representa a un estudiante y recopila información estructurada en cinco grandes bloques de variables: Identificación y demografía, hábitos tecnológicos, patrones de descanso, bienestar y salud mental, y rendimiento y resultado global.
 
-...
+El objetivo de nuestro proyecto es analizar y predecir el **rendimiento académico** de los alumnos.
+
+## Datos
 
 El conjunto de datos...
 
@@ -51,12 +57,14 @@ Describir cada variable y que valores posibles toman
 
 ## Estudio univariante
 
+En esta sección realizamos una inspección descriptiva individual de todas las variables de nuestro conjunto de datos. A través de las funciones dfSummary() y summary(), evaluamos las medidas de tendencia central (media y mediana), la dispersión y la distribución de frecuencias de factores demográficos, de descanso, psicológicos y de consumo digital.
+
 ```{r}
-(dfSummary(datos))
+(dfSummary(datos, graph.col = FALSE))
 ```
 
 ```{r}
-prop.table(table(datos$Sleep_Quality_Score))
+#prop.table(table(datos$Sleep_Quality_Score))
 ```
 
 ```{r}
@@ -67,7 +75,7 @@ En base a este primer vistazo a los datos no hemos detectado ningún valor clara
 
 ## Partición de los datos
 
-Dada la cantidad de datos decidimos una partición train(0.65)-test (0.2) -validación (0.15).
+Dada la cantidad de datos decidimos una partición train(0.65) -test (0.2) -validación (0.15).
 
 ```{r}
 set.seed(54685)
@@ -84,17 +92,19 @@ A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el 
 
 ## Análisis exploratorio de datos
 
+Realizamos una exploración exclusivamente sobre el conjunto de entrenamientos (train) para evitar la fuga de información hacia los conjuntos de evaluación (test y validation).
+
 ```{r}
 summary(train)
 ```
 
-Como la cantidad de NA's es pequeña decicimos no trabajar con dichas observaciones.
+Dado que la proporción de datos ausentes en train es mínimo, decidimos no trabajar con dichas observaciones.
 
 ```{r}
 train <- na.omit(train)
 ```
 
-Como no tenemos un target binario y tenemos dudas entre 2 posibles candidatos para variable objetivo, vamos a estudiar su comportamiento y relación.
+Como no tenemos un target binario y tenemos dudas entre 2 posibles candidatos para variable objetivo, vamos a estudiar el comportamiento y relación de las variables Academic_Performance_GPA y Overall_Impact.
 
 ```{r}
 boxplot(train$Academic_Performance_GPA ~ train$Overall_Impact)
@@ -108,7 +118,7 @@ Así, decidimos que nuestro target será Academic_Performance_GPA. Como es una v
 hist(train$Academic_Performance_GPA)
 ```
 
-Nos planteamos binarizar en 3.5 para distinguir entre aquellos estudiantes que tienen muy buenas notas y los que tienen malas o intermedias.
+Binarizamos la variable Academic_Performance_GPA mediante un punto de corta en 3.5. para diferenciaar a los alumnos de rendimiento excelente del resto de calificaciones.
 
 ```{r}
 train$target <- cut(train$Academic_Performance_GPA, breaks=c(-Inf,3.5,Inf),labels = c("Rendimiento_bajo_medio", "Rendimiento_alto") )
@@ -117,7 +127,7 @@ train$target <- cut(train$Academic_Performance_GPA, breaks=c(-Inf,3.5,Inf),label
 
 Que preguntas tengo sobre mis datos, objetivos que tengo.
 
-- ¿Cuál es la proporción de estudiantes con muy buenas notas?\
+- ¿Cuál es la proporción de estudiantes con muy buenas notas?
 - ¿Existe diferencia entre la calidad de sueño y el género?
 - ¿Existe diferencia entre la calidad de sueño en función de las notas (target)?
 - ¿Cómo se relaciona la edad con el número de horas de consumo RRSS?
@@ -129,6 +139,7 @@ Nos interesa estudiar la relación entre todas las variables y el target.
 ### Relaciones entre el target y el resto de variables.
 
 #### Comparación de Age y Target
+
 ```{r}
 ggplot(train, aes(x = target, y = Age, fill = target)) +
   geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
@@ -142,13 +153,20 @@ ggplot(train, aes(x = target, y = Age, fill = target)) +
   theme_minimal()
 ```
 
+Este diagrama de caja muestra una distribución de la edad prácticamente idéntica entre los estudiantes con rendimiento académico bajo/ medio y aquellos que con un rendimiento alto. En ambos grupos, la mediana de edad se sitúa en torno a los 19 años.
+
+Para contrartar formalmente si existen diferencia significativas en la distribución de la edad según el rendimiento académico, aplicamos el test no paramétrico de Wilcoxon.
 
 Test estadístico (Wilcoxon)
+
 ```{r}
 wilcox.test(Age ~ target, data = train)
 ```
 
+Observamos que obtenemos los valores $988026$ para el estadístico W y para el p-valor $0.4122$. Como el p-valor es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no podemos rechazar la hipótesis nula $H_0$, lo que indica que no existen diferencias estadísticamente significativas en la edad entre los alumnos de alto rendimiento y los de rendimiento bajo o medio. Por lo tanto, la edad no presenta un comportamiento diferencial respecto al rendimient académico, por lo que no muestra capacidad explicativa sobre el target.
+
 #### Comparación de Daily_Usage_Hours y Target
+
 ```{r}
 ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
   geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
@@ -161,7 +179,9 @@ ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
   ) +
   theme_minimal()
 ```
+
 Test estadístico (Wilcoxon)
+
 ```{r}
 # 
 wilcox.test(Daily_Usage_Hours ~ target, data = train)
@@ -190,7 +210,9 @@ ggplot(train, aes(x = Device_Type, fill = target)) +
   ) +
   theme_minimal()
 ```
+
 Test de independencia Chi-cuadrado
+
 ```{r}
 chisq.test(table(train$Device_Type, train$target))
 ```
@@ -209,7 +231,9 @@ ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
   ) +
   theme_minimal()
 ```
+
 Test estadístico (Wilcoxon)
+
 ```{r}
 wilcox.test(Sleep_Quality_Score ~ target, data = train)
 ```
@@ -239,6 +263,7 @@ ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
 ```
 
 Test de independencia Chi-cuadrado
+
 ```{r}
 chisq.test(table(train$Late_Night_Usage, train$target))
 ```
@@ -269,6 +294,7 @@ ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
 ```
 
 Test de independencia Chi-cuadrado
+
 ```{r}
 chisq.test(table(train$Social_Comparison_Frequency, train$target))
 ```
@@ -289,6 +315,7 @@ ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
 ```
 
 Test estadístico (Wilcoxon)
+
 ```{r}
 wilcox.test(Perceived_Stress_Score ~ target, data = train)
 ```
@@ -314,8 +341,6 @@ Test estadístico (Wilcoxon)
 wilcox.test(Mental_Health_Index ~ target, data = train)
 ```
 
-
-
 #### Comparación de Horas de Sueño y Target
 
 ```{r}
@@ -328,10 +353,10 @@ ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
 ```
 
 Test estadístico (Wilcoxon)
+
 ```{r}
 wilcox.test(Sleep_Duration_Hours ~ target, data = train)
 ```
-
 
 #### Comparación de Género y Target
 
@@ -358,11 +383,10 @@ ggplot(train, aes(x = Gender, fill = target, group = target)) +
 ```
 
 Test Estadístico (Chi cuadrado)
+
 ```{r}
 chisq.test(table(train$Gender, train$target))
 ```
-
-
 
 La relación observada a simple vista no nos permite distinguir si existe diferencia significativa entre rendimiento alto y bajo por genero, para ello hagamos un test binomial.
 
@@ -403,12 +427,11 @@ ggplot(train, aes(x = Academic_Level, fill = target)) +
   theme_minimal()
 ```
 
-
 Test Estadístico (Chi cuadrado)
+
 ```{r}
 chisq.test(table(train$Academic_Level, train$target))
 ```
-
 
 #### Comparación de Plataforma principal y Target
 
@@ -437,11 +460,12 @@ ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
     legend.position = "right"
   )
 ```
+
 Test Estadístico (Chi cuadrado)
+
 ```{r}
 chisq.test(table(train$Primary_Platform, train$target))
 ```
-
 
 #### Comparación entre Horas extra y el target.
 
@@ -455,10 +479,10 @@ ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
 ```
 
 Test Estadístico (Wilcox)
+
 ```{r}
 wilcox.test(Weekend_Extra_Hours ~ target, data = train)
 ```
-
 
 ### Preguntas interesantes y relaciones entre variables que no son el target.
 
