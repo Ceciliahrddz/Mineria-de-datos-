@@ -39,7 +39,27 @@ ul.task-list li input[type="checkbox"] {
 <link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Informe_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Informe_files/libs/bootstrap/bootstrap-917079515d91bccb85b543faf8aa8bb6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Informe_files/libs/bootstrap/bootstrap-62e2d20df198e8a01bb734742f2e28cf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Informe_files/libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+<script src="Informe_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="Informe_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+
+<script src="Informe_files/libs/datatables-binding-0.34.0/datatables.js"></script>
+
+<script src="Informe_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="Informe_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="Informe_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+
+<script src="Informe_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="Informe_files/libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="Informe_files/libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -73,10 +93,31 @@ window.Quarto = {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">0.1</span> Introducción</a></li>
+  <li><a href="#datos" id="toc-datos" class="nav-link" data-scroll-target="#datos"><span class="header-section-number">0.2</span> Datos</a></li>
+  <li><a href="#descripcion-de-las-variables" id="toc-descripcion-de-las-variables" class="nav-link" data-scroll-target="#descripcion-de-las-variables"><span class="header-section-number">0.3</span> Descripcion de las variables</a></li>
+  <li><a href="#estudio-univariante" id="toc-estudio-univariante" class="nav-link" data-scroll-target="#estudio-univariante"><span class="header-section-number">0.4</span> Estudio univariante</a></li>
+  <li><a href="#partición-de-los-datos" id="toc-partición-de-los-datos" class="nav-link" data-scroll-target="#partición-de-los-datos"><span class="header-section-number">0.5</span> Partición de los datos</a></li>
+  <li><a href="#análisis-exploratorio-de-datos" id="toc-análisis-exploratorio-de-datos" class="nav-link" data-scroll-target="#análisis-exploratorio-de-datos"><span class="header-section-number">0.6</span> Análisis exploratorio de datos</a>
+  <ul class="collapse">
+  <li><a href="#relaciones-entre-el-target-y-el-resto-de-variables." id="toc-relaciones-entre-el-target-y-el-resto-de-variables." class="nav-link" data-scroll-target="#relaciones-entre-el-target-y-el-resto-de-variables."><span class="header-section-number">0.6.1</span> Relaciones entre el target y el resto de variables.</a></li>
+  <li><a href="#preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target." id="toc-preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target." class="nav-link" data-scroll-target="#preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target."><span class="header-section-number">0.6.2</span> Preguntas interesantes y relaciones entre variables que no son el target.</a></li>
+  </ul></li>
+  <li><a href="#comparación-de-horas-de-sueño-y-género" id="toc-comparación-de-horas-de-sueño-y-género" class="nav-link" data-scroll-target="#comparación-de-horas-de-sueño-y-género"><span class="header-section-number">1</span> Comparación de Horas de sueño y Género</a></li>
+  <li><a href="#comparación-de-índice-de-salud-mental-y-horas-de-uso-diarias" id="toc-comparación-de-índice-de-salud-mental-y-horas-de-uso-diarias" class="nav-link" data-scroll-target="#comparación-de-índice-de-salud-mental-y-horas-de-uso-diarias"><span class="header-section-number">2</span> Comparación de Índice de salud mental y Horas de uso diarias</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -98,54 +139,24 @@ window.Quarto = {
 </header>
 
 
-<section id="introducción" class="level2">
-<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<section id="introducción" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">0.1</span> Introducción</h2>
 <p>Este trabajo aborda el análisis exploratorio de datos sobre el conjunto de datos `Social_media_impact_on_life.csv´. Cada observación representa a un estudiante y recopila información estructurada en cinco grandes bloques de variables: Identificación y demografía, hábitos tecnológicos, patrones de descanso, bienestar y salud mental, y rendimiento y resultado global.</p>
 <p>El objetivo de nuestro proyecto es analizar y predecir el <strong>rendimiento académico</strong> de los alumnos.</p>
 </section>
-<section id="datos" class="level2">
-<h2 class="anchored" data-anchor-id="datos">Datos</h2>
-<p>El conjunto de datos…</p>
+<section id="datos" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="datos"><span class="header-section-number">0.2</span> Datos</h2>
+<p>El conjunto de datos analizado cuenta con un total de 4500 observaciones y 16 variables, abarcando la información estructural necesaria para el estudio.</p>
+<p>A continuación, se presenta una tabla interactiva con una vista preliminar de los datos. Esta herramienta permite explorar las primeras filas de forma dinámica, facilitando la verificación inicial de los tipos de variables, la detección de posibles valores ausentes y la comprensión general de la estructura del dataset antes de proceder con los análisis estadísticos y los modelos.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4500   16</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   Student_ID Age Gender Academic_Level Primary_Platform Daily_Usage_Hours
-1 STU_2024000  19 Female  Undergraduate         Snapchat               7.5
-2 STU_2024001  19 Female  Undergraduate        Instagram               4.6
-3 STU_2024002  17 Female    High School           TikTok              10.9
-4 STU_2024003  16 Female    High School          YouTube               6.0
-5 STU_2024004  17   Male    High School         LinkedIn               3.3
-6 STU_2024005  16   Male    High School           TikTok               6.2
-  Weekend_Extra_Hours Device_Type Sleep_Duration_Hours Sleep_Quality_Score
-1                 1.5  Smartphone                  5.9                   2
-2                 1.3  Smartphone                  7.9                   3
-3                 1.7  Smartphone                  5.2                   1
-4                 2.3      Tablet                  7.6                   4
-5                 2.6  Smartphone                  7.6                   4
-6                 1.6  Smartphone                  5.9                   1
-  Late_Night_Usage Social_Comparison_Frequency Perceived_Stress_Score
-1               Sí                      Always                     20
-2               Sí                   Sometimes                     17
-3               Sí                  Frequently                     18
-4               Sí                   Sometimes                     15
-5               Sí                       Never                     16
-6               No                      Rarely                     10
-  Mental_Health_Index Academic_Performance_GPA Overall_Impact
-1                  73                     2.73        Neutral
-2                  90                     3.21     Beneficial
-3                  70                     3.00        Neutral
-4                  82                     3.42     Beneficial
-5                  84                     3.41     Beneficial
-6                  66                     3.21     Beneficial</code></pre>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-18d5940d6b3f03ea7611" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-18d5940d6b3f03ea7611">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
-<section id="descripcion-de-las-variables" class="level2">
-<h2 class="anchored" data-anchor-id="descripcion-de-las-variables">Descripcion de las variables</h2>
+<section id="descripcion-de-las-variables" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="descripcion-de-las-variables"><span class="header-section-number">0.3</span> Descripcion de las variables</h2>
 <p>Describir cada variable y que valores posibles toman</p>
 <ul>
 <li><strong>Student_ID</strong>: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio.</li>
@@ -165,207 +176,750 @@ window.Quarto = {
 <li><strong>Overall_Impact</strong>: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.</li>
 </ul>
 </section>
-<section id="estudio-univariante" class="level2">
-<h2 class="anchored" data-anchor-id="estudio-univariante">Estudio univariante</h2>
+<section id="estudio-univariante" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="estudio-univariante"><span class="header-section-number">0.4</span> Estudio univariante</h2>
 <p>En esta sección realizamos una inspección descriptiva individual de todas las variables de nuestro conjunto de datos. A través de las funciones dfSummary() y summary(), evaluamos las medidas de tendencia central (media y mediana), la dispersión y la distribución de frecuencias de factores demográficos, de descanso, psicológicos y de consumo digital.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Data Frame Summary  
-datos  
-Dimensions: 4500 x 16  
-Duplicates: 0  
+<div class="cell-output-display">
+<div class="container st-container">
 
--------------------------------------------------------------------------------------------------------
-No   Variable                      Stats / Values            Freqs (% of Valid)    Valid      Missing  
----- ----------------------------- ------------------------- --------------------- ---------- ---------
-1    Student_ID                    1. STU_2024000               1 ( 0.0%)          4500       0        
-     [character]                   2. STU_2024001               1 ( 0.0%)          (100.0%)   (0.0%)   
-                                   3. STU_2024002               1 ( 0.0%)                              
-                                   4. STU_2024003               1 ( 0.0%)                              
-                                   5. STU_2024004               1 ( 0.0%)                              
-                                   6. STU_2024005               1 ( 0.0%)                              
-                                   7. STU_2024006               1 ( 0.0%)                              
-                                   8. STU_2024007               1 ( 0.0%)                              
-                                   9. STU_2024008               1 ( 0.0%)                              
-                                   10. STU_2024009              1 ( 0.0%)                              
-                                   [ 4490 others ]           4490 (99.8%)                              
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline caption-top table-sm small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>No</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Variable</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Stats / Values</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Freqs (% of Valid)</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Graph</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Valid</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Missing</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Student_ID [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. STU_2024000</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. STU_2024001</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. STU_2024002</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. STU_2024003</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. STU_2024004</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. STU_2024005</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. STU_2024006</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">8. STU_2024007</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">9. STU_2024008</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">10. STU_2024009</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">[ 4490 others ]</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">4490</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">99.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAKIAAAEKBAMAAABj5JMfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCsm/vyxAAAAnklEQVR42u3VsQ2DUBQEQVpwCWd3AP33RuKMkBP6T8wWMOlum1rlU4tIJBKJxIvYA98thkgkEolEvy6LIRKJRCJxlNgDJ4khEolEInGU2AMniSESiUQi0V2XF0MkEolEol8vL4ZIJBKJRL8uiyESiUQicZTYAyeJIRKJRCJxlNgDJ4khEolEItFdlxe/vf7i72i1E4lEIvFhsX8F3e8EYwzOElxQWMEAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Age [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 18.7 (2)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">15 ≤ 19 ≤ 26</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 3 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">12 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCsm/vyxAAAApElEQVRo3u3ZQQ7AEBCFYVfQG5Qb1P3v1gYLUg1mZtHF/xYWI75IhNA6RyTxTY6Qc/rtjLCUAwYGZoaVHRpssJjbCwwMDAzMEquXKSOsjAcDW8F2LglTbGd+YGBgT0Jz+quxbiQYGBiYGlv72LeIlRIYGBgY2KA0O2+3sDiZHxiYHfb910GA1Y7/YoONKsfSezVssLomWqwotaTFulL/ElbGEUluIHZGBQx2aX8AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Gender [factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. Female</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. Male</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. Non-Binary</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. Prefer not to say</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">2234</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">49.6%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">2051</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">45.6%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">122</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">93</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFcAAABmBAMAAABMwBBXAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCsm/vyxAAAAZElEQVRYw+3UQQrAIAxEUY+gN6jJDer979aN4DIZsKXC/+u3EGFSyplZpmtiH4nAYLCCpQ22TPV1HD+4Lxz/BhgMFrG0wZ/cDfHI9Dz2AQaDN2Npg7H8BJsJ2G8wGLwZSxs8rQe+irM73gMangAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Academic_Level [ordered, factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. High School</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. Undergraduate</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. Postgraduate</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1477</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">32.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">2777</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">61.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">246</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">5.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOBAMAAADRBSWHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCsm/vyxAAAAV0lEQVRYw+3UuQ0AIAwEQUqADng6gP57Q0iERsiOeHbzSS44594trwpSfqrS5CoKhfpA2X4jqLpHZVVxs7wcCoU6Vdke4Pxns/9hUquxPAqF+lXZfuPFOgtfml2Hz5QfAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">Primary_Platform [factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. Instagram</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. LinkedIn</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. Reddit</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. Snapchat</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. TikTok</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. X (Twitter)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. YouTube</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1453</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">32.3%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">96</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">229</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">5.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">472</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">10.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1226</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">27.2%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">206</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">4.6%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">818</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">18.2%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAD0AAACsBAMAAAA6drk8AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCsm/vyxAAAAiklEQVRYw+3WUQqAIBBFUZfQ7KB0B+P+9xZCkJLjhKhT8O7v+VF4Us7Z54X2y0OsB4ePcG1/JLQNcu/bHhgOn+fa/ojmenprzfPHyHB4r2v7IqGV+6+dMbtfiuHwHtf2RUKr9593PO9XBIe/dW1fK/bd8vDx7yf83279/1O+vOr57xgOH+va/iw7Adzmz2N9h8ghAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">Daily_Usage_Hours [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 5.3 (2.6)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">0.9 ≤ 4.7 ≤ 14</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 3.2 (0.5)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">129 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCsm/vyxAAAAsElEQVRo3u3Yyw2AIBBFUVrQDtQOpP/e1FloNPwGJn7ifQsSNiePoJDgHKlJd864Zei0CWOTXwOmx/S7kMD09cDAwMDAbsfk5LfCDsceU11ROUxVDwwMDAwM7KOYXJ5W2DbMYGBgYA9iBYdaOebz9cDAXoilfwMllq73DezypNGGxZyfYtGPrQaL1gNLY6FdqMZC9YywXoq2Yftae5m2YXu9d2KyVivsGP6FjSZxpCYL7+UfjtP2qGkAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">Weekend_Extra_Hours [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 1.8 (0.7)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">0 ≤ 1.8 ≤ 4.5</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 1 (0.4)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">43 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAjElEQVRo3u3ZwQ2AIAxAUVbADcQNZP/dPNgmSiho4cb/FxITHpyEaAjkKdZL0h4/1caOfAcGBgYGtg62yUEyBxNEMT2lpmAynmBgYGBgYGBgYGBgD6xz6/6H5fYOC0yXnoIVs8DAwMDAwMAqWHp/yhvDjFmLY8ZfNx8mIxiYgZU3+SFMHxtvjbECeboAf4pG0terURcAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Device_Type [factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. Laptop/PC</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. Smartphone</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. Tablet</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">596</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">13.2%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">3775</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">83.9%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">129</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.9%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIoAAABOBAMAAAAN0JP1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAYklEQVRYw+3WsQ3AIAwFUVbICJgNwv67pQkUsZLi44LIdz2vsWRTCr1ls3oI3UrrIxQUFBSUbyVm7ypPMyi2lpu00omCgoLyCyVmY+50A3ZSxCv/UJr240BBQUFJqMTsXfJdCWfi0oUR9CsAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">Sleep_Duration_Hours [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 6.7 (1.2)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3 ≤ 6.8 ≤ 10.5</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 1.5 (0.2)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">73 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAuklEQVRo3u3YDQqEIBCGYa+QN6huUPe/WyobZWq2jrv9vR8UCc1DoGSNUqQkTSa6M2lzdx3FRhOwkzE7o10trDfHAAb2G8yt1VqYM8DAwOpje7vK19i483hgl8bcOqiF9Z4BBgYGBgb2JEzPW2YMS/Rf0thcHsPsCQwMDAxMgHl9KSnmlb8ci7QRyjE3uiumgx9pCRaUg4Ft2utCLKz6L+Z/KX+wRDsqi9mLAEtUgS2j5f29ngBxFCnJBDI8NITbmpexAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Sleep_Quality_Score [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 2.5 (1)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1 ≤ 3 ≤ 5</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 1 (0.4)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">934</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">20.8%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">2</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">1311</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">29.1%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">3</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">1543</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">34.3%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">4</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">621</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">13.8%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">5</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">91</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">2.0%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEAAAAB9BAMAAADgo3ieAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAbElEQVRYw+3TsQ3AIAxEUVbwCMAGsP9uUaIoEIRzDTYp7tevsXQO4R+lIXm6Qa6vCgGBMYCbFLVlIE3Tr+huISAwAXCT2/7i7OuK6xICAhMAN+n6F3EO2hUEBC4AblLUFv4FALkQELgCuMndHavTjwYiAsUwAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Late_Night_Usage [factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. Sí</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. No</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">2644</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">58.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1856</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">41.2%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3BAMAAADnFJkAAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAP0lEQVRIx2NgGH5AiQSgANWjbEw8GNUzqmdUz/DWQ04ZIkgCEKCzHgJewKoHf7gZjeoZ1TOqZwTpIacMGU4AAM9RXE6bK1iVAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Social_Comparison_Frequency [ordered, factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. Never</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. Rarely</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. Sometimes</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. Frequently</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. Always</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">260</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">5.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">766</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">17.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1594</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">35.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1248</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">27.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">632</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">14.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEIAAAB9BAMAAADkVqijAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAbUlEQVRYw+3TsQ2AMAxE0azgEUg2iPffDQpABOV0Ddgp7tevsXQuZZ3q0WbTTtHcXUIiV/CdGu5DUZ/BW666hESK4Ds13F//Mja5ZaxLSAQJvtPEf4G/f18hIREq+E7D/wWI9r5AQiJc8J2u0A5JZ5bLQm/ZUwAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Perceived_Stress_Score [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 13.5 (7.1)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">0 ≤ 13 ≤ 40</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 9 (0.5)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">41 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAjUlEQVRo3u3ZQQqAIBBAUa9gN0hvkPe/WxudhSLKOETK/6tIetQiTXKONPm6K+RuP18XSzkwMDAtVl7JYIHFbDxgYGBgp2EyW1pgcgIMDAwMDAwM7EBMPpwssNhcCwa2Pzaxu5jH0vgWwcDAwPbC+j+RFFg5AAP7AmuX+AVMRv6LyfNaYDJSbyqWcqTpBV2taFx9wQRzAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4454 (99.0%)</td>
+<td style="text-align: center;">46 (1.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Mental_Health_Index [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 79.9 (12.9)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">32 ≤ 82 ≤ 98</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 17 (0.2)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">67 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAp0lEQVRo3u3WzQ2AIAyGYVbQEXQD3X83FRNJCH8tTTD6fgcOHJ6Q0lCcI5pM0szLlWhTje1ntp9gUeH6sOh4YGBgI7H7XbTCggMGBgY2Ggu/FwMsHA9sHOav1ArziwyLR2YflnXAwN6HVZpfiJUdMDAwMDCwOtYwmNqxte6A/Q7zLWaFXc4O1oo9tbfAHgcMLNNieizh6LGE8zEsVy4pVnRUWHcc0eQAQfZjFwJrHIUAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Academic_Performance_GPA [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 3.4 (0.4)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1.9 ≤ 3.5 ≤ 4</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 0.5 (0.1)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle;">194 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAmUlEQVRo3u3ZSwqAIBSFYbeQO0h3kPvfW6AOrtiD7nUQ+p+BSHA+HIhkOUc02T7Hh5xdPtNjKQcM7BErey6MwWKeHwqsLmMMVptg82FlmwzCohjBwMDAwMDA1sOaFwsr1jTBwMDAwH6LeXn6m7GLJhgYGNjCmJdfeM3YbRNsWUz+QzBjsgP2gvn+9mzAUteZBQsyQzF1HNHkBAk7a1C9O+egAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4415 (98.1%)</td>
+<td style="text-align: center;">85 (1.9%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">Overall_Impact [ordered, factor]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. Negative</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. Neutral</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. Beneficial</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
+<tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">165</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">654</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">14.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">3681</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">81.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody>
+</table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOBAMAAAD4LhhFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChAKHCy4mmkSAAAAX0lEQVRYw+3UsQ3AIAxEUUYgGyTHBrD/bmkioggajCvn/96vsXQp0SxJh7n8IKVVEBAQEJARcdlYuxAX0dtlRkrrgYCAgARBXOZx+fAHiHY6xxevBwICAhIXcdlY+nYD0vrkvdHuVNAAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">4500 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+</tbody>
+</table>
 
-2    Age                           Mean (sd) : 18.7 (2)      12 distinct values    4500       0        
-     [integer]                     min &lt; med &lt; max:                                (100.0%)   (0.0%)   
-                                   15 &lt; 19 &lt; 26                                                        
-                                   IQR (CV) : 3 (0.1)                                                  
-
-3    Gender                        1. Female                 2234 (49.6%)          4500       0        
-     [factor]                      2. Male                   2051 (45.6%)          (100.0%)   (0.0%)   
-                                   3. Non-Binary              122 ( 2.7%)                              
-                                   4. Prefer not to say        93 ( 2.1%)                              
-
-4    Academic_Level                1. High School            1477 (32.8%)          4500       0        
-     [ordered,                     2. Undergraduate          2777 (61.7%)          (100.0%)   (0.0%)   
-     factor]                       3. Postgraduate            246 ( 5.5%)                              
-
-5    Primary_Platform              1. Instagram              1453 (32.3%)          4500       0        
-     [factor]                      2. LinkedIn                 96 ( 2.1%)          (100.0%)   (0.0%)   
-                                   3. Reddit                  229 ( 5.1%)                              
-                                   4. Snapchat                472 (10.5%)                              
-                                   5. TikTok                 1226 (27.2%)                              
-                                   6. X (Twitter)             206 ( 4.6%)                              
-                                   7. YouTube                 818 (18.2%)                              
-
-6    Daily_Usage_Hours             Mean (sd) : 5.3 (2.6)     129 distinct values   4500       0        
-     [numeric]                     min &lt; med &lt; max:                                (100.0%)   (0.0%)   
-                                   0.9 &lt; 4.7 &lt; 14                                                      
-                                   IQR (CV) : 3.2 (0.5)                                                
-
-7    Weekend_Extra_Hours           Mean (sd) : 1.8 (0.7)     43 distinct values    4500       0        
-     [numeric]                     min &lt; med &lt; max:                                (100.0%)   (0.0%)   
-                                   0 &lt; 1.8 &lt; 4.5                                                       
-                                   IQR (CV) : 1 (0.4)                                                  
-
-8    Device_Type                   1. Laptop/PC               596 (13.2%)          4500       0        
-     [factor]                      2. Smartphone             3775 (83.9%)          (100.0%)   (0.0%)   
-                                   3. Tablet                  129 ( 2.9%)                              
-
-9    Sleep_Duration_Hours          Mean (sd) : 6.7 (1.2)     73 distinct values    4500       0        
-     [numeric]                     min &lt; med &lt; max:                                (100.0%)   (0.0%)   
-                                   3 &lt; 6.8 &lt; 10.5                                                      
-                                   IQR (CV) : 1.5 (0.2)                                                
-
-10   Sleep_Quality_Score           Mean (sd) : 2.5 (1)       1 :  934 (20.8%)      4500       0        
-     [integer]                     min &lt; med &lt; max:          2 : 1311 (29.1%)      (100.0%)   (0.0%)   
-                                   1 &lt; 3 &lt; 5                 3 : 1543 (34.3%)                          
-                                   IQR (CV) : 1 (0.4)        4 :  621 (13.8%)                          
-                                                             5 :   91 ( 2.0%)                          
-
-11   Late_Night_Usage              1. Sí                     2644 (58.8%)          4500       0        
-     [factor]                      2. No                     1856 (41.2%)          (100.0%)   (0.0%)   
-
-12   Social_Comparison_Frequency   1. Never                   260 ( 5.8%)          4500       0        
-     [ordered,                     2. Rarely                  766 (17.0%)          (100.0%)   (0.0%)   
-     factor]                       3. Sometimes              1594 (35.4%)                              
-                                   4. Frequently             1248 (27.7%)                              
-                                   5. Always                  632 (14.0%)                              
-
-13   Perceived_Stress_Score        Mean (sd) : 13.5 (7.1)    41 distinct values    4454       46       
-     [numeric]                     min &lt; med &lt; max:                                (99.0%)    (1.0%)   
-                                   0 &lt; 13 &lt; 40                                                         
-                                   IQR (CV) : 9 (0.5)                                                  
-
-14   Mental_Health_Index           Mean (sd) : 79.9 (12.9)   67 distinct values    4500       0        
-     [integer]                     min &lt; med &lt; max:                                (100.0%)   (0.0%)   
-                                   32 &lt; 82 &lt; 98                                                        
-                                   IQR (CV) : 17 (0.2)                                                 
-
-15   Academic_Performance_GPA      Mean (sd) : 3.4 (0.4)     194 distinct values   4415       85       
-     [numeric]                     min &lt; med &lt; max:                                (98.1%)    (1.9%)   
-                                   1.9 &lt; 3.5 &lt; 4                                                       
-                                   IQR (CV) : 0.5 (0.1)                                                
-
-16   Overall_Impact                1. Negative                165 ( 3.7%)          4500       0        
-     [ordered,                     2. Neutral                 654 (14.5%)          (100.0%)   (0.0%)   
-     factor]                       3. Beneficial             3681 (81.8%)                              
--------------------------------------------------------------------------------------------------------</code></pre>
+<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.5 (<a href="https://www.r-project.org/">R</a> version 4.5.2)<br>2026-10-16</p>
 </div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  Student_ID             Age                     Gender    
- Length:4500        Min.   :15.0   Female           :2234  
- Class :character   1st Qu.:17.0   Male             :2051  
- Mode  :character   Median :19.0   Non-Binary       : 122  
-                    Mean   :18.7   Prefer not to say:  93  
-                    3rd Qu.:20.0                           
-                    Max.   :26.0                           
-                                                           
-       Academic_Level    Primary_Platform Daily_Usage_Hours Weekend_Extra_Hours
- High School  :1477   Instagram  :1453    Min.   : 0.900    Min.   :0.000      
- Undergraduate:2777   LinkedIn   :  96    1st Qu.: 3.400    1st Qu.:1.300      
- Postgraduate : 246   Reddit     : 229    Median : 4.700    Median :1.800      
-                      Snapchat   : 472    Mean   : 5.296    Mean   :1.797      
-                      TikTok     :1226    3rd Qu.: 6.600    3rd Qu.:2.300      
-                      X (Twitter): 206    Max.   :14.000    Max.   :4.500      
-                      YouTube    : 818                                         
-     Device_Type   Sleep_Duration_Hours Sleep_Quality_Score Late_Night_Usage
- Laptop/PC : 596   Min.   : 3.000       Min.   :1.000       Sí:2644         
- Smartphone:3775   1st Qu.: 6.000       1st Qu.:2.000       No:1856         
- Tablet    : 129   Median : 6.800       Median :3.000                       
-                   Mean   : 6.701       Mean   :2.472                       
-                   3rd Qu.: 7.500       3rd Qu.:3.000                       
-                   Max.   :10.500       Max.   :5.000                       
-                                                                            
- Social_Comparison_Frequency Perceived_Stress_Score Mental_Health_Index
- Never     : 260             Min.   : 0.00          Min.   :32.00      
- Rarely    : 766             1st Qu.: 9.00          1st Qu.:72.00      
- Sometimes :1594             Median :13.00          Median :82.00      
- Frequently:1248             Mean   :13.51          Mean   :79.87      
- Always    : 632             3rd Qu.:18.00          3rd Qu.:89.00      
-                             Max.   :40.00          Max.   :98.00      
-                             NA's   :46                                
- Academic_Performance_GPA    Overall_Impact
- Min.   :1.900            Negative  : 165  
- 1st Qu.:3.200            Neutral   : 654  
- Median :3.460            Beneficial:3681  
- Mean   :3.429                             
- 3rd Qu.:3.720                             
- Max.   :4.000                             
- NA's   :85                                </code></pre>
 </div>
 </div>
 <p>En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar.</p>
 </section>
-<section id="partición-de-los-datos" class="level2">
-<h2 class="anchored" data-anchor-id="partición-de-los-datos">Partición de los datos</h2>
+<section id="partición-de-los-datos" class="level2" data-number="0.5">
+<h2 data-number="0.5" class="anchored" data-anchor-id="partición-de-los-datos"><span class="header-section-number">0.5</span> Partición de los datos</h2>
 <p>Dada la cantidad de datos decidimos una partición train(0.65) -test (0.2) -validación (0.15).</p>
 <p>A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el análisis exploratorio de datos. Usaremos test para ir evaluando y estudiando la capacidad de generalización de los modelos que entrenemos en train. Por último, dejaremos la partición de validación para el final del todo del proyecto: una vez tengamos un modelo final seleccionado estudiaremos su rendimiento en esta partición de validación. Esto nos permitirá simular un caso real en el que podamos estudiar cómo funciona nuestro modelo final ante datos nunca vistos.</p>
 </section>
-<section id="análisis-exploratorio-de-datos" class="level2">
-<h2 class="anchored" data-anchor-id="análisis-exploratorio-de-datos">Análisis exploratorio de datos</h2>
+<section id="análisis-exploratorio-de-datos" class="level2" data-number="0.6">
+<h2 data-number="0.6" class="anchored" data-anchor-id="análisis-exploratorio-de-datos"><span class="header-section-number">0.6</span> Análisis exploratorio de datos</h2>
 <p>Realizamos una exploración exclusivamente sobre el conjunto de entrenamientos (train) para evitar la fuga de información hacia los conjuntos de evaluación (test y validation).</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>  Student_ID             Age                      Gender    
- Length:2927        Min.   :15.00   Female           :1461  
- Class :character   1st Qu.:17.00   Male             :1328  
- Mode  :character   Median :19.00   Non-Binary       :  83  
-                    Mean   :18.72   Prefer not to say:  55  
-                    3rd Qu.:20.00                           
-                    Max.   :26.00                           
-                                                            
-       Academic_Level    Primary_Platform Daily_Usage_Hours Weekend_Extra_Hours
- High School  : 945   Instagram  :933     Min.   : 0.900    Min.   :0.0        
- Undergraduate:1811   LinkedIn   : 62     1st Qu.: 3.400    1st Qu.:1.3        
- Postgraduate : 171   Reddit     :137     Median : 4.700    Median :1.8        
-                      Snapchat   :321     Mean   : 5.289    Mean   :1.8        
-                      TikTok     :806     3rd Qu.: 6.600    3rd Qu.:2.3        
-                      X (Twitter):143     Max.   :14.000    Max.   :4.5        
-                      YouTube    :525                                          
-     Device_Type   Sleep_Duration_Hours Sleep_Quality_Score Late_Night_Usage
- Laptop/PC : 381   Min.   : 3.0         Min.   :1.00        Sí:1717         
- Smartphone:2460   1st Qu.: 6.0         1st Qu.:2.00        No:1210         
- Tablet    :  86   Median : 6.8         Median :3.00                        
-                   Mean   : 6.7         Mean   :2.48                        
-                   3rd Qu.: 7.5         3rd Qu.:3.00                        
-                   Max.   :10.5         Max.   :5.00                        
-                                                                            
- Social_Comparison_Frequency Perceived_Stress_Score Mental_Health_Index
- Never     : 155             Min.   : 0.00          Min.   :32.0       
- Rarely    : 492             1st Qu.: 9.00          1st Qu.:72.0       
- Sometimes :1038             Median :13.00          Median :82.0       
- Frequently: 823             Mean   :13.56          Mean   :79.9       
- Always    : 419             3rd Qu.:18.00          3rd Qu.:89.0       
-                             Max.   :40.00          Max.   :98.0       
-                             NA's   :33                                
- Academic_Performance_GPA    Overall_Impact
- Min.   :1.900            Negative  : 108  
- 1st Qu.:3.200            Neutral   : 426  
- Median :3.460            Beneficial:2393  
- Mean   :3.427                             
- 3rd Qu.:3.720                             
- Max.   :4.000                             
- NA's   :46                                </code></pre>
-</div>
-</div>
-<p>Dado que la proporción de datos ausentes en train es mínimo, decidimos no trabajar con dichas observaciones.</p>
+<p>Como sabemos de la exploración inicial de nuestro datos, tenemos datos faltantes en dos columnas, la primera <strong>Perceived_Stress_Score</strong> tiene una cantidad de NA’s en porcentaje de <strong>1%</strong>, y la variable <strong>Academic_Performance_GPA</strong> <strong>2%</strong>. Dado que la proporción de datos ausentes en train es mínimo, decidimos no trabajar con dichas observaciones.</p>
 <p>Como no tenemos un target binario y tenemos dudas entre 2 posibles candidatos para variable objetivo, vamos a estudiar el comportamiento y relación de las variables Academic_Performance_GPA y Overall_Impact.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -388,6 +942,12 @@ No   Variable                      Stats / Values            Freqs (% of Valid) 
 </div>
 </div>
 <p>Binarizamos la variable Academic_Performance_GPA mediante un punto de corta en 3.5. para diferenciaar a los alumnos de rendimiento excelente del resto de calificaciones.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rendimiento_bajo_medio       Rendimiento_alto 
+                  1552                   1296 </code></pre>
+</div>
+</div>
 <p>Que preguntas tengo sobre mis datos, objetivos que tengo.</p>
 <ul>
 <li>¿Cuál es la proporción de estudiantes con muy buenas notas?</li>
@@ -398,10 +958,10 @@ No   Variable                      Stats / Values            Freqs (% of Valid) 
 <li></li>
 </ul>
 <p>Nos interesa estudiar la relación entre todas las variables y el target.</p>
-<section id="relaciones-entre-el-target-y-el-resto-de-variables." class="level3">
-<h3 class="anchored" data-anchor-id="relaciones-entre-el-target-y-el-resto-de-variables.">Relaciones entre el target y el resto de variables.</h3>
-<section id="comparación-de-age-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-age-y-target">Comparación de Age y Target</h4>
+<section id="relaciones-entre-el-target-y-el-resto-de-variables." class="level3" data-number="0.6.1">
+<h3 data-number="0.6.1" class="anchored" data-anchor-id="relaciones-entre-el-target-y-el-resto-de-variables."><span class="header-section-number">0.6.1</span> Relaciones entre el target y el resto de variables.</h3>
+<section id="comparación-de-age-y-target" class="level4" data-number="0.6.1.1">
+<h4 data-number="0.6.1.1" class="anchored" data-anchor-id="comparación-de-age-y-target"><span class="header-section-number">0.6.1.1</span> Comparación de Age y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -426,8 +986,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <p>Observamos que obtenemos los valores <span class="math inline">\(988026\)</span> para el estadístico W y para el p-valor <span class="math inline">\(0.4122\)</span>. Como el p-valor es notablemente superior al nivel de significación habitual (<span class="math inline">\(\alpha = 0.05\)</span>), no podemos rechazar la hipótesis nula <span class="math inline">\(H_0\)</span>, lo que indica que no existen diferencias estadísticamente significativas en la edad entre los alumnos de alto rendimiento y los de rendimiento bajo o medio. Por lo tanto, la edad no presenta un comportamiento diferencial respecto al rendimient académico, por lo que no muestra capacidad explicativa sobre el target.</p>
 </section>
-<section id="comparación-de-daily_usage_hours-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-daily_usage_hours-y-target">Comparación de Daily_Usage_Hours y Target</h4>
+<section id="comparación-de-daily_usage_hours-y-target" class="level4" data-number="0.6.1.2">
+<h4 data-number="0.6.1.2" class="anchored" data-anchor-id="comparación-de-daily_usage_hours-y-target"><span class="header-section-number">0.6.1.2</span> Comparación de Daily_Usage_Hours y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -449,8 +1009,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-device_type-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-device_type-y-target">Comparación de Device_Type y Target</h4>
+<section id="comparación-de-device_type-y-target" class="level4" data-number="0.6.1.3">
+<h4 data-number="0.6.1.3" class="anchored" data-anchor-id="comparación-de-device_type-y-target"><span class="header-section-number">0.6.1.3</span> Comparación de Device_Type y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -471,8 +1031,8 @@ X-squared = 0.51705, df = 2, p-value = 0.7722</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-sleep_quality_score-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-sleep_quality_score-y-target">Comparación de Sleep_Quality_Score y Target</h4>
+<section id="comparación-de-sleep_quality_score-y-target" class="level4" data-number="0.6.1.4">
+<h4 data-number="0.6.1.4" class="anchored" data-anchor-id="comparación-de-sleep_quality_score-y-target"><span class="header-section-number">0.6.1.4</span> Comparación de Sleep_Quality_Score y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -494,8 +1054,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-late_night_usage-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-late_night_usage-y-target">Comparación de Late_Night_Usage y Target</h4>
+<section id="comparación-de-late_night_usage-y-target" class="level4" data-number="0.6.1.5">
+<h4 data-number="0.6.1.5" class="anchored" data-anchor-id="comparación-de-late_night_usage-y-target"><span class="header-section-number">0.6.1.5</span> Comparación de Late_Night_Usage y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -516,8 +1076,8 @@ X-squared = 139.35, df = 1, p-value &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-social_comparison_frequency-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-social_comparison_frequency-y-target">Comparación de Social_Comparison_Frequency y Target</h4>
+<section id="comparación-de-social_comparison_frequency-y-target" class="level4" data-number="0.6.1.6">
+<h4 data-number="0.6.1.6" class="anchored" data-anchor-id="comparación-de-social_comparison_frequency-y-target"><span class="header-section-number">0.6.1.6</span> Comparación de Social_Comparison_Frequency y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -538,8 +1098,8 @@ X-squared = 1.4687, df = 4, p-value = 0.8322</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-perceived_stress_score-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-perceived_stress_score-y-target">Comparación de Perceived_Stress_Score y Target</h4>
+<section id="comparación-de-perceived_stress_score-y-target" class="level4" data-number="0.6.1.7">
+<h4 data-number="0.6.1.7" class="anchored" data-anchor-id="comparación-de-perceived_stress_score-y-target"><span class="header-section-number">0.6.1.7</span> Comparación de Perceived_Stress_Score y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -556,13 +1116,13 @@ X-squared = 1.4687, df = 4, p-value = 0.8322</code></pre>
     Wilcoxon rank sum test with continuity correction
 
 data:  Perceived_Stress_Score by target
-W = 1553782, p-value &lt; 2.2e-16
+W = 1553783, p-value &lt; 2.2e-16
 alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-mental_health_index-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-mental_health_index-y-target">Comparación de Mental_Health_Index y Target</h4>
+<section id="comparación-de-mental_health_index-y-target" class="level4" data-number="0.6.1.8">
+<h4 data-number="0.6.1.8" class="anchored" data-anchor-id="comparación-de-mental_health_index-y-target"><span class="header-section-number">0.6.1.8</span> Comparación de Mental_Health_Index y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -584,8 +1144,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-horas-de-sueño-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-horas-de-sueño-y-target">Comparación de Horas de Sueño y Target</h4>
+<section id="comparación-de-horas-de-sueño-y-target" class="level4" data-number="0.6.1.9">
+<h4 data-number="0.6.1.9" class="anchored" data-anchor-id="comparación-de-horas-de-sueño-y-target"><span class="header-section-number">0.6.1.9</span> Comparación de Horas de Sueño y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -607,8 +1167,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-género-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-género-y-target">Comparación de Género y Target</h4>
+<section id="comparación-de-género-y-target" class="level4" data-number="0.6.1.10">
+<h4 data-number="0.6.1.10" class="anchored" data-anchor-id="comparación-de-género-y-target"><span class="header-section-number">0.6.1.10</span> Comparación de Género y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -633,18 +1193,18 @@ X-squared = 0.46186, df = 3, p-value = 0.9272</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 6
 # Rowwise: 
-  Gender            n_bajo_medio n_alto total  p_value es_significativo
-  &lt;fct&gt;                    &lt;int&gt;  &lt;int&gt; &lt;int&gt;    &lt;dbl&gt; &lt;lgl&gt;           
-1 Female                     782    637  1419 0.000130 TRUE            
-2 Male                       697    596  1293 0.00540  TRUE            
-3 Non-Binary                  43     38    81 0.657    FALSE           
-4 Prefer not to say           30     25    55 0.590    FALSE           </code></pre>
+  Gender            n_bajo_medio n_alto total p_value es_significativo
+  &lt;fct&gt;                    &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;lgl&gt;           
+1 Female                     782    637  1419   0.651 FALSE           
+2 Male                       697    596  1293   0.675 FALSE           
+3 Non-Binary                  43     38    81   0.824 FALSE           
+4 Prefer not to say           30     25    55   1     FALSE           </code></pre>
 </div>
 </div>
-<p>Los resultados nos indican que la diferencia entre Female y Male, sí es significativa, mientras que la diferencia en Non-Binary y Prefered not to Say no lo es.</p>
+<p>Los resultados nos indican que la diferencia entre todas las categorías no es relevante para nuestro estudio.</p>
 </section>
-<section id="comparación-de-nivel-académico-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-nivel-académico-y-target">Comparación de Nivel Académico y Target</h4>
+<section id="comparación-de-nivel-académico-y-target" class="level4" data-number="0.6.1.11">
+<h4 data-number="0.6.1.11" class="anchored" data-anchor-id="comparación-de-nivel-académico-y-target"><span class="header-section-number">0.6.1.11</span> Comparación de Nivel Académico y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -665,8 +1225,8 @@ X-squared = 0.88828, df = 2, p-value = 0.6414</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-plataforma-principal-y-target" class="level4">
-<h4 class="anchored" data-anchor-id="comparación-de-plataforma-principal-y-target">Comparación de Plataforma principal y Target</h4>
+<section id="comparación-de-plataforma-principal-y-target" class="level4" data-number="0.6.1.12">
+<h4 data-number="0.6.1.12" class="anchored" data-anchor-id="comparación-de-plataforma-principal-y-target"><span class="header-section-number">0.6.1.12</span> Comparación de Plataforma principal y Target</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -687,8 +1247,8 @@ X-squared = 3.0364, df = 6, p-value = 0.8043</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-entre-horas-extra-y-el-target." class="level4">
-<h4 class="anchored" data-anchor-id="comparación-entre-horas-extra-y-el-target.">Comparación entre Horas extra y el target.</h4>
+<section id="comparación-entre-horas-extra-y-el-target." class="level4" data-number="0.6.1.13">
+<h4 data-number="0.6.1.13" class="anchored" data-anchor-id="comparación-entre-horas-extra-y-el-target."><span class="header-section-number">0.6.1.13</span> Comparación entre Horas extra y el target.</h4>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -711,8 +1271,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </section>
 </section>
-<section id="preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target." class="level3">
-<h3 class="anchored" data-anchor-id="preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target.">Preguntas interesantes y relaciones entre variables que no son el target.</h3>
+<section id="preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target." class="level3" data-number="0.6.2">
+<h3 data-number="0.6.2" class="anchored" data-anchor-id="preguntas-interesantes-y-relaciones-entre-variables-que-no-son-el-target."><span class="header-section-number">0.6.2</span> Preguntas interesantes y relaciones entre variables que no son el target.</h3>
 <p>##¿Existe diferencia entre la longitud del sueño y la edad?</p>
 <p>Vamos a estudiar la longitud del sueño dependiendo de la edad</p>
 <div class="cell">
@@ -726,8 +1286,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </section>
 </section>
-<section id="comparación-de-horas-de-sueño-y-género" class="level1">
-<h1>Comparación de Horas de sueño y Género</h1>
+<section id="comparación-de-horas-de-sueño-y-género" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Comparación de Horas de sueño y Género</h1>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -738,8 +1298,8 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="comparación-de-índice-de-salud-mental-y-horas-de-uso-diarias" class="level1">
-<h1>Comparación de Índice de salud mental y Horas de uso diarias</h1>
+<section id="comparación-de-índice-de-salud-mental-y-horas-de-uso-diarias" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Comparación de Índice de salud mental y Horas de uso diarias</h1>
 <div class="cell">
 <div class="cell-output-display">
 <div>

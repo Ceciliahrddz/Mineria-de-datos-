@@ -1,7 +1,12 @@
 ---
 title: "Informe"
-format: html
-editor: visual
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    number-sections: true
 execute:
   echo: false
   warning: false
@@ -13,6 +18,9 @@ library(summarytools)
 library(ggplot2)
 library(caret)
 library(dplyr)
+library(DT)
+library(knitr)
+library(skimr)
 #load("~/Mineria-de-datos-/datos.Rdata")
 load("datos.Rdata") # investigar más
 ```
@@ -25,14 +33,20 @@ El objetivo de nuestro proyecto es analizar y predecir el **rendimiento académi
 
 ## Datos
 
-El conjunto de datos...
 
 ```{r}
-dim(datos)
+n_filas <- nrow(datos)
+n_columnas <- ncol(datos)
 ```
+El conjunto de datos analizado cuenta con un total de `r n_filas` observaciones y `r n_columnas` variables, abarcando la información estructural necesaria para el estudio.
 
+A continuación, se presenta una tabla interactiva con una vista preliminar de los datos. Esta herramienta permite explorar las primeras filas de forma dinámica, facilitando la verificación inicial de los tipos de variables, la detección de posibles valores ausentes y la comprensión general de la estructura del dataset antes de proceder con los análisis estadísticos y los modelos.
 ```{r}
-head(datos)
+datatable(
+  head(datos, 10), 
+  options = list(scrollX = TRUE), 
+  caption = "Vista interactiva de los datos"
+)
 ```
 
 ## Descripcion de las variables
@@ -60,7 +74,14 @@ Describir cada variable y que valores posibles toman
 En esta sección realizamos una inspección descriptiva individual de todas las variables de nuestro conjunto de datos. A través de las funciones dfSummary() y summary(), evaluamos las medidas de tendencia central (media y mediana), la dispersión y la distribución de frecuencias de factores demográficos, de descanso, psicológicos y de consumo digital.
 
 ```{r}
-(dfSummary(datos, graph.col = FALSE))
+#(dfSummary(datos, graph.col = FALSE))
+#| results: asis
+print(
+  dfSummary(datos, graph.col = TRUE), # Activamos la columna de gráficos
+  method = "render",
+  headings = FALSE,      # Oculta cabeceras repetitivas
+  bootstrap.css = FALSE  # Evita conflictos con el diseño de Quarto
+)
 ```
 
 ```{r}
@@ -68,7 +89,8 @@ En esta sección realizamos una inspección descriptiva individual de todas las 
 ```
 
 ```{r}
-summary(datos)
+#summary(datos)
+#skim(datos)
 ```
 
 En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar.
@@ -95,9 +117,14 @@ A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el 
 Realizamos una exploración exclusivamente sobre el conjunto de entrenamientos (train) para evitar la fuga de información hacia los conjuntos de evaluación (test y validation).
 
 ```{r}
-summary(train)
-```
+#summary(train)
+NAs_PERSTR = round(
+    mean(is.na(train$Perceived_Stress_Score)) * 100)
+NAs_TARGET = round(
+    mean(is.na(train$Academic_Performance_GPA)) * 100)
 
+```
+Como sabemos de la exploración inicial de nuestro datos, tenemos datos faltantes en dos columnas, la primera **Perceived_Stress_Score** tiene una cantidad de NA's en porcentaje de **`r NAs_PERSTR`%**, y la variable **Academic_Performance_GPA** **`r NAs_TARGET`%**.
 Dado que la proporción de datos ausentes en train es mínimo, decidimos no trabajar con dichas observaciones.
 
 ```{r}
@@ -122,7 +149,16 @@ Binarizamos la variable Academic_Performance_GPA mediante un punto de corta en 3
 
 ```{r}
 train$target <- cut(train$Academic_Performance_GPA, breaks=c(-Inf,3.5,Inf),labels = c("Rendimiento_bajo_medio", "Rendimiento_alto") )
+summary(train$target)
+
+# 1. Calcular las proporciones (en formato de 0 a 1)
+proporciones <- prop.table(table(train$target))
+
+# 2. Guardar la probabilidad de cada clase en una variable individual
+prob_bajo_medio <- proporciones["Rendimiento_bajo_medio"]
+prob_alto <- proporciones["Rendimiento_alto"]
 # Hay que quitar la variable Academic_Performance_GPA
+train <- train %>% select(-Academic_Performance_GPA)
 ```
 
 Que preguntas tengo sobre mis datos, objetivos que tengo.
@@ -400,14 +436,14 @@ resultados_binomiales <- train %>%
   ) %>%
   rowwise() %>%
   mutate(
-    p_value = binom.test(n_alto, total, p = 0.5)$p.value,
+    p_value = binom.test(n_alto, total, p = prob_alto)$p.value,
     es_significativo = p_value < 0.05
   )
 
 print(resultados_binomiales)
 ```
 
-Los resultados nos indican que la diferencia entre Female y Male, sí es significativa, mientras que la diferencia en Non-Binary y Prefered not to Say no lo es.
+Los resultados nos indican que la diferencia entre todas las categorías no es relevante para nuestro estudio.
 
 #### Comparación de Nivel Académico y Target
 
@@ -515,3 +551,6 @@ ggplot(train, aes(x = Gender, y = Sleep_Duration_Hours)) +
 ```{r}
 plot(train$Mental_Health_Index, train$Daily_Usage_Hours, col=train$target)
 ```
+
+
+
