@@ -21,8 +21,11 @@ library(dplyr)
 library(DT)
 library(knitr)
 library(skimr)
+library(scales)
+library(patchwork) # Para combinar gráficos lado a lado
+library(corrplot)
 #load("~/Mineria-de-datos-/datos.Rdata")
-load("datos.Rdata") # investigar más
+load("datos.Rdata")
 ```
 
 # Introducción
@@ -167,13 +170,11 @@ ggplot(train, aes(x = Overall_Impact, y = Academic_Performance_GPA, fill = Overa
   )
 ```
 
-Ya hemos solventado la duda que teníamos sobre si `Overall_Impact` podría ser una categorización de `Academic_Performance_GPA` . El boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral.
+Como podemos observar, ambas colas se solapan, por tanto, una no es una categorización de la otra. Ya hemos solventado la duda que teníamos sobre si `Overall_Impact` podría ser una categorización de `Academic_Performance_GPA` . Aunque no sea una cateogorización una de otra, el boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral. Antes de deducir si existe diferencia significativa entre ambas variables hagamos lo siguiente:
 
-Así, decidimos que nuestro target será `Academic_Performance_GPA`. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.
+Decidimos que nuestro target será `Academic_Performance_GPA`. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.
 
 ```{r}
-library(ggplot2)
-
 ggplot(train, aes(x = Academic_Performance_GPA)) +
   geom_histogram(
     binwidth = 0.2,
@@ -206,9 +207,6 @@ ggplot(train, aes(x = Academic_Performance_GPA)) +
 Binarizamos la variable `Academic_Performance_GPA` mediante un punto de corte en 3.5. para diferenciar a los alumnos de rendimiento excelente del resto de calificaciones.
 
 ```{r}
-library(knitr)
-library(dplyr)
-
 # 1. Binarizar el target (debe ejecutarse MIENTRAS exista Academic_Performance_GPA)
 train$target <- cut(
   train$Academic_Performance_GPA, 
@@ -228,6 +226,11 @@ table(train$target) %>%
     align = c("l", "c", "c")
   )
 
+
+```
+Una vez binarizada debemos conocer la proporción de datos que se quedan por debajo del corte y por arriba, en porcentaje:
+
+```{r}
 # 3. Calcular y guardar proporciones
 proporciones <- prop.table(table(train$target))
 prob_bajo_medio <- proporciones["Rendimiento_bajo_medio"]
@@ -237,18 +240,15 @@ prob_alto <- proporciones["Rendimiento_alto"]
 train <- train %>% select(-Academic_Performance_GPA)
 ```
 
-Que preguntas tengo sobre mis datos, objetivos que tengo.
+Por tanto, obtenemos `r prob_bajo_medio` para **Rendimiento_bajo_medio** y `r prob_alto` para **Rendimiento_bajo_medio**. Valores que tendremos en cuenta para el análisis de estadístico de datos.
 
-- ¿Cuál es la proporción de estudiantes con muy buenas notas?
-- ¿Existe diferencia entre la calidad de sueño y el género?
-- ¿Existe diferencia entre la calidad de sueño en función de las notas (target)?
-- ¿Cómo se relaciona la edad con el número de horas de consumo RRSS?
-- Relación entre horas de uso y mental health
-- 
 
-Nos interesa estudiar la relación entre todas las variables y el target.
+En el siguiente apartado, estudiaremos la relación entre todas las variables y nuestro objetivo en este informe. Recapitulando, ya tenemos una descripción de todas las variables y nuestro target bien definido en una variable categórica que distingue entre las notas de los alumnos.
+
 
 # Relaciones entre el target y el resto de variables.
+
+En este capítulo dedicaremos una subsección a la comparación de cada variables con el target; a la vez aplicaremos los test estadísticos correspondientes para deducir si esa variables marca una diferencia estadística significativa en nuestro target.
 
 ## Comparación de Age y Target
 
@@ -630,6 +630,46 @@ Para evaluar cuantitativamente si la dedicación extra durante el fin de semana 
 wilcox.test(Weekend_Extra_Hours ~ target, data = train)
 ```
 
+## Comparación de Overall_Impact y Target
+
+Estas variables eran con las que teníamos dudas a elegir target. Por tanto, ya conocemos que deben estar correlacionadas. Ahora que, hemos binarizado el target, veamos como se distribuyen en un gráfico:
+
+```{r}
+ggplot(train, aes(x = Overall_Impact, fill = target)) +
+  geom_bar(
+    aes(y = after_stat(prop), group = target), 
+    position = position_dodge(width = 0.8), 
+    width = 0.7,
+    color = "darkblue"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_fill_manual(
+    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    labels = c("Bajo / Medio", "Alto")
+  ) +
+  scale_x_discrete(
+    limits = c("Negative", "Neutral", "Beneficial"),
+    labels = c("Negativo", "Neutro", "Beneficioso")
+  ) +
+  labs(
+    title = "Rendimiento académico según el impacto percibido",
+    x = "Impacto percibido de las redes sociales",
+    y = "Porcentaje dentro de cada categoría",
+    fill = "Rendimiento"
+  ) +
+  theme_minimal()
+```
+
+El gráfico muestra algo bastante interesante, no existen casos de personas que comuniquen que el impacto haya sido negativo y aún así entren en la categoría de **Rendimiento Alto**. Por lo demás solo confirmamos visualmente que **Overall_Impact** será una variable importante a la hora de realizar el modelo.
+
+Confirmemos analíticamente con el Test de independencia Chi-cuadrado:
+  
+```{r}
+chisq.test(table(train$Overall_Impact, train$target))
+```
+
+Como obtenemos un valor de `p-value` < 2.2e-16 nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban altamente correlacionadas.
+
 # Relaciones entre variables.
 
 En este apartado analizaremos las interacciones cruzadas entre variables. Estudiar estas relaciones no ayuda a comprender los mecanismos subyacentes del comportamiento estudiantil y anticipar posibles relaciones indirectas o redundancias antes de la fase de modelado.
@@ -654,10 +694,6 @@ El diagrama de dispersión evidencia una clara relación inversa y lineal entre 
 ```{r}
 #| label: fig-relacion-uso-saludmental
 #| fig-cap: "Relación entre las horas de uso diario de redes sociales y el índice de salud mental"
-#| message: false
-#| warning: false
-
-library(ggplot2)
 
 ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target)) +
   geom_point(alpha = 0.5, size = 2) +
@@ -689,10 +725,6 @@ El diagrama de caja manifiesta una progresión directamente proporcional entre l
 ```{r}
 #| label: fig-relacion-duracion-calidad-sueno
 #| fig-cap: "Distribución de la duración del sueño según la puntuación de calidad del descanso"
-#| message: false
-#| warning: false
-
-library(ggplot2)
 
 ggplot(train, aes(x = factor(Sleep_Quality_Score), y = Sleep_Duration_Hours, fill = factor(Sleep_Quality_Score))) +
   geom_boxplot(alpha = 0.75, color = "#2c3e50", outlier.color = "black", outlier.alpha = 0.5) +
@@ -720,11 +752,6 @@ La comparación gráfica y estadística demuestra que el hábito de consultar re
 #| fig-cap: "Impacto del uso nocturno de redes sociales en las horas de sueño y la calidad del descanso"
 #| fig-width: 10
 #| fig-height: 4.5
-#| message: false
-#| warning: false
-
-library(ggplot2)
-library(patchwork) # Para combinar gráficos lado a lado
 
 # Gráfico 1: Horas de sueño vs Uso nocturno
 p1 <- ggplot(train, aes(x = Late_Night_Usage, y = Sleep_Duration_Hours, fill = Late_Night_Usage)) +
@@ -776,10 +803,6 @@ Además, al segmentar por rendimiento académico (`target`), se observa claramen
 ```{r}
 #| label: fig-relacion-estres-saludmental
 #| fig-cap: "Relación entre la puntuación de estrés percibido y el índice de salud mental"
-#| message: false
-#| warning: false
-
-library(ggplot2)
 
 ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = target)) +
   geom_point(alpha = 0.5, size = 2) +
@@ -816,10 +839,7 @@ Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó 
 ```{r}
 #| label: fig-relacion-edad-uso
 #| fig-cap: "Dispersión entre la edad del estudiante y las horas de uso diario de redes sociales"
-#| message: false
-#| warning: false
 
-library(ggplot2)
 
 # 1. Gráfico de dispersión
 p <- ggplot(train, aes(x = Age, y = Daily_Usage_Hours)) +
@@ -892,11 +912,7 @@ La presencia de coeficientes superioes a $|r| \ge 0.75$ señala una alta multico
 #| fig-cap: "Matriz de correlación de Pearson entre predictores cuantitativos"
 #| fig-width: 7
 #| fig-height: 6
-#| message: false
-#| warning: false
 
-library(dplyr)
-library(corrplot)
 
 # Selección de predictores cuantitativos continuos
 var_num <- train %>%
