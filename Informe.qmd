@@ -24,9 +24,27 @@ library(skimr)
 library(scales)
 library(patchwork) # Para combinar gráficos lado a lado
 library(corrplot)
+library(broom)
 #load("~/Mineria-de-datos-/datos.Rdata")
 load("datos.Rdata")
 ```
+
+```{r}
+# Función para formatear y mostrar cualquier test en una tabla
+mostrar_test <- function(test_obj, nombre_variable) {
+  tidy(test_obj) %>%
+    mutate(
+      Variable = nombre_variable,
+      `Estadístico` = round(statistic, 2),
+      `p-valor` = ifelse(p.value < 2.2*10^(-16), "< 2.2 ×10^(−16)", sprintf("%.4f", p.value)),
+      `G.L.` = ifelse("parameter" %in% colnames(.), as.character(parameter), "-"),
+      `Significativo (α=0.05)` = ifelse(p.value < 0.05, "Sí", "No")
+    ) %>%
+    select(Variable, `Estadístico`, `G.L.`, `p-valor`, `Significativo (α=0.05)`) %>%
+    kable(align = c('l', 'c', 'c', 'c', 'c'))
+}
+```
+
 
 # Introducción
 
@@ -95,11 +113,11 @@ print(
 #skim(datos)
 ```
 
-En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar.
+En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar. Por tanto proseguimos a la siguiente parte.
 
 # Partición de los datos
 
-Dada la cantidad de datos decidimos una partición train(0.65) -test (0.2) -validación (0.15).
+Dada la cantidad de datos decidimos una partición train(0.65) -test (0.21) -validación (0.14).
 
 ```{r}
 set.seed(54685)
@@ -111,6 +129,28 @@ idx_test <- createDataPartition(test_valid$Overall_Impact, p=0.60)
 test <- test_valid[idx_test$Resample1, ]
 valid <- test_valid[-idx_test$Resample1, ]
 ```
+
+```{r}
+# Crear el data frame con la cardinalidad de cada subconjunto
+resumen_particiones <- data.frame(
+  Conjunto = c("Entrenamiento (Train)", "Prueba (Test)", "Validación (Valid)", "Total"),
+  `Nº Observaciones` = c(nrow(train), nrow(test), nrow(valid), nrow(datos)),
+  `Porcentaje (%)` = round(c(
+    nrow(train) / nrow(datos) * 100,
+    nrow(test) / nrow(datos) * 100,
+    nrow(valid) / nrow(datos) * 100,
+    100
+  ), 2)
+)
+
+# Renderizar la tabla con knitr::kable
+kable(
+  resumen_particiones, 
+  align = c('l', 'c', 'c'),
+  col.names = c("Conjunto de datos", "Nº de observaciones", "Porcentaje real (%)")
+)
+```
+
 
 A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el análisis exploratorio de datos. Usaremos test para ir evaluando y estudiando la capacidad de generalización de los modelos que entrenemos en train. Por último, dejaremos la partición de validación para el final del todo del proyecto: una vez tengamos un modelo final seleccionado estudiaremos su rendimiento en esta partición de validación. Esto nos permitirá simular un caso real en el que podamos estudiar cómo funciona nuestro modelo final ante datos nunca vistos.
 
@@ -248,11 +288,38 @@ En el siguiente apartado, estudiaremos la relación entre todas las variables y 
 
 # Relaciones entre el target y el resto de variables.
 
-En este capítulo dedicaremos una subsección a la comparación de cada variables con el target; a la vez aplicaremos los test estadísticos correspondientes para deducir si esa variables marca una diferencia estadística significativa en nuestro target.
+En este capítulo dedicaremos una subsección a la comparación de cada variable con el *target*. De manera complementaria a la visualización analítica, aplicaremos los test estadísticos correspondientes para contrastar formalmente si existe una diferencia o asociación estadísticamente significativa con respecto a nuestra variable objetivo.
+
+A continuación, se describen los test estadísticos que emplearemos según la naturaleza de las variables analizadas:
+
+:::{.callout-note icon=false}
+### 1. Test Binomial (`binom.test`)
+
+* **Aplicación:** Se utiliza cuando comparamos una variable cualitativa dicotómica (dos categorías) frente a una proporción teórica o esperada.
+* **Definición:** Evalúa si la frecuencia observada de un éxito en una muestra binaria difiere significativamente de una probabilidad de éxito esperada bajo la hipótesis nula ($H_0: p = p_0$).
+:::
+
+:::{.callout-note icon=false}
+### 2. Test de $\chi$-cuadrado de Independencia (`chisq.test`)
+
+* **Aplicación:** Se emplea para analizar la relación entre dos variables cualitativas o categóricas (por ejemplo, categorías de un predictor vs. categorías del *target*).
+* **Definición:** Evalúa si existe una asociación no aleatoria entre ambas variables comparando las frecuencias observadas en las celdas de una tabla de contingencia con las frecuencias que se esperarían bajo el supuesto de independencia ($H_0$: las variables son independientes).
+:::
+
+:::{.callout-note icon=false}
+### 3. Test de Wilcoxon-Mann-Whitney (`wilcox.test`)
+
+* **Aplicación:** Se aplica al comparar una variable cuantitativa continua (o cualitativa ordinal) dividida en dos grupos independientes definidos por un *target* binario, especialmente cuando no se asume normalidad en los datos.
+* **Definición:** Es una prueba no paramétrica que evalúa si dos muestras independientes provienen de poblaciones con la misma distribución ($H_0$: la diferencia de posiciones/medianas entre ambos grupos es igual a cero), basándose en los rangos u orden de las observaciones.
+:::
+
+En todos los casos, tomaremos como criterio general de decisión el **$p$-valor** generado por cada prueba frente al nivel de significación estándar $\alpha = 0.05$. Un $p\text{-valor} < 0.05$ nos permitirá rechazar la hipótesis nula ($H_0$) y concluir que existe una relación o diferencia estadísticamente significativa.
 
 ## Comparación de Age y Target
 
-Este diagrama de caja muestra una distribución de la edad prácticamente idéntica entre los estudiantes con rendimiento académico bajo/ medio y aquellos que con un rendimiento alto. En ambos grupos, la mediana de edad se sitúa en torno a los 19 años.
+Vamos a comparar la variable **Age** (variable categórica ordinal) contra el target. Para esto usaremos boxplot para obtener una visualización y el test de Wilcoxon para comprobar si existe una relación estadística significativa.
+
+
 
 ```{r}
 ggplot(train, aes(x = target, y = Age, fill = target)) +
@@ -265,20 +332,26 @@ ggplot(train, aes(x = target, y = Age, fill = target)) +
     y = "Edad"
   ) +
   theme_minimal()
+
 ```
+
+Este diagrama de caja muestra una distribución de la edad prácticamente idéntica entre los estudiantes con rendimiento académico bajo/ medio y aquellos que con un rendimiento alto. En ambos grupos, la mediana de edad se sitúa en torno a los 19 años.
 
 Para contrastar formalmente si existen diferencia significativas en la distribución de la edad según el rendimiento académico, aplicamos el test no paramétrico de Wilcoxon.
 
 ```{r}
 #Test estadístico (Wilcoxon)
-wilcox.test(Age ~ target, data = train)
+test_wilcox <- wilcox.test(Age ~ target, data = train)
+mostrar_test(test_wilcox, "Age")
 ```
 
 Observamos que obtenemos los valores $988026$ para el estadístico W y para el p-valor $0.4122$. Como el *p-valor* es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no podemos rechazar la hipótesis nula $H_0$, lo que indica que **no existen diferencias estadísticamente significativas** en la edad entre los alumnos de alto rendimiento y los de rendimiento bajo o medio. Por lo tanto, la edad no presenta un comportamiento diferencial respecto al rendimiento académico, por lo que no muestra capacidad explicativa sobre el target.
 
 ## Comparación de Daily_Usage_Hours y Target
 
-Este gráfico muestra una clara diferencia en el tiempo diario dedicado a las redes sociales según el rendimiento académico. Observamos que los estudiantes con rendimiento bajo/medio presentan una mediana de uso diario de redes sociales cercana a las 6 horas y una mayor variabilidad, mientras que el grupo de rendimiento alto tiene una mediana menor, que se encuentra entre 3.5 y 4 horas y una menor dispersión.
+Comparamos **Daily_Usage_Hours** (variable continua) con el target, para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias. Por último aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
+
+
 
 ```{r}
 ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
@@ -293,16 +366,21 @@ ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
   theme_minimal()
 ```
 
+Este gráfico muestra una clara diferencia en el tiempo diario dedicado a las redes sociales según el rendimiento académico. Observamos que los estudiantes con rendimiento bajo/medio presentan una mediana de uso diario de redes sociales cercana a las 6 horas y una mayor variabilidad, mientras que el grupo de rendimiento alto tiene una mediana menor, que se encuentra entre 3.5 y 4 horas y una menor dispersión.
+
+Para evaluar si esta diferencia es estadísticamente significativa, usaremos la prueba no paramétrica de suma de rasgos Wilcoxon.
+
 ```{r}
 # Test estadístico (Wilcoxon)
-wilcox.test(Daily_Usage_Hours ~ target, data = train)
+test_wilcox<-wilcox.test(Daily_Usage_Hours ~ target, data = train)
+mostrar_test(test_wilcox, "Daily_Usage_Hours")
 ```
 
-Para evaluar si esta diferencia es estadísticamente significativa, la prueba no paramétrica de suma de rasgos Wilcoxon obtiene un estadístico $W = 1622909$ y un $p-valor< 2.2 \times 10^{-16}$ . Dado que el *p-valor* es muy inferior al nivel de significación $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$, por lo que se confirma que ***existe diferencia estadística significativa*** en el tiempo de uso de redes sociales diarias entre los dos grupos. Por tanto, `Daily_Usage_Hours` es un predictor altamente relevante e inversamente relacionado con el rendimiento académico.
+Con esta se obtiene un estadístico $W = 1622909$ y un $p-valor< 2.2 \times 10^{-16}$ . Dado que el *p-valor* es muy inferior al nivel de significación $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$, por lo que se confirma que ***existe diferencia estadística significativa*** en el tiempo de uso de redes sociales diarias entre los dos grupos. Por tanto, `Daily_Usage_Hours` es un predictor altamente relevante e inversamente relacionado con el rendimiento académico.
 
 ## Comparación de Device_Type y Target
 
-El gráfico de barras agrupadas muestra la distribución del rendimiento académico (`target` ) según el tipo de dispositivo utilizado principalmente por el estudiante (`Device_Type`). Podemos ver que el *smartphone* es el dispositivo predominante utilizado tanto en el grupo de rendimiento *bajo/medio* como en el *alto* (alrededor del 85%), seguido de *Laptop/PC* (\~12-13 %) y por último la *tablet* (\~2-3%). Destacamos que la proporción de alumnos con alto rendimeinto frente a bajo o medio resulta prácticamente idéntica en las tres categorías de dispositivos.
+Comparamos **Device_Type** (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente las proporciones de uso según el dispositivo. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = Device_Type, fill = target)) +
@@ -326,16 +404,21 @@ ggplot(train, aes(x = Device_Type, fill = target)) +
   theme_minimal()
 ```
 
+El gráfico de barras agrupadas muestra la distribución del rendimiento académico (`target` ) según el tipo de dispositivo utilizado principalmente por el estudiante (`Device_Type`). Podemos ver que el *smartphone* es el dispositivo predominante utilizado tanto en el grupo de rendimiento *bajo/medio* como en el *alto* (alrededor del 85%), seguido de *Laptop/PC* (\~12-13 %) y por último la *tablet* (\~2-3%). Destacamos que la proporción de alumnos con alto rendimeinto frente a bajo o medio resulta prácticamente idéntica en las tres categorías de dispositivos.
+
+Para evaluar de forma cuantitativa si existe una relación entre ambas variables categóricas, utilizamos la prueba de independencia de Chi-Cuadrado de Pearson.
+
 ```{r}
 #Test de independencia Chi-cuadrado
-chisq.test(table(train$Device_Type, train$target))
+test_chisq<-chisq.test(table(train$Device_Type, train$target))
+mostrar_test(test_chisq, "Device_Type")
 ```
 
-Para evaluar de forma cuantitativa si existe una relación entre ambas variables categóricas, utilizamos la prueba de independencia de Chi-Cuadrado de Pearson. El test arrojó un estadístico $X^2 = 0.51705$ con 2 grados de libertad y un $p-valor = 0.7722$. Como el *p-valor* es superior al nivel de significación estándar, **no existe evidencia estadística suficiente** para rechazar la hipótesis nula $(H_0)$. Por lo que podemos concluir que el tipo de dispositivo utilizado y el rendimiento académico son independientes, la variable `Device_Type` no aporta capacidad discriminante ni predictiva relevante sobre la variable objetivo.
+El test muestra un estadístico $X^2 = 0.51705$ con 2 grados de libertad y un $p-valor = 0.7722$. Como el *p-valor* es superior al nivel de significación estándar, **no existe evidencia estadística suficiente** para rechazar la hipótesis nula $(H_0)$. Por lo que podemos concluir que el tipo de dispositivo utilizado y el rendimiento académico son independientes, la variable `Device_Type` no aporta capacidad discriminante ni predictiva relevante sobre la variable objetivo.
 
 ## Comparación de Sleep_Quality_Score y Target
 
-El diagrama de caja muestra una diferencia notable en la puntuación de la calidad del sueño (`Sleep_Quality_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento *bajo/medio*, la mediana de calidad del sueño se sitúa en un 2, mientras que en grupo de rendimiento *alto*, la mediana asciende a 3, lo que indica que los estudiantes con calificaciones más altas tienden a reportar un mejor descanso.
+Comparamos **Sleep_Quality_Score** (variable discreta/ordinal) con el target; para ello usaremos un boxplot que nos permite observar visualmente la distribución de las puntuaciones. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
@@ -350,16 +433,21 @@ ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
   theme_minimal()
 ```
 
+El diagrama de caja muestra una diferencia notable en la puntuación de la calidad del sueño (`Sleep_Quality_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento *bajo/medio*, la mediana de calidad del sueño se sitúa en un 2, mientras que en grupo de rendimiento *alto*, la mediana asciende a 3, lo que indica que los estudiantes con calificaciones más altas tienden a reportar un mejor descanso.
+
+Para contrastar formalmente si esta diferencia entre ambos grupos es estadísticamente significativa aplicamos la prueba de Wilcoxon
+
 ```{r}
 #Test estadístico (Wilcoxon)
-wilcox.test(Sleep_Quality_Score ~ target, data = train)
+test_wilcox<-wilcox.test(Sleep_Quality_Score ~ target, data = train)
+mostrar_test(test_wilcox, "Sleep_Quality_Score")
 ```
 
-Para contrastar formalmente si esta diferencia entre ambos grupos es estadísticamente significativa aplicamos la prueba de Wilcoxon mediante la que obtenemos $W=536281$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el *p-valor* es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupo, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
+Con este test obtenemos $W=536281$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el *p-valor* es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupo, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
 
 ## Comparación de Late_Night_Usage y Target
 
-Este gráfico de barras agrupadas muestra la relación entre el uso nocturno de redes sociales (`Late_Night_Usage`) y el `target`. Podemos ver que hay un patrón entre ambos grupos: entre los alumnos que si utilizan las redes sociales a altas horas de la noche, predomina ampliamente el grupo de rendimiento *bajo/medio*, aproximadamente un 68% frente a un 32% de rendimiento *alto*. Por el contrario, aquellos estudiantes que declaran no realizar uso nocturno, las proporciones se invierten, alcanzando el rendimiento *alto* cerca del 53%.
+Comparamos **Late_Night_Usage** (variable booleana/dicotómica) con el target; para ello usaremos un gráfico de frecuencias relativas que nos permite observar visualmente las proporciones de uso a altas horas de la noche. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
@@ -383,16 +471,21 @@ ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
   theme_minimal()
 ```
 
+Este gráfico de barras agrupadas muestra la relación entre el uso nocturno de redes sociales (`Late_Night_Usage`) y el `target`. Podemos ver que hay un patrón entre ambos grupos: entre los alumnos que si utilizan las redes sociales a altas horas de la noche, predomina ampliamente el grupo de rendimiento *bajo/medio*, aproximadamente un 68% frente a un 32% de rendimiento *alto*. Por el contrario, aquellos estudiantes que declaran no realizar uso nocturno, las proporciones se invierten, alcanzando el rendimiento *alto* cerca del 53%.
+
+Para evaluar de forma cuantitativa la significación de esta relación entre ambar variables categóricas, usamos la prueba de independiencia de Chi-Cuadrado
+
 ```{r}
 #Test de independencia Chi-cuadrado
-chisq.test(table(train$Late_Night_Usage, train$target))
+test_chisq <- chisq.test(table(train$Late_Night_Usage, train$target))
+mostrar_test(test_chisq, "Late_Night_Usage")
 ```
 
-Para evaluar de forma cuantitativa la significación de esta relación entre ambar variables categóricas, usamos la prueba de independiencia de Chi-Cuadrado, lo que nos dió $X^2 = 139.35$ con 1 grado de libertad y un $p-valor<2.2 \times 10^{-16}$. Como el *p-valor* es infinitamente menor que el nivel de significación estándar se rechaza la hipótesis nula $(H_0)$. Confirmamos así una **asociación estadísticamente significativa** entre el uso nocturno de las plataformas y las calificaciones, concluyendo que `Late_Night_Usage` es un factor altamente relevante e inversamente relacionado con la probabilidad de obtener un rendimiento académico alto.
+Los valores que devuelve son $X^2 = 139.35$ con 1 grado de libertad y un $p-valor<2.2 \times 10^{-16}$. Como el *p-valor* es infinitamente menor que el nivel de significación estándar se rechaza la hipótesis nula $(H_0)$. Confirmamos así una **asociación estadísticamente significativa** entre el uso nocturno de las plataformas y las calificaciones, concluyendo que `Late_Night_Usage` es un factor altamente relevante e inversamente relacionado con la probabilidad de obtener un rendimiento académico alto.
 
 ## Comparación de Social_Comparison_Frequency y Target
 
-El gráfico de barras agrupado muestra la distribución del rendimiento académico (`target`) según la frecuencia con la que los estudiantes se comparan socialmente en redes (`Social_Comparison_Frequency`). Observamos que la categoría con mayor concetración de alumnos en ambos grupos es *Sometimes* (alrededor del 35%), seguida de *Frequently* (\~28%), *Rarely* (\~16-17%), *Always* (\~14-15%) y *Never* (\~5-6%). La proporción de estudiantes con rendimiento *alto* frente a aquellos con rendimiento *bajo/medio* se mantiene prácticamente idéntica en cada uno de los niveles de frecuencia analizados.
+Comparamos **Social_Comparison_Frequency** (variable categórica ordinal) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente la distribución de los niveles de comparación social. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
@@ -417,16 +510,21 @@ ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
+El gráfico de barras agrupado muestra la distribución del rendimiento académico (`target`) según la frecuencia con la que los estudiantes se comparan socialmente en redes (`Social_Comparison_Frequency`). Observamos que la categoría con mayor concetración de alumnos en ambos grupos es *Sometimes* (alrededor del 35%), seguida de *Frequently* (\~28%), *Rarely* (\~16-17%), *Always* (\~14-15%) y *Never* (\~5-6%). La proporción de estudiantes con rendimiento *alto* frente a aquellos con rendimiento *bajo/medio* se mantiene prácticamente idéntica en cada uno de los niveles de frecuencia analizados.
+
+Para evaluar formalmente la existencia de asociación entre las variables categóricas recurrimos a la prueba de independencia de Chi-Cuadrado de Pearson.
+
 ```{r}
 #Test de independencia Chi-cuadrado
-chisq.test(table(train$Social_Comparison_Frequency, train$target))
+test_chisq <- chisq.test(table(train$Social_Comparison_Frequency, train$target))
+mostrar_test(test_chisq, "Social_Comparison_Frequency")
 ```
 
-Para evaluar formalmente la existencia de asociación entre las variables categóricas recurrimos a la prueba de independencia de Chi-Cuadrado de Pearson. En el análisis obtuvimos un estadístico de prueba $X^2 = 1.4687$ con 4 grados de libertad y un $p-valor = 0.8322$, por lo que como $p-valor \ge \alpha$, no existe evidencia estadística para rechazar la hipótesis nula de independencia. Por lo tanto, concluimos que la frecuencia de comparación social y el rendimiento académico son **variables independientes**, lo que indica que `Social_Comparison_Frequency` no aporta capacidad predictiva ni discriminante sobre nuestro `target`.
+En el análisis obtuvimos un estadístico de prueba $X^2 = 1.4687$ con 4 grados de libertad y un $p-valor = 0.8322$, por lo que como $p-valor \ge \alpha$, no existe evidencia estadística para rechazar la hipótesis nula de independencia. Por lo tanto, concluimos que la frecuencia de comparación social y el rendimiento académico son **variables independientes**, lo que indica que `Social_Comparison_Frequency` no aporta capacidad predictiva ni discriminante sobre nuestro `target`.
 
 ## Comparación de Perceived_Stress_Score y Target
 
-El diagrama de caja refleja una clara diferencia en la puntuación de estrés percivido (`Perceived_Stress_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento *bajo/medio*, la mediana de estrés se sitúa en torno a los 16 punto con un rango intercuartílico aproximado de 12 a 21, mientras que en el grupo de rendimiento *alto*, la mediana desciente a los 10 puntos con un rango de 6 a 14, mostrando además valores máximos sensiblemente menores.
+Comparamos **Perceived_Stress_Score** (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias en las puntuaciones de estrés. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
@@ -441,16 +539,22 @@ ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
   theme_minimal()
 ```
 
-Para evaluar formalmente si la existencia de la diferencia entre las distribuciones de ambos grupos es estadísticamente significativa, aplicamos la prueba no paramétrica de suma de rasgos de Wilcoxon. El contraste arrojó un estadística de prueba $W= 1553782$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el *p-valor* es infinitamente menor que el nivel de significación estándar $(\alpha = 0.05)$, se rechaza la hipótesis nula. Con esto, podemos confirmar la **existencia de diferencia estadísticamente significativas** en los niveles de estrés entre ambos grupos, concluyendo que `Perceived_Stress_Score` es un predictor altamente relevante e inversamente asociado al rendimiento académico, a menor nivel de estrés percibido, mayor probabilidad de pertenecer al grupo de rendimiento *alto*.
+El diagrama de caja refleja una clara diferencia en la puntuación de estrés percivido (`Perceived_Stress_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento *bajo/medio*, la mediana de estrés se sitúa en torno a los 16 punto con un rango intercuartílico aproximado de 12 a 21, mientras que en el grupo de rendimiento *alto*, la mediana desciente a los 10 puntos con un rango de 6 a 14, mostrando además valores máximos sensiblemente menores.
+
+
+Para evaluar formalmente si la existencia de la diferencia entre las distribuciones de ambos grupos es estadísticamente significativa, aplicamos la prueba no paramétrica de suma de rasgos de Wilcoxon. 
 
 ```{r}
 #Test estadístico (Wilcoxon)
-wilcox.test(Perceived_Stress_Score ~ target, data = train)
+test_wilcox<-wilcox.test(Perceived_Stress_Score ~ target, data = train)
+mostrar_test(test_wilcox, "Perceived_Stress_Score")
 ```
+
+El contraste muestra un estadístico de prueba $W= 1553782$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el *p-valor* es infinitamente menor que el nivel de significación estándar $(\alpha = 0.05)$, se rechaza la hipótesis nula. Con esto, podemos confirmar la **existencia de diferencia estadísticamente significativas** en los niveles de estrés entre ambos grupos, concluyendo que `Perceived_Stress_Score` es un predictor altamente relevante e inversamente asociado al rendimiento académico, a menor nivel de estrés percibido, mayor probabilidad de pertenecer al grupo de rendimiento *alto*.
 
 ## Comparación de Mental_Health_Index y Target
 
-El diagrama de caja manifiesta una clara brecha en el índice de salud mental (`Mental_Health_Index`) en función del rendimiento académico de los estudiantes. Quienes se encuentran en el grupo de rendimiento *alto* presentan niveles sensiblementes superiores, con una mediana que ronda los 87 puntos y un rango intercuartílico concentrado en su mayoría entre los 81 y 94 puntos. Sin embargo, los alumnos con rendimiento *bajo/medio* exhiben puntuaciones de bienestar psicológico sensiblemente inferiores y más dispersas, situando su mediana en torno a los 76 puntos y registrando numerososo valores atípicos en la zona inferior de la escala.
+Comparamos **Mental_Health_Index** (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias en el índice de salud mental. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
@@ -465,16 +569,21 @@ ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
   theme_minimal()
 ```
 
-Para corroborar formalmente si la discrepancia visual entre ambas distribuciones responde a un patrón estadísiticamente siginificativo, usamos una prueba no paramétrica de suma de rangos de Wilcoxon. Con este análisis obtenemos $W = 449073$ y un $p-valor<2.2 \times 10^{-16}$. Al ser el *p-valor* infitamente menor que el nivel de significación prefijado $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$ de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y **altamente significativa** con el desempeño estudiantil, conviertiendo a `Mental_Health_Index` en un predictor clave e inversamente condicionado por el malestar psicológico para la clasificación del target.
+El diagrama de caja manifiesta una clara brecha en el índice de salud mental (`Mental_Health_Index`) en función del rendimiento académico de los estudiantes. Quienes se encuentran en el grupo de rendimiento *alto* presentan niveles sensiblementes superiores, con una mediana que ronda los 87 puntos y un rango intercuartílico concentrado en su mayoría entre los 81 y 94 puntos. Sin embargo, los alumnos con rendimiento *bajo/medio* exhiben puntuaciones de bienestar psicológico sensiblemente inferiores y más dispersas, situando su mediana en torno a los 76 puntos y registrando numerososo valores atípicos en la zona inferior de la escala.
+
+Para corroborar formalmente si la discrepancia visual entre ambas distribuciones responde a un patrón estadísiticamente siginificativo, usamos una prueba no paramétrica de suma de rangos de Wilcoxon. 
 
 ```{r}
 #Test estadístico (Wilcoxon)
-wilcox.test(Mental_Health_Index ~ target, data = train)
+test_wilcox<-wilcox.test(Mental_Health_Index ~ target, data = train)
+mostrar_test(test_wilcox, "Mental_Health_Index")
 ```
+
+Con este análisis obtenemos $W = 449073$ y un $p-valor<2.2 \times 10^{-16}$. Al ser el *p-valor* infitamente menor que el nivel de significación prefijado $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$ de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y **altamente significativa** con el desempeño estudiantil, conviertiendo a `Mental_Health_Index` en un predictor clave e inversamente condicionado por el malestar psicológico para la clasificación del target.
 
 ## Comparación de Horas de Sueño y Target
 
-El diagrama de caja permite evaluar la distribución de la duración del descanso nocturno (`Sleep_Duration_Hours`) en función de la categoría de rendimiento académico (`target`). En la representación gráfica apreciamos que los estudiantes del grupo con rendimiento *alto* presentan, en general, un promedio de horas de sueño más elevado y constante, mientras que los alumnos con rendimiento *bajo/medio* registra periodos de descanso sensiblemente más reducidos y con mayor variabilidad.
+Comparamos **Sleep_Duration_Hours** (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias en el descanso. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
@@ -485,14 +594,21 @@ ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
   theme_minimal()
 ```
 
-Para determinar si estas diferencias en la calidad de descanso resultan estadísiticamente significativas entre ambos grupos, se aplica la prueba no paramétrica de suma de rangos de Wilcoxon. Al obtener un $p-valor<2.2 \times 10^{-16}$ que está por debajo del umbral de significación $(\alpha = 0.05)$ se rechaza la hipótesis nula $H_0$. De este modo, afirmamos que la duración del suelo constituye una **variable significativamente asociada** al desempeño estudiantil, actuando la variable `Sleep_Duration_Hours` como un predictor del un rendimiento académico.
+El diagrama de caja permite evaluar la distribución de la duración del descanso nocturno (`Sleep_Duration_Hours`) en función de la categoría de rendimiento académico (`target`). En la representación gráfica apreciamos que los estudiantes del grupo con rendimiento *alto* presentan, en general, un promedio de horas de sueño más elevado y constante, mientras que los alumnos con rendimiento *bajo/medio* registra periodos de descanso sensiblemente más reducidos y con mayor variabilidad.
+
+Para determinar si estas diferencias en la calidad de descanso resultan estadísiticamente significativas entre ambos grupos, se aplica la prueba no paramétrica de suma de rangos de Wilcoxon. 
 
 ```{r}
 #Test estadístico (Wilcoxon)
-wilcox.test(Sleep_Duration_Hours ~ target, data = train)
+test_wilcox<-wilcox.test(Sleep_Duration_Hours ~ target, data = train)
+mostrar_test(test_wilcox, "Sleep_Duration_Hours")
 ```
 
+Al obtener un $p-valor<2.2 \times 10^{-16}$ que está por debajo del umbral de significación $(\alpha = 0.05)$ se rechaza la hipótesis nula $H_0$. De este modo, afirmamos que la duración del suelo constituye una **variable significativamente asociada** al desempeño estudiantil, actuando la variable `Sleep_Duration_Hours` como un predictor del un rendimiento académico.
+
 ## Comparación de Género y Target
+
+Comparamos Gender (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente las posibles diferencias en las proporciones de la variable objetivo según el género. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 El gráfico de barras estandariza muestra la proporción del rendimiento académico (`target`) desglosada por las distintas categorías de género del estudiante (`Gender`). Tanto en los grupos mayoritarios (*Female* y *Male*) como en las categorías *Non-Binary* y *Prefer not to say*, la distribución interna entre alumnos de rendimiento *alto* y rendimiento *bajo/medio* se mantiene prácticamente simétrica y equilibrada, sin que ninguna identidad muestre una prevalencia destacable sobre el rendimiento académico.
 
@@ -518,16 +634,17 @@ ggplot(train, aes(x = Gender, fill = target, group = target)) +
   theme_minimal()
 ```
 
-Para evaluar inicialmente la relación global entre ambas variables categóricas, usamos la prueba de independencia de Chi-Cuadrado de Pearson. El análisis arrojó un estadístico de contraste $X^2 = 0.46186$ con 3 grados de libertad y un $p-valor= 0.9272$. Al ser este *p-valor* claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$, confirmando que la distribución global del rendimiento académico es independiente del género.
+Para evaluar inicialmente la relación global entre ambas variables categóricas, usamos la prueba de independencia de Chi-Cuadrado de Pearson. 
 
 ```{r}
 #Test Estadístico (Chi cuadrado)
-chisq.test(table(train$Gender, train$target))
+test_chisq <- chisq.test(table(train$Gender, train$target))
+mostrar_test(test_chisq, "Gender")
 ```
 
-La relación observada a simple vista no nos permite distinguir si existe diferencia significativa entre rendimiento *alto* y *bajo/medio* por género, para ello hagamos un test binomial. Este análisis evalúa si la proporción de estudiantes con rendimiento *alto* dentro de cada subgrupo específico difiere de forma relevante del 50% teórico esperado por azar.
+El análisis arrojó un estadístico de contraste $X^2 = 0.46186$ con 3 grados de libertad y un $p-valor= 0.9272$. Al ser este *p-valor* claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$, confirmando que la distribución global del rendimiento académico es independiente del género.
 
-Los resultados de estas pruebas arrojaron *p-valores* no significativas en la totalidad de las categorías analizadas: $0.651$ en *Female*, $0.675$ en *Male*, $0.824$ en *Non-Binary* y $1.000$ e *Prefer not to say*. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable `Gender` no ejerce ningún efecto relevante sobre las calificaciones, **careciendo de capacidad explicativa o discriminante** para el modelado de la variable respuesta.
+La relación observada a simple vista no nos permite distinguir si existe diferencia significativa entre rendimiento *alto* y *bajo/medio* por género, para ello hagamos un test binomial. Este análisis evalúa si la proporción de estudiantes con rendimiento *alto* dentro de cada subgrupo específico difiere de forma relevante del 50% teórico esperado por azar.
 
 ```{r}
 resultados_binomiales <- train %>%
@@ -546,9 +663,11 @@ resultados_binomiales <- train %>%
 print(resultados_binomiales)
 ```
 
+Los resultados de estas pruebas muestran *p-valores* no significativas en la totalidad de las categorías analizadas: $0.651$ en *Female*, $0.675$ en *Male*, $0.824$ en *Non-Binary* y $1.000$ e *Prefer not to say*. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable `Gender` no ejerce ningún efecto relevante sobre las calificaciones, **careciendo de capacidad explicativa o discriminante** para el modelado de la variable respuesta.
+
 ## Comparación de Nivel Académico y Target
 
-El gráfico de barras refleja el volumen de estudiantes distribuido según su nivel educativo (`Academic_Level`) y clasificado en función del `target`. Aunque hay un volumen marcadamente superior en el nivel universitario (*Undergraduate*), seguido de la educación secundaria (*High School*) y, de forma minoritaria los estudios de posgrado (*Postgraduate*), la proporción interna entre los estudiantes de rendimiento *alto* y *bajo/medio* guarda un patrón uniforme y constante en los tres estratos.
+Comparamos **Academic_Level** (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas y tablas de contingencia que nos permiten observar visualmente la distribución de frecuencias entre categorías. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = Academic_Level, fill = target)) +
@@ -566,16 +685,23 @@ ggplot(train, aes(x = Academic_Level, fill = target)) +
   theme_minimal()
 ```
 
-Con el propósito de evaluar formalmente si el nivel académico alcanzado condiona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson. El contraste arrojó un estadístico de prueba $X^2 = 0.88828$ con 2 grados de libertad y un $p-valor = 0.6414$, como este es superior al nivel de significación prefijado, no se encuentra evidencia estadística para rechazar la hipótesis nula de independencia. Por consiguiente, determinamos que la etapa educativo **no ejerce un efecto diferenciador** sobre el rendimiento académico, lo que indica que `Academic_Level` no resulta una variable relevante para discriminar las clases de la variable objetivo.
+
+El gráfico de barras refleja el volumen de estudiantes distribuido según su nivel educativo (`Academic_Level`) y clasificado en función del `target`. Aunque hay un volumen marcadamente superior en el nivel universitario (*Undergraduate*), seguido de la educación secundaria (*High School*) y, de forma minoritaria los estudios de posgrado (*Postgraduate*), la proporción interna entre los estudiantes de rendimiento *alto* y *bajo/medio* guarda un patrón uniforme y constante en los tres estratos.
+
+
+Con el propósito de evaluar formalmente si el nivel académico alcanzado condiona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson. 
 
 ```{r}
 #Test Estadístico (Chi cuadrado)
-chisq.test(table(train$Academic_Level, train$target))
+test_chisq<-chisq.test(table(train$Academic_Level, train$target))
+mostrar_test(test_chisq, "Academic_Level")
 ```
+
+Del contraste resulta un estadístico de prueba $X^2 = 0.88828$ con 2 grados de libertad y un $p-valor = 0.6414$, como este es superior al nivel de significación prefijado, no se encuentra evidencia estadística para rechazar la hipótesis nula de independencia. Por consiguiente, determinamos que la etapa educativo **no ejerce un efecto diferenciador** sobre el rendimiento académico, lo que indica que `Academic_Level` no resulta una variable relevante para discriminar las clases de la variable objetivo.
 
 ## Comparación de Plataforma principal y Target
 
-El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedkn*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones dentre enstudiantes de rendimiento *alto* y *bajo/medio* resultan prácticamente idénticas en todas las categorías analizadas.
+Comparamos **Primary_Platform** (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente cómo se distribuyen las distintas plataformas según la variable objetivo. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
@@ -603,16 +729,21 @@ ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
   )
 ```
 
-Para evaluar si la elección de la red social predominante está vinculada al desempeño académico, aplicamos la prueba de independencia de Chi-Cuadrado de Pearson. El contraste arrojó un estadístico $X^2=3.0364$ con 6 grados de libertad y un $p–valor = 0.8043$, como este supera el umbral de significación habitual, no existe evidencia estadísitca para rechazar la hipótesis nula $(H_0)$ de independencia. En consecuencia, se concluye que la red social principal **no influye** en las calificaciones del estudiante, de modo que la variable `Primary_Platform` carece de capacidad discriminante o valor predictivo para el modelado de la variable objetivo.
+El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedkn*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones dentre enstudiantes de rendimiento *alto* y *bajo/medio* resultan prácticamente idénticas en todas las categorías analizadas.
+
+Para evaluar si la elección de la red social predominante está vinculada al desempeño académico, aplicamos la prueba de independencia de Chi-Cuadrado de Pearson.
 
 ```{r}
 #Test Estadístico (Chi cuadrado)
-chisq.test(table(train$Primary_Platform, train$target))
+test_chisq<-chisq.test(table(train$Primary_Platform, train$target))
+mostrar_test(test_chisq, "Primary_Platform")
 ```
+
+El contraste nos devuelve un estadístico $X^2=3.0364$ con 6 grados de libertad y un $p–valor = 0.8043$, como este supera el umbral de significación habitual, no existe evidencia estadísitca para rechazar la hipótesis nula $(H_0)$ de independencia. En consecuencia, se concluye que la red social principal **no influye** en las calificaciones del estudiante, de modo que la variable `Primary_Platform` carece de capacidad discriminante o valor predictivo para el modelado de la variable objetivo.
 
 ## Comparación entre Horas extra y el target.
 
-El gráfico de caja compara la distribución del tiempo adicional dedicado a las redes sociales durante el fin de semana (`Weekend_Extra_Hours`) en función de la categoría de rendimiento académico (`target`). Ambas distribuciones resultan visualmente simétricas e indistinguibles, tanto en el grupo de rendimiento *bajo/medio* como en el de *alto*, la mediana de uso extraordinario se sitúa en torno a las 1.8 horas, compartiendo un rango intercuartílico equivalente (de 1.3 a 2.3. horas aproximadamente) y un patrón similar de valores atípicos en la zona superior.
+Comparamos **Weekend_Extra_Hours** (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
@@ -623,12 +754,17 @@ ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
   theme_minimal()
 ```
 
-Para evaluar cuantitativamente si la dedicación extra durante el fin de semana difiere de manera significativa entre ambos grupos de alumnos, aplicamos la prueba no paramétrica de suma de rangos de Wilcoxon mediante la que obtenemos los valores $W = 1013076$ y un $p-valor = 0.7354$. Como el *p-valor* es notablemente superior al nivel de significación de referencia $(\alpha = 0.05)$, no se dispone de evidencia estadística para rechazar la hipótesis nula de igualdad de distribuciones. En consecuencia, concluimos que el número de horas extra consumidas durante el fin de semana no está asociado al desempeño escolar, por lo que `Weekend_Extra_Hours` **carece de poder discriminante** y puede descartarse como predictor explicativo para el target.
+El gráfico de caja compara la distribución del tiempo adicional dedicado a las redes sociales durante el fin de semana (`Weekend_Extra_Hours`) en función de la categoría de rendimiento académico (`target`). Ambas distribuciones resultan visualmente simétricas e indistinguibles, tanto en el grupo de rendimiento *bajo/medio* como en el de *alto*, la mediana de uso extraordinario se sitúa en torno a las 1.8 horas, compartiendo un rango intercuartílico equivalente (de 1.3 a 2.3. horas aproximadamente) y un patrón similar de valores atípicos en la zona superior.
+
+Para evaluar cuantitativamente si la dedicación extra durante el fin de semana difiere de manera significativa entre ambos grupos de alumnos, aplicamos la prueba no paramétrica de suma de rangos de Wilcoxon. 
 
 ```{r}
 #Test Estadístico (Wilcox)
-wilcox.test(Weekend_Extra_Hours ~ target, data = train)
+test_wilcox <- wilcox.test(Weekend_Extra_Hours ~ target, data = train)
+mostrar_test(test_wilcox, "Weekend_Extra_Hours")
 ```
+
+Obtenemos los valores $W = 1013076$ y un $p-valor = 0.7354$. Como el *p-valor* es notablemente superior al nivel de significación de referencia $(\alpha = 0.05)$, no se dispone de evidencia estadística para rechazar la hipótesis nula de igualdad de distribuciones. En consecuencia, concluimos que el número de horas extra consumidas durante el fin de semana no está asociado al desempeño escolar, por lo que `Weekend_Extra_Hours` **carece de poder discriminante** y puede descartarse como predictor explicativo para el target.
 
 ## Comparación de Overall_Impact y Target
 
@@ -665,7 +801,8 @@ El gráfico muestra algo bastante interesante, no existen casos de personas que 
 Confirmemos analíticamente con el Test de independencia Chi-cuadrado:
   
 ```{r}
-chisq.test(table(train$Overall_Impact, train$target))
+test_chisq <- chisq.test(table(train$Overall_Impact, train$target))
+mostrar_test(test_chisq, "Overall_Impact")
 ```
 
 Como obtenemos un valor de `p-value` < 2.2e-16 nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban altamente correlacionadas.
