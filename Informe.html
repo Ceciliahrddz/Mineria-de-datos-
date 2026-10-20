@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Marcos García y Cecilia Hernández">
 
 <title>Informe</title>
 <style>
@@ -36,30 +37,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="Informe_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Informe_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Informe_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Informe_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Informe_files/libs/bootstrap/bootstrap-62e2d20df198e8a01bb734742f2e28cf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="Informe_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-
+<link href="Informe_files/libs/bootstrap/bootstrap-c2e55264ed47ce3b2e0326a2269f9400.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Informe_files/libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 <script src="Informe_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-
 <link href="Informe_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-
 <script src="Informe_files/libs/datatables-binding-0.34.0/datatables.js"></script>
-
 <script src="Informe_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-
 <link href="Informe_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-
 <link href="Informe_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-
 <script src="Informe_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-
 <link href="Informe_files/libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-
 <script src="Informe_files/libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
-
+<script src="Informe_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Informe_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -133,9 +126,11 @@ window.Quarto = {
   <li><a href="#evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." id="toc-evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." class="nav-link" data-scroll-target="#evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario."><span class="header-section-number">8.5</span> Evaluación de la relación entre la edad y las horas de uso diario.</a></li>
   </ul></li>
   <li><a href="#comparación-de-horas-de-sueño-y-género" id="toc-comparación-de-horas-de-sueño-y-género" class="nav-link" data-scroll-target="#comparación-de-horas-de-sueño-y-género"><span class="header-section-number">9</span> Comparación de Horas de sueño y Género</a></li>
-  <li><a href="#análisis-de-multicolinealidad-entre-predictores" id="toc-análisis-de-multicolinealidad-entre-predictores" class="nav-link" data-scroll-target="#análisis-de-multicolinealidad-entre-predictores"><span class="header-section-number">10</span> Análisis de multicolinealidad entre predictores</a>
+  <li><a href="#análisis-de-multicolinealidad-entre-predictores" id="toc-análisis-de-multicolinealidad-entre-predictores" class="nav-link" data-scroll-target="#análisis-de-multicolinealidad-entre-predictores"><span class="header-section-number">10</span> Análisis de multicolinealidad entre predictores</a></li>
+  <li><a href="#síntesis-y-selección-de-variables" id="toc-síntesis-y-selección-de-variables" class="nav-link" data-scroll-target="#síntesis-y-selección-de-variables"><span class="header-section-number">11</span> Síntesis y selección de variables</a>
   <ul class="collapse">
-  <li><a href="#matriz-de-correlación-entre-variables-cuantitativas" id="toc-matriz-de-correlación-entre-variables-cuantitativas" class="nav-link" data-scroll-target="#matriz-de-correlación-entre-variables-cuantitativas"><span class="header-section-number">10.1</span> Matriz de correlación entre variables cuantitativas</a></li>
+  <li><a href="#criterio-de-selección-y-justificación" id="toc-criterio-de-selección-y-justificación" class="nav-link" data-scroll-target="#criterio-de-selección-y-justificación"><span class="header-section-number">11.1</span> Criterio de selección y justificación</a></li>
+  <li><a href="#comparación-de-la-capacidad-discriminante" id="toc-comparación-de-la-capacidad-discriminante" class="nav-link" data-scroll-target="#comparación-de-la-capacidad-discriminante"><span class="header-section-number">11.2</span> Comparación de la capacidad discriminante</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -153,6 +148,12 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Marcos García y Cecilia Hernández </p>
+          </div>
+  </div>
     
   
     
@@ -174,8 +175,8 @@ window.Quarto = {
 <p>A continuación, se presenta una tabla interactiva con una vista preliminar de los datos. Esta herramienta permite explorar las primeras filas de forma dinámica, facilitando la verificación inicial de los tipos de variables, la detección de posibles valores ausentes y la comprensión general de la estructura del dataset antes de proceder con los análisis estadísticos y los modelos.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-667f2c9c111dfad15d78" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-667f2c9c111dfad15d78">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-70812c936a0cb87caedd" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-70812c936a0cb87caedd">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -338,7 +339,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAKIAAAEKBAMAAABj5JMfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAnklEQVR42u3VsQ2DUBQEQVpwCWd3AP33RuKMkBP6T8wWMOlum1rlU4tIJBKJxIvYA98thkgkEolEvy6LIRKJRCJxlNgDJ4khEolEInGU2AMniSESiUQi0V2XF0MkEolEol8vL4ZIJBKJRL8uiyESiUQicZTYAyeJIRKJRCJxlNgDJ4khEolEItFdlxe/vf7i72i1E4lEIvFhsX8F3e8EYwzOElxQWMEAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAKIAAAELCAQAAADwn5UCAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqChQQFB9RQDP9AAACpklEQVR42u3ZQUrDYBRGUSPdoytzEVllO/3jSF8uhNRzHBWhhMurBb/t+cFZn1c/wDsQMSBi4bn8fPsD+WtrN5cYEDEgYkDEgIgBEQMiBkQMiBgQMSBiQMSAiAERAyIGRAyIGBAxIGJAxMC2blPb1U9zI2s3lxgQMXCIaHeecYkBEQMiBkQMiBgQMSBiQMSAiAERAyIGRAyIGBAxIGJAxICIAREDIgZEDNidh+zOMREDdueASwyIGBAxIGJAxICIAREDIgZEDIgYEDEgYkDEgIgBEQMiBkQMiBgQMSBiwO48ZHeOiRiwOwdcYkDEgIgBEQMiBkQMiBgQMSBiQMSAiAERAyIGRAyIGBAxIGJAxICIAZPpkMk0JmJAxIDdOeASAyIGRAyIGBAxIGJAxICIAREDIgZEDIgYEDEgYkDEgIgBEQMiBkQM2J2H7M4xEQMm04BLDIgYEDEgYkDEgIgBEQMiBkQMiBgQMSBiQMSAiAERAyIGRAyIGBAxIGLA7jxkd46JGLA7B1xiQMSAiAERAyIGRAyIGBAxIGJAxICIAREDIgZEDIgYEDEgYkDEgIgBEQN25yG7c0zEgN054BIDIgZEDIgYEDEgYkDEgIgBEQMiBkQMiBgQMSBiQMSAiAERAyIGRAyIGLA7D9mdYyIG7M4BlxgQMSBiQMSAiAERAyIGRAyIGBAxIGJAxICIAREDIgZEDIgYEDEgYkDEgN15yO4cEzFgdw64xICIAREDIgZEDIgYEDEgYkDEgIgBEQMiBkQMiBgQMSBiQMSAiAERAybTIZNpTMSAiIHH+sLu/AfLF8jj+Juvqx/tJvbDKx/ngIgBEQMiBkQMiBgQMSBiQMSAiAERAyIGRAyIGBAxIGJAxMCP/2zvs3f55zazynk+zgERAyIGXrepNv30lDu8AAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -362,7 +363,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">12 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAApElEQVRo3u3ZQQ7AEBCFYVfQG5Qb1P3v1gYLUg1mZtHF/xYWI75IhNA6RyTxTY6Qc/rtjLCUAwYGZoaVHRpssJjbCwwMDAzMEquXKSOsjAcDW8F2LglTbGd+YGBgT0Jz+quxbiQYGBiYGlv72LeIlRIYGBgY2KA0O2+3sDiZHxiYHfb910GA1Y7/YoONKsfSezVssLomWqwotaTFulL/ElbGEUluIHZGBQx2aX8AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -413,7 +414,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFcAAABmBAMAAABMwBBXAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAZElEQVRYw+3UQQrAIAxEUY+gN6jJDer979aN4DIZsKXC/+u3EGFSyplZpmtiH4nAYLCCpQ22TPV1HD+4Lxz/BhgMFrG0wZ/cDfHI9Dz2AQaDN2Npg7H8BJsJ2G8wGLwZSxs8rQe+irM73gMangAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -455,7 +456,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOBAMAAADRBSWHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAV0lEQVRYw+3UuQ0AIAwEQUqADng6gP57Q0iERsiOeHbzSS44594trwpSfqrS5CoKhfpA2X4jqLpHZVVxs7wcCoU6Vdke4Pxns/9hUquxPAqF+lXZfuPFOgtfml2Hz5QfAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOCAQAAACJIvA/AAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqChQQFB9RQDP9AAAA0klEQVR42u3awQ3CMBAFURulR4qgHuiBKuFq58JpF+Yzc4uQojxpHSkr5mukdfn2A0j6T9KxXjwaDtZtVtx1ffBj/+laDHoW33+MyMGTREgSIUmEJBGSREgSIUmEJBEKJJ0+1Ds+pKub6yKiZNPR0qoIHLxA0naW7twF+XJmmvd4Ne0vtcDBk0RIEiFJhCQRkkRIEiFJhCQRCiS5x/vV3OPRCiR9WE3W/CGwkXReTTLff4GDJ4mQJEKSCEkiJImQJEKSCEkiFEhKX01mFDh4kgi9AbCpEje7M3wDAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -533,7 +534,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAD0AAACsBAMAAAA6drk8AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAiklEQVRYw+3WUQqAIBBFUZfQ7KB0B+P+9xZCkJLjhKhT8O7v+VF4Us7Z54X2y0OsB4ePcG1/JLQNcu/bHhgOn+fa/ojmenprzfPHyHB4r2v7IqGV+6+dMbtfiuHwHtf2RUKr9593PO9XBIe/dW1fK/bd8vDx7yf83279/1O+vOr57xgOH+va/iw7Adzmz2N9h8ghAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -557,7 +558,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">129 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAsElEQVRo3u3Yyw2AIBBFUVrQDtQOpP/e1FloNPwGJn7ifQsSNiePoJDgHKlJd864Zei0CWOTXwOmx/S7kMD09cDAwMDAbsfk5LfCDsceU11ROUxVDwwMDAwM7KOYXJ5W2DbMYGBgYA9iBYdaOebz9cDAXoilfwMllq73DezypNGGxZyfYtGPrQaL1gNLY6FdqMZC9YywXoq2Yftae5m2YXu9d2KyVivsGP6FjSZxpCYL7+UfjtP2qGkAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqChQQFB9RQDP9AAABs0lEQVR42u3cQU7DMBBAUYJ6R+5Az9PeoaeErdVM1Xy3bmbi/3awiOhXxgk2Yvn7EvG99w9QjcEgg0Gn9ovlhQtdwsXw/Mol02g/2qn7Kis/q+/c9v6kAziSkMEgg0FvXMMi0aOg9oNgcLDjPQgcSchgkMEgg0EGgwwGGQwyGGQwyGCQwSCDQQaDDAYZDDIYZDDIYFDXFvVl4r9g6dzTP95e/VaDD0EitU+SdghW++500YcMBhkMMhhkMMhgkMEgg0EGgwwGGQwyGGQwyGCQwSCDQQaDDAYZDDIYZDDIYNAOx2yROmeVSYLVOat0JCGDQQaDDAYZDDIYZDDIYJDBIINBBoMMBhkMMhiUZHsnst4jy7BDljjY/R5Zjh0yRxIyGGQwyGCQwSCDQQaDDAYlfnFdy3A+XipYhvNxRxIyGPR0JGf+HxWRDWtYhpUjD0cSMhhU6rUi8ul3s/LBPr3COpKQwSCDQeXXsMjIB8Ehg418EBwyWL8Hvwg2d+c0wbaO6bO7c5pg7xpTn5LQNHdYpGfraupgPWPqSEIGgwwGLe26d3X/PvTbvK8tNmIcSchgkMGgf9mPLFoT9OaMAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -581,7 +582,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">43 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAjElEQVRo3u3ZwQ2AIAxAUVbADcQNZP/dPNgmSiho4cb/FxITHpyEaAjkKdZL0h4/1caOfAcGBgYGtg62yUEyBxNEMT2lpmAynmBgYGBgYGBgYGBgD6xz6/6H5fYOC0yXnoIVs8DAwMDAwMAqWHp/yhvDjFmLY8ZfNx8mIxiYgZU3+SFMHxtvjbECeboAf4pG0terURcAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -623,7 +624,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIoAAABOBAMAAAAN0JP1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAYklEQVRYw+3WsQ3AIAwFUVbICJgNwv67pQkUsZLi44LIdz2vsWRTCr1ls3oI3UrrIxQUFBSUbyVm7ypPMyi2lpu00omCgoLyCyVmY+50A3ZSxCv/UJr240BBQUFJqMTsXfJdCWfi0oUR9CsAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -647,7 +648,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">73 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAuklEQVRo3u3YDQqEIBCGYa+QN6huUPe/WyobZWq2jrv9vR8UCc1DoGSNUqQkTSa6M2lzdx3FRhOwkzE7o10trDfHAAb2G8yt1VqYM8DAwOpje7vK19i483hgl8bcOqiF9Z4BBgYGBgb2JEzPW2YMS/Rf0thcHsPsCQwMDAxMgHl9KSnmlb8ci7QRyjE3uiumgx9pCRaUg4Ft2utCLKz6L+Z/KX+wRDsqi9mLAEtUgS2j5f29ngBxFCnJBDI8NITbmpexAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqChQQFB9RQDP9AAABuUlEQVR42u3cW07DMBQA0QZ1j90DrKfsgVXCb8it1Ixl+8b2nL8iAdEIP+qQbr83ER/ZFzAag0EGg+77F1v21dyeL6bUr/TL2l/UvfinNPI4vP7JvqADhyRkMMhgkMGgy036UVw5M9fNAYJda910SEIGgwwGGQwyGGQwyGBQ6j7sOeD5ePLG9Vqb0jMckpDBIINBBoMMBhkMMhhkMMhgkMGgAc70o8x/KBgy2CN8pd97UIckZDDIYJDBIINB3VbJEY+jX+m4rcjcDNTjkIQMBhkMMhhkMMhgkMEgg0EGgwwGGQwyGGQwyGCQwSCDQQaDDAYZDDIYZDDIYFCj22z970L2ejK82X3J3g/F9Pp9DknIYJDBIINBBoMMBhkMMhhkMMhgkMEgg0EGgwwGGQwyGGQwqMqJ6yyPxZxR6Yh6vE9pKuWQhAwGDfmQ/DltbrxNHKzNvOqQhAwGFQzJlXZdUdEcts6uK3JIQgaDDAYZDDIYZDDo7bZi7V1XdGIftvKuK5r4zXdU4/ziX7DZh1+NsXL4C5vjE5hacpWEDAYtNelHfBnY9t/xPfmkX+pzF3GzEeMcBhkMMhj0BxDzLROocmtwAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -714,7 +715,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEAAAAB9BAMAAADgo3ieAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAbElEQVRYw+3TsQ3AIAxEUVbwCMAGsP9uUaIoEIRzDTYp7tevsXQO4R+lIXm6Qa6vCgGBMYCbFLVlIE3Tr+huISAwAXCT2/7i7OuK6xICAhMAN+n6F3EO2hUEBC4AblLUFv4FALkQELgCuMndHavTjwYiAsUwAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -747,7 +748,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3BAMAAADnFJkAAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAP0lEQVRIx2NgGH5AiQSgANWjbEw8GNUzqmdUz/DWQ04ZIkgCEKCzHgJewKoHf7gZjeoZ1TOqZwTpIacMGU4AAM9RXE6bK1iVAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3CAQAAAC/M0y4AAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqChQQFB9RQDP9AAAAoElEQVRo3u3YTQqAIBQAYY3u2B3qPHWHTllbDVr0A46P+XZuxIFnkPlIUQytD2BK7JSxXGzdXZw536SkNLU+2yN7tQo0YKYQmUJkCpEpRKYQmUJkCpEpRKYQXf7t93e7IOTykSW/3qaV8vSBBixQSnVX1oZPesvn6YY86f3xuQk0YKYQmUJkCpEpRKYQmUJkCpEpRKYQRX3S61ugATOF6ASrDwvHwXGkbQAAAD10RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgMjAwNyBBcHBsZSBJbmMuLCBhbGwgcmlnaHRzIHJlc2VydmVkLp5m3CkAAAAjdEVYdGljYzpkZXNjcmlwdGlvbgBHZW5lcmljIFJHQiBQcm9maWxlGqc4jgAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -807,7 +808,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEIAAAB9BAMAAADkVqijAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAbUlEQVRYw+3TsQ2AMAxE0azgEUg2iPffDQpABOV0Ddgp7tevsXQuZZ3q0WbTTtHcXUIiV/CdGu5DUZ/BW666hESK4Ds13F//Mja5ZaxLSAQJvtPEf4G/f18hIREq+E7D/wWI9r5AQiJc8J2u0A5JZ5bLQm/ZUwAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -831,7 +832,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">41 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAjUlEQVRo3u3ZQQqAIBBAUa9gN0hvkPe/WxudhSLKOETK/6tIetQiTXKONPm6K+RuP18XSzkwMDAtVl7JYIHFbDxgYGBgp2EyW1pgcgIMDAwMDAwM7EBMPpwssNhcCwa2Pzaxu5jH0vgWwcDAwPbC+j+RFFg5AAP7AmuX+AVMRv6LyfNaYDJSbyqWcqTpBV2taFx9wQRzAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4454 (99.0%)</td>
 <td style="text-align: center;">46 (1.0%)</td>
 </tr>
@@ -855,7 +856,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">67 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAp0lEQVRo3u3WzQ2AIAyGYVbQEXQD3X83FRNJCH8tTTD6fgcOHJ6Q0lCcI5pM0szLlWhTje1ntp9gUeH6sOh4YGBgI7H7XbTCggMGBgY2Ggu/FwMsHA9sHOav1ArziwyLR2YflnXAwN6HVZpfiJUdMDAwMDCwOtYwmNqxte6A/Q7zLWaFXc4O1oo9tbfAHgcMLNNieizh6LGE8zEsVy4pVnRUWHcc0eQAQfZjFwJrHIUAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -879,7 +880,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">194 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAmUlEQVRo3u3ZSwqAIBSFYbeQO0h3kPvfW6AOrtiD7nUQ+p+BSHA+HIhkOUc02T7Hh5xdPtNjKQcM7BErey6MwWKeHwqsLmMMVptg82FlmwzCohjBwMDAwMDA1sOaFwsr1jTBwMDAwH6LeXn6m7GLJhgYGNjCmJdfeM3YbRNsWUz+QzBjsgP2gvn+9mzAUteZBQsyQzF1HNHkBAk7a1C9O+egAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4415 (98.1%)</td>
 <td style="text-align: center;">85 (1.9%)</td>
 </tr>
@@ -921,14 +922,14 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOBAMAAAD4LhhFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChQOGTvOVScbAAAAX0lEQVRYw+3UsQ3AIAxEUUYgGyTHBrD/bmkioggajCvn/96vsXQp0SxJh7n8IKVVEBAQEJARcdlYuxAX0dtlRkrrgYCAgARBXOZx+fAHiHY6xxevBwICAhIXcdlY+nYD0vrkvdHuVNAAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOCAQAAACgCc39AAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqChQQFB9RQDP9AAAA/UlEQVR42u3ZwYkCQRBA0Z3FHA1i49EcjFIvLvYTBlHBkZn/LiJemg/dQtV0/snN79IH+C7lQDmwG78ch4fkb1r6aJ8yvp47f9pfP09Ln3EhXRaUA+VAOVAOlAPlQDlQDpQD5UA5UA6UA+VAOVAOlAN3w8GtDgX/TePgdDPTYowFuiwoB3g7Dk8tbNe4iZnZszy2zke3y4JyoBwoB8qBcqAcKAfKgXKgHCgHyoFyoBwoB8qBcqA9C9qztGeZVw6UA2+snVZjeDJfXjuthf+lXRaUA+VAOVAOlAPlQDlQDpQD5UA5UA6UA+VAOVAOlAOtnTBtc1o8p8uCcqAcuAA/JRI3PkpKwwAAAD10RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgMjAwNyBBcHBsZSBJbmMuLCBhbGwgcmlnaHRzIHJlc2VydmVkLp5m3CkAAAAjdEVYdGljYzpkZXNjcmlwdGlvbgBHZW5lcmljIFJHQiBQcm9maWxlGqc4jgAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
 </tbody>
 </table>
 
-<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.4 (<a href="https://www.r-project.org/">R</a> version 4.5.2)<br>2026-10-20</p>
+<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.5 (<a href="https://www.r-project.org/">R</a> version 4.5.2)<br>2026-10-20</p>
 </div>
 </div>
 </div>
@@ -1081,7 +1082,7 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<p>En todos los casos, tomaremos como criterio general de decisión el <strong><span class="math inline">\(p\)</span>-valor</strong> generado por cada prueba frente al nivel de significación estándar <span class="math inline">\(\alpha = 0.05\)</span>. Un <span class="math inline">\(p\text{-valor} &lt; 0.05\)</span> nos permitirá rechazar la hipótesis nula (<span class="math inline">\(H_0\)</span>) y concluir que existe una relación o diferencia estadísticamente significativa.</p>
+<p>En todos los casos, tomaremos como criterio general de decisión el <span class="math inline">\(p\)</span>-valor generado por cada prueba frente al nivel de significación estándar <span class="math inline">\(\alpha = 0.05\)</span>. Un <span class="math inline">\(p\text{-valor} &lt; 0.05\)</span> nos permitirá rechazar la hipótesis nula (<span class="math inline">\(H_0\)</span>) y concluir que existe una relación o diferencia estadísticamente significativa.</p>
 <section id="comparación-de-age-y-target" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="comparación-de-age-y-target"><span class="header-section-number">7.1</span> Comparación de Age y Target</h2>
 <p>Vamos a comparar la variable <strong>Age</strong> (variable categórica ordinal) contra el target. Para esto usaremos boxplot para obtener una visualización y el test de Wilcoxon para comprobar si existe una relación estadística significativa.</p>
@@ -1140,11 +1141,11 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 22%">
+<col style="width: 23%">
 <col style="width: 16%">
 <col style="width: 7%">
-<col style="width: 22%">
-<col style="width: 31%">
+<col style="width: 21%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1227,8 +1228,8 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 15%">
+<col style="width: 25%">
+<col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 21%">
 <col style="width: 30%">
@@ -1274,7 +1275,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 21%">
+<col style="width: 22%">
 <col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 22%">
@@ -1321,7 +1322,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 34%">
+<col style="width: 35%">
 <col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 11%">
@@ -1371,8 +1372,8 @@ window.Quarto = {
 <col style="width: 27%">
 <col style="width: 15%">
 <col style="width: 7%">
-<col style="width: 21%">
-<col style="width: 29%">
+<col style="width: 20%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1386,7 +1387,7 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Perceived_Stress_Score</td>
-<td style="text-align: center;">1553783</td>
+<td style="text-align: center;">1553782</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">&lt; 2.2 ×10^(−16)</td>
 <td style="text-align: center;">Sí</td>
@@ -1415,8 +1416,8 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 15%">
+<col style="width: 25%">
+<col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 21%">
 <col style="width: 30%">
@@ -1463,10 +1464,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
-<col style="width: 15%">
+<col style="width: 16%">
 <col style="width: 7%">
-<col style="width: 21%">
-<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 29%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1567,7 +1568,7 @@ window.Quarto = {
 <col style="width: 19%">
 <col style="width: 8%">
 <col style="width: 13%">
-<col style="width: 36%">
+<col style="width: 35%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1613,8 +1614,8 @@ window.Quarto = {
 <col style="width: 24%">
 <col style="width: 18%">
 <col style="width: 8%">
-<col style="width: 12%">
-<col style="width: 35%">
+<col style="width: 13%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1658,10 +1659,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 27%">
-<col style="width: 17%">
+<col style="width: 18%">
 <col style="width: 8%">
 <col style="width: 12%">
-<col style="width: 34%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1704,10 +1705,10 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 16%">
-<col style="width: 7%">
-<col style="width: 23%">
+<col style="width: 20%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 22%">
 <col style="width: 32%">
 </colgroup>
 <thead>
@@ -1790,7 +1791,7 @@ Figure&nbsp;2: Distribución de la duración del sueño según la puntuación de
     Wilcoxon rank sum test with continuity correction
 
 data:  Sleep_Duration_Hours by Late_Night_Usage
-W = 658597, p-value &lt; 2.2e-16
+W = 658596, p-value &lt; 2.2e-16
 alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
@@ -1907,8 +1908,6 @@ sample estimates:
 </section>
 <section id="análisis-de-multicolinealidad-entre-predictores" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Análisis de multicolinealidad entre predictores</h1>
-<section id="matriz-de-correlación-entre-variables-cuantitativas" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="matriz-de-correlación-entre-variables-cuantitativas"><span class="header-section-number">10.1</span> Matriz de correlación entre variables cuantitativas</h2>
 <p>La matriz de correlación de Pearson evalúa cuantitativamente la intensidad y direción de la relación lineal entre cada par de variables continuas predictoras del conjunto de datos. Los valores oscilan en el intervalo <span class="math inline">\([-1, 1]\)</span>:</p>
 <p>El análisis de la matriz de correlación evidencia fuertes independencias entre los predictores cuantitativos, destacando los siguientes hallazgos principales:</p>
 <ul>
@@ -1931,6 +1930,166 @@ Figure&nbsp;6: Matriz de correlación de Pearson entre predictores cuantitativos
 </div>
 </div>
 </div>
+</section>
+<section id="síntesis-y-selección-de-variables" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Síntesis y selección de variables</h1>
+<section id="criterio-de-selección-y-justificación" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="criterio-de-selección-y-justificación"><span class="header-section-number">11.1</span> Criterio de selección y justificación</h2>
+<p>Tras finalizar la exploración bivariante sobre el subconjunto de entrenamiento (<code>train</code>), aplicamos el principio de parsimonia y reducción de dimensionalidad para definir el espacio final de características. En problemas de aprendizaje automático supervisado, incluir variables sin capacidad discriminante incrementa la complejidad del espacio de coordenadas, aumenta la varianza del modelo y eleva el riesgo de sobreajuste (<em>overfitting</em>).</p>
+<p>Dado un nivel de significación estadística fijado en <span class="math inline">\(\alpha = 0.05\)</span>, adoptamosla siguiente regla de decisión metodológica basada en métodos tipo filter:</p>
+<ul>
+<li><p><strong>Inclusión</strong> <span class="math inline">\((p&lt;0.05)\)</span>: se mantienen aquellos predictores cuyas pruebas de hipótesis (suma de rangos de Wilcoxon o Chi-cuadrado de independencia ) demostraron diferencias o asociaciones estadísticamente significativas con la variable objeto (<code>target</code>).</p></li>
+<li><p><strong>Exclusión</strong> <span class="math inline">\((p \ge 0.05)\)</span>: se descartan las variables descriptivas donde no existe evidencia estadística en contra de la hipótesis nula <span class="math inline">\((H_0)\)</span>, confirmando que su distribución es independiente del rendimiento académico del estudiante.</p></li>
+</ul>
+<div class="cell">
+<div id="tbl-resumen-seleccion-variables" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resumen-seleccion-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Cuadro resumen del análisis bivariante y decisión metodológica de Feature Selection
+</figcaption>
+<div aria-describedby="tbl-resumen-seleccion-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable Predictora</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Naturaleza de la Variable</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Prueba Estadística</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p-valor</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Decisión Metodológica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Daily_Usage_Hours</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Cuantitativa (continua)</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">&lt; 2.2e-16</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">SELECCIONADA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Sleep_Duration_Hours</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Cuantitativa (continua)</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">&lt; 2.2e-16</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">SELECCIONADA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Sleep_Quality_Score</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Cuantitativa / Ordinal</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">&lt; 2.2e-16</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">SELECCIONADA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Late_Night_Usage</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Cualitativa (binaria)</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Chi-cuadrado de independencia</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">&lt; 2.2e-16</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">SELECCIONADA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Perceived_Stress_Score</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Cuantitativa (continua)</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">&lt; 2.2e-16</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">SELECCIONADA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Mental_Health_Index</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Cuantitativa (continua)</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">&lt; 2.2e-16</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 94, 32, 1) !important; background-color: rgba(232, 245, 233, 1) !important;">SELECCIONADA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Age</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cuantitativa (continua)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.4122</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Device_Type</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cualitativa (nominal)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Chi-cuadrado de independencia</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.7722</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Social_Comparison_Frequency</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cualitativa (ordinal)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Chi-cuadrado de independencia</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.8322</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Gender</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cualitativa (nominal)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Chi-cuadrado / Test Binomial</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.9272</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Academic_Level</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cualitativa (nominal)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Chi-cuadrado de independencia</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.6414</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Primary_Platform</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cualitativa (nominal)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Chi-cuadrado de independencia</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.5891</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Weekend_Extra_Hours</td>
+<td style="text-align: left; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Cuantitativa (continua)</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Suma de rangos de Wilcoxon</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">0.7354</td>
+<td style="text-align: center; color: rgba(183, 28, 28, 1) !important; background-color: rgba(255, 235, 238, 1) !important;">Descartada</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<ul>
+<li><strong>Factores seleccionados:</strong> Seleccionamos 6 predictores finales: <code>Daily_Usage_Hours</code>, <code>Sleep_Duration_Hours</code>, <code>Sleep_Quality_Score</code>, <code>Late_Night_Usage</code>, <code>Perceived_Stress_Score</code> y <code>Mental_Health_Index</code>. El análisis confirma que las dimensiones vinculadas a la exposición digital, los patrones de sueño y la salud psicológica contienen la variabilidad relevante para separar a los estudiantes según su rendimiento académico (<code>target</code>).</li>
+<li><strong>Factores descartados:</strong> Se excluyen 7 variables: <code>Age</code>, <code>Device_Type</code>, <code>Social_Comparison_Frequency</code>, <code>Gender</code>, <code>Academic_Level</code>, <code>Primary_Platform</code> y <code>Weekend_Extra_Hours</code>. Al presentar <span class="math inline">\(p\)</span>-valores sustancialmente superiores al umbral de significación, estas variables actúan como ruido no informativo dentro del espacio de características y su eliminación simplifica la frontera de división de los algoritmos supervisados.</li>
+</ul>
+</section>
+<section id="comparación-de-la-capacidad-discriminante" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="comparación-de-la-capacidad-discriminante"><span class="header-section-number">11.2</span> Comparación de la capacidad discriminante</h2>
+<p>Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación <span class="math inline">\(Z\)</span>-score, <span class="math inline">\(\mu = 0, \sigma = 1\)</span>) sobre el conjunto <code>train</code>. Esta proyección permite comparar en una misma escala la magnitud de la sepación entre el grupo de <code>Rendimiento_alto</code> y el de <code>Rendimiento_medio</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-capacidad-discriminante" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-capacidad-discriminante-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Informe_files/figure-html/fig-capacidad-discriminante-1.png" class="img-fluid figure-img" width="912">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-capacidad-discriminante-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Perfil de medias estandarizadas (Z-score) de los predictores numéricos seleccionados según la clase del target
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>El perfil de distribución estandarizada evidencia una separación clara entre las clases del <code>target</code>:</p>
+<ul>
+<li><strong>Patrón de factores protectores:</strong> Los estudiantes clasificados en <code>Rendimiento_alto</code> exhiben puntuaciones <span class="math inline">\(Z\)</span> marcadamente positivas en <code>Sleep_Duration_Hours</code>, <code>Sleep_Quality_Score</code> y <code>Mental_Health_Index</code>, confirmando que un descanso prolongado y un mayor bienestar psicológico se asocian de forma directa con el éxito académico.</li>
+</ul>
+<!-- -->
+<ul>
+<li><strong>Patrón de factores de riesgo:</strong> Por el contrario, la categoría de <code>Rendimiento_bajo_medio</code> se desplaza hacia valores estandarizados positivos en <code>Daily_Usage_Hours</code> y <code>Perceived_Stress_Score</code>, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.</li>
+</ul>
 </section>
 </section>
 
