@@ -15,18 +15,38 @@ execute:
 ---
 
 ```{r}
-library(summarytools)
-library(ggplot2)
-library(caret)
-library(dplyr)
-library(DT)
-library(knitr)
-library(skimr)
-library(scales)
-library(patchwork) # Para combinar gráficos lado a lado
-library(corrplot)
-library(broom)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(summarytools,
+               ggplot2,
+               caret,
+               dplyr,
+               DT,
+               knitr,
+               skimr,
+               scales,
+               patchwork,
+               corrplot,
+               broom,
+               kableExtra,
+               tidyr)
+
+
+#library(summarytools)
+#library(ggplot2)
+#library(caret)
+#library(dplyr)
+#library(DT)
+#library(knitr)
+#library(skimr)
+#library(scales)
+#library(patchwork) # Para combinar gráficos lado a lado
+#library(corrplot)
+#library(broom)
+#library(kableExtra)
 #load("~/Mineria-de-datos-/datos.Rdata")
+
+
 load("datos.Rdata")
 ```
 
@@ -46,11 +66,44 @@ mostrar_test <- function(test_obj, nombre_variable) {
 }
 ```
 
-# Introducción
+# Introducción y Contexto del Proyecto
 
-Este trabajo aborda el análisis exploratorio de datos sobre el conjunto de datos `Social_media_impact_on_life.csv`. Cada observación representa a un estudiante y recopila información estructurada en cinco grandes bloques de variables: Identificación y demografía, hábitos tecnológicos, patrones de descanso, bienestar y salud mental, y rendimiento y resultado global.
+Este trabajo aborda un análisis exploratorio de datos (EDA) y modelado predictivo basado en el conjunto de datos `Social_media_impact_on_life.csv`. Los datos proceden de **Kaggle**, la mayor plataforma y comunidad global de ciencia de datos, aprendizaje automático y analítica avanzada, donde investigadores y profesionales de todo el mundo comparten repositorios para el desarrollo de proyectos y análisis empíricos. Tal como se especifica en la documentación oficial del repositorio, este conjunto recopila **datos reales** a partir de encuestas estructuradas a una amplia muestra de estudiantes, reflejando su realidad académica y digital.
 
-El objetivo de nuestro proyecto es analizar y predecir el **rendimiento académico** de los alumnos.
+El objetivo principal de nuestro proyecto es analizar, comprender y predecir el **rendimiento académico** de los alumnos, evaluando de forma empírica cómo el ecosistema digital modela su día a día. Para lograrlo, cada observación detalla información rigurosa estructurada en cinco grandes bloques de variables:
+
+1. **Identificación y demografía:** Variables que caracterizan al participante, abarcando su identificador único, la edad, el género y el nivel académico cursado.
+2. **Hábitos tecnológicos:** Métricas sobre la exposición digital, incluyendo el promedio de horas de uso diario, el consumo adicional durante los fines de semana, la plataforma de redes sociales preferida, el tipo de dispositivo y el hábito de uso a altas horas de la noche.
+3. **Patrones de descanso:** Indicadores asociados al sueño del estudiante, como la duración media del descanso nocturno en horas y una escala cuantitativa sobre la calidad del sueño.
+4. **Bienestar y salud mental:** Métricas de naturaleza psicométrica, tales como la frecuencia de comparación social con otros usuarios, la puntuación de estrés percibido y un índice global de salud mental.
+5. **Rendimiento y resultado global:** Variables que cuantifican directamente el éxito académico (calificación o promedio académico GPA) y la variable objetivo o *target* global (`Overall_Impact`), que resume el impacto neto del entorno digital en la vida del estudiante.
+
+A lo largo de las siguientes secciones, llevaremos a cabo una fase exhaustiva de análisis exploratorio y contraste estadístico sobre nuestra partición de entrenamiento (*train*), con el fin de desentrañar patrones ocultos y preparar el terreno para los futuros modelos predictivos.
+
+# Metodología y Estrategia Analítica
+
+Para garantizar el rigor científico, la reproducibilidad y evitar el sobreajuste  o la fuga de datos, este proyecto sigue una estrategia metodológica estructurada en fases bien diferenciadas.
+
+## Partición y División del Conjunto de Datos
+
+Dado el volumen total de observaciones, el conjunto de datos original se ha dividido en tres particiones independientes mediante un esquema de muestreo estratificado basado en la variable objetivo:
+
+1. **Conjunto de Entrenamiento (*Train*, 65%):** Es el subconjunto principal sobre el cual realizamos la totalidad del Análisis Exploratorio de Datos (EDA), el contraste estadístico de hipótesis y, posteriormente, el entrenamiento y la sintonización de los modelos predictivos.
+2. **Conjunto de Prueba (*Test*, 21%):** Reservado de forma iterativa para evaluar y estudiar la capacidad de generalización de los modelos entrenados en la fase previa.
+3. **Conjunto de Validación (*Validation*, 14%):** Se mantendrá completamente aislado hasta el final del proyecto. Su propósito es simular un caso real y riguroso ante datos nunca vistos (*unseen data*), permitiendo estudiar el rendimiento definitivo del modelo seleccionado.
+
+## Enfoque del Análisis Exploratorio de Datos (EDA)
+
+El análisis exploratorio se aborda principalmente desde una perspectiva bivariante para estudiar la relación entre cada variable predictora y el *target*. Para ello, combinamos técnicas de visualización avanzada con herramientas de inferencia estadística:
+
+* **Análisis Visual:** 
+  * Para las **variables cuantitativas y continuas**, empleamos diagramas de cajas combinados y la representación explícita de la media estadística, lo que permite observar la forma de la distribución y las diferencias centrales entre grupos.
+  * Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
+* **Contraste de Hipótesis Estadísticas:** 
+  Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
+  * **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
+  * **Test de $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`):** Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
+  * **Test Binomial (`binom.test`):** Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.
 
 # Datos
 
@@ -601,9 +654,7 @@ Al obtener un $p-valor<2.2 \times 10^{-16}$ que está por debajo del umbral de s
 
 ## Comparación de Género y Target
 
-Comparamos Gender (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente las posibles diferencias en las proporciones de la variable objetivo según el género. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
-
-El gráfico de barras estandariza muestra la proporción del rendimiento académico (`target`) desglosada por las distintas categorías de género del estudiante (`Gender`). Tanto en los grupos mayoritarios (*Female* y *Male*) como en las categorías *Non-Binary* y *Prefer not to say*, la distribución interna entre alumnos de rendimiento *alto* y rendimiento *bajo/medio* se mantiene prácticamente simétrica y equilibrada, sin que ninguna identidad muestre una prevalencia destacable sobre el rendimiento académico.
+Comparamos **Gender** (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente las posibles diferencias en las proporciones de la variable objetivo según el género. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 ggplot(train, aes(x = Gender, fill = target, group = target)) +
@@ -627,6 +678,8 @@ ggplot(train, aes(x = Gender, fill = target, group = target)) +
   theme_minimal()
 ```
 
+El gráfico de barras estandariza muestra la proporción del rendimiento académico (`target`) desglosada por las distintas categorías de género del estudiante (`Gender`). Tanto en los grupos mayoritarios (*Female* y *Male*) como en las categorías *Non-Binary* y *Prefer not to say*, la distribución interna entre alumnos de rendimiento *alto* y rendimiento *bajo/medio* se mantiene prácticamente simétrica y equilibrada, sin que ninguna identidad muestre una prevalencia destacable sobre el rendimiento académico.
+
 Para evaluar inicialmente la relación global entre ambas variables categóricas, usamos la prueba de independencia de Chi-Cuadrado de Pearson.
 
 ```{r}
@@ -635,9 +688,9 @@ test_chisq <- chisq.test(table(train$Gender, train$target))
 mostrar_test(test_chisq, "Gender")
 ```
 
-El análisis arrojó un estadístico de contraste $X^2 = 0.46186$ con 3 grados de libertad y un $p-valor= 0.9272$. Al ser este *p-valor* claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$, confirmando que la distribución global del rendimiento académico es independiente del género.
+El análisis devuelve un estadístico de contraste $X^2 = 0.46186$ con 3 grados de libertad y un $p-valor= 0.9272$. Al ser este *p-valor* claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$, confirmando que la distribución global del rendimiento académico es independiente del género.
 
-La relación observada a simple vista no nos permite distinguir si existe diferencia significativa entre rendimiento *alto* y *bajo/medio* por género, para ello hagamos un test binomial. Este análisis evalúa si la proporción de estudiantes con rendimiento *alto* dentro de cada subgrupo específico difiere de forma relevante del 50% teórico esperado por azar.
+Además nos parece interesante preguntarnos si existe diferencia en las categorías individualmente; esto se debe a la existencia de la creencia de que las mujeres maduran antes y, por tanto, mejoran sus resultados antes. Para ello hagamos un test binomial. Este análisis evalúa si la proporción de estudiantes con rendimiento *alto* dentro de cada subgrupo específico difiere de forma relevante del `r prob_alto` teórico esperado por azar.
 
 ```{r}
 resultados_binomiales <- train %>%
@@ -653,7 +706,24 @@ resultados_binomiales <- train %>%
     es_significativo = p_value < 0.05
   )
 
-print(resultados_binomiales)
+resultados_binomiales %>%
+  mutate(
+    `Proporción (Alto)` = round(n_alto / total, 3),
+    `p-valor` = ifelse(p_value < 0.001, "< 0.001", sprintf("%.4f", p_value)),
+    `Significativo (α=0.05)` = ifelse(p_value < 0.05, "Sí", "No")
+  ) %>%
+  select(
+    Grupo = Gender, 
+    `Nº Éxitos (Alto)` = n_alto, 
+    `Total` = total, 
+    `Proporción` = `Proporción (Alto)`, 
+    `p-valor`, 
+    `Significativo (α=0.05)`
+  ) %>%
+  kable(
+    align = c('l', 'c', 'c', 'c', 'c', 'c'),
+    col.names = c("Grupo (Gender)", "Nº Éxitos (Alto)", "Total", "Proporción", "p-valor", "Significativo (α=0.05)")
+  )
 ```
 
 Los resultados de estas pruebas muestran *p-valores* no significativas en la totalidad de las categorías analizadas: $0.651$ en *Female*, $0.675$ en *Male*, $0.824$ en *Non-Binary* y $1.000$ e *Prefer not to say*. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable `Gender` no ejerce ningún efecto relevante sobre las calificaciones, **careciendo de capacidad explicativa o discriminante** para el modelado de la variable respuesta.
@@ -1087,12 +1157,6 @@ Dado un nivel de significación estadística fijado en $\alpha = 0.05$, adoptamo
 ```{r}
 #| label: tbl-resumen-seleccion-variables
 #| tbl-cap: "Cuadro resumen del análisis bivariante y decisión metodológica de Feature Selection"
-#| message: false
-#| warning: false
-
-library(knitr)
-library(kableExtra)
-library(dplyr)
 
 # 1. Definición del dataframe con el histórico de contrastes sobre la partición 'train'
 tabla_seleccion <- data.frame(
@@ -1151,12 +1215,7 @@ Para visualizar de manera conjunta como se comportan los predictores cuantitativ
 #| fig-cap: "Perfil de medias estandarizadas (Z-score) de los predictores numéricos seleccionados según la clase del target"
 #| fig-width: 9.5
 #| fig-height: 5.2
-#| message: false
-#| warning: false
 
-library(ggplot2)
-library(tidyr)
-library(dplyr)
 
 # 1. Estandarización de predictores numéricos sobre 'train' (Z-score: media = 0, sd = 1)
 train_scaled <- train %>%
