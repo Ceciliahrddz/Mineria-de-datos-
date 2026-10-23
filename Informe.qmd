@@ -123,7 +123,7 @@ datatable(
 )
 ```
 
-# Descripcion de las variables
+## Descripcion de las variables
 
 - **Student_ID**: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio.
 - **Age**: Edad del estudiante. Toma valores numéricos enteros.
@@ -141,7 +141,7 @@ datatable(
 - **Academic_Performance_GPA**: Calificación o promedio académico. Variable numérica continua.
 - **Overall_Impact**: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.
 
-# Estudio univariante
+## Estudio univariante
 
 En esta sección realizamos una inspección descriptiva individual de todas las variables de nuestro conjunto de datos. Evaluamos las medidas de tendencia central (media y mediana), la dispersión y la distribución de frecuencias de factores demográficos, de descanso, psicológicos y de consumo digital.
 
@@ -167,10 +167,13 @@ print(
 
 En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar. Por tanto proseguimos a la siguiente parte.
 
-# Partición de los datos
+## Partición de los datos
 
-Dada la cantidad de datos decidimos una partición train(0.65) -test (0.21) -validación (0.14).
+En este apartado debemos crear una división de nuestros datos. Como hemos nombrado anteriormente vamos a dividir el conjunto en **tres** partes, explicadas anteriormente en la metodología.
 
+- **Train**: La gran mayoría de los datos caerán aquí, aproximadamente el 65%.
+- **Valid**: Con este conjunto comprobaremos que nuestros modelos son certeros, acaparán el 21% de los datos.
+- **Test**: Con estos datos ejecutaremos el examen final de nuestro modelo, aproximadamente el 14% de los datos.
 ```{r}
 set.seed(54685)
 idx_train <- createDataPartition(datos$Overall_Impact, p=0.65)
@@ -1226,3 +1229,25 @@ El perfil de distribución estandarizada evidencia una separación clara entre l
 <!-- -->
 
 - **Patrón de factores de riesgo:** Por el contrario, la categoría de `Rendimiento_bajo_medio` se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
+
+
+
+# Uso de Inteligencia Artificial {.unnumbered}
+
+En la elaboración de este trabajo hemos hecho uso puntual de un modelo de lenguaje de inteligencia artificial (LLM) como herramienta de apoyo técnico y de programación (Gemini AI). A continuación detallamos su alcance, integración y el proceso de verificación aplicado:
+
+## Tareas desarrolladas e integración en el flujo de trabajo {.unnumbered}
+
+Hemos integrado la IA como un asistente técnico puntual, sin delegar en ningún momento la redacción ni la interpretación de los resultados. Principalmente nos ha servido para:
+
+* **Consultar sintaxis y funciones específicas:** Buscar de forma rápida el nombre o el funcionamiento de ciertas librerías de R que necesitábamos para procesar los datos (como por ejemplo la función `createDataPartition()` del paquete `caret` para realizar el muestreo estratificado).
+* **Apoyo en el código de visualización:** Ayudarnos a estructurar y retocar el código para crear gráficos con `ggplot2` y maquetar tablas tanto estáticas como dinámicas (`knitr::kable` y `DT::datatable`).
+* **Resolver errores de entorno en R y RStudio:** Diagnosticar y solucionar fallos técnicos de configuración, instalación de paquetes y dependencias en Windows. Por ejemplo, la utilizamos para corregir un fallo en la ejecución del Quarto derivado de la corrupción del paquete `rmarkdown`, solucionar bloqueos de seguridad del sistema sobre archivos DLL (`lava` y `digest.dll`); dado que Windows Defender decidió bloquear dichos archivos sin razon aparente. En ese caso tuvimos que aprender a manejar el `AppLocker` de Windows.
+
+## Verificación de la información y validación del código {.unnumbered}
+
+Para garantizar el rigor metodológico, la reproducibilidad del estudio y evitar la inclusión de código o interpretaciones erróneas, aplicamos una verificación en tres niveles:
+
+1. **Prueba y ejecución local:** Todo el código o sugerencia de configuración proporcionado por la IA fue ejecutado y probado previamente en la consola interactiva de RStudio para comprobar su comportamiento antes de incorporarlo al documento definitivo.
+2. **Contraste con la documentación oficial:** Contrastamos directamente los parámetros y argumentos de las funciones sugeridas con las guías de referencia de CRAN y la ayuda integrada de R (por ejemplo, verificación del parámetro `list = FALSE` dentro de `createDataPartition`).
+3. **Supervisión teórica y lógica:** Evaluamos críticamente cada respuesta para asegurar que las soluciones de código respetasen la lógica del proyecto (como el aislamiento estricto de las particiones de *Train*, *Test* y *Validation* para evitar la fuga de datos) y que los textos explicativos fuesen de autoría propia.
