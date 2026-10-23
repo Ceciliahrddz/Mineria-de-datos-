@@ -888,8 +888,7 @@ Para abordar este análisis, nos planteamos las siguientes preguntas clave de in
 El diagrama de dispersión evidencia una clara relación inversa y lineal entre el tiempo dedicado diariamente a las redes sociales (`Daily_Usage_Hours`) y el bienestar psicológico del estudiante (`Mental_Health_Index`). Conforme aumentan las horas de uso diario, el índice de salud mental disminuye progresivamente, observándose además que el alumnado con rendimiento académico alto se concentra principalmente en la franja de bajo consumo digital (entre 2 y 6 horas) y puntuaciones elevadas de salud mental (superiores a 75). Este patrón confirma que la sobreexposición digital se asocia negativamente con el bienestar emocional de los estudiantes, posicionando a las horas de uso como un indicador determinante e interrelacionado con la salud mental como el rendimiento académico.
 
 ```{r}
-#| label: fig-relacion-uso-saludmental
-#| fig-cap: "Relación entre las horas de uso diario de redes sociales y el índice de salud mental"
+
 
 ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target)) +
   geom_point(alpha = 0.5, size = 2) +
@@ -919,8 +918,7 @@ ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target
 El diagrama de caja manifiesta una progresión directamente proporcional entre la duración media del descanso (`Sleep_Duration_Hours`) y la puntuación de calidad percibida (`Sleep_Quality_Score`). Aquellos estudiantes que reportan una calidad de sueño deficiente (puntuación de 1) presentan una mediana de descanso cercana a las 5 horas diarias, mientras que en el grupo con una calidad excelente (puntuación de 5) la mediana asciende prograsivamente hasta aproximarse a las 8,5 horas. Esta clara tendencia confirma una fuerte interdemendencia positiva entre ambas métricas, evidenciando que la cantidad de tiempo dormido es un condicionante principal de la percepción subjetiva del descanso. A efectos del modelado predictivo, este hallazgo ratifica la presencia de redundancia informativa en el bloque de variables de descanso, lo que respalda la necesidad de aplicar técnicas de selección de características.
 
 ```{r}
-#| label: fig-relacion-duracion-calidad-sueno
-#| fig-cap: "Distribución de la duración del sueño según la puntuación de calidad del descanso"
+
 
 ggplot(train, aes(x = factor(Sleep_Quality_Score), y = Sleep_Duration_Hours, fill = factor(Sleep_Quality_Score))) +
   geom_boxplot(alpha = 0.75, color = "#2c3e50", outlier.color = "black", outlier.alpha = 0.5) +
@@ -944,8 +942,6 @@ ggplot(train, aes(x = factor(Sleep_Quality_Score), y = Sleep_Duration_Hours, fil
 La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (`Late_Night_Usage`) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas. Las pruebas no paramétricas de Wilcoxon confirman que estas diferencias son altamente significativase ambos indicadores ($p$-valor$<2.2 \times 10^{-16}$ en ambos contrastes), permitiendo rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, se concluye que el uso nocturno es un factor perturbador clave del descanso.
 
 ```{r}
-#| label: fig-uso-nocturno-descanso
-#| fig-cap: "Impacto del uso nocturno de redes sociales en las horas de sueño y la calidad del descanso"
 #| fig-width: 10
 #| fig-height: 4.5
 
@@ -982,12 +978,16 @@ p2 <- ggplot(train, aes(x = Late_Night_Usage, y = Sleep_Quality_Score, fill = La
 # Presentación conjunta de gráficos
 p1 + p2
 
+```
+
+```{r}
+
 # Pruebas estadísticas de Wilcoxon
 test_duracion <- wilcox.test(Sleep_Duration_Hours ~ Late_Night_Usage, data = train)
 test_calidad <- wilcox.test(Sleep_Quality_Score ~ Late_Night_Usage, data = train)
 
-test_duracion
-test_calidad
+mostrar_test(test_duracion, "Horas de sueño vs Uso nocturno de redes sociales")
+mostrar_test(test_calidad, "Calidad del sueño vs Uso nocturno de redes sociales")
 ```
 
 ## Relación entre el estrés percibido y el índice de salud mental
@@ -997,8 +997,7 @@ El gráfico de dispersión refleja una relación lineal inversa muy pronunciada 
 Además, al segmentar por rendimiento académico (`target`), se observa claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.
 
 ```{r}
-#| label: fig-relacion-estres-saludmental
-#| fig-cap: "Relación entre la puntuación de estrés percibido y el índice de salud mental"
+
 
 ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = target)) +
   geom_point(alpha = 0.5, size = 2) +
@@ -1023,7 +1022,10 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
   )
 
 # Contraste de correlación de Pearson
-cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, use = "complete.obs")
+test_cor <- cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, use = "complete.obs")
+mostrar_test(test_cor, "Puntuación de estrés vs Índice salud mental")
+
+
 ```
 
 ## Evaluación de la relación entre la edad y las horas de uso diario.
@@ -1033,10 +1035,6 @@ El gráfico de dispersión muestra una recta de ajuste prácticamente horizonal,
 Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson. Obtuvimos un coeficiente de correlación cercano a cero $r \approx 0.01$ con un $p$-valor ampliamente superior al nivel de significación estándar ($\alpha = 0.05$, $p > 0.05$), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.
 
 ```{r}
-#| label: fig-relacion-edad-uso
-#| fig-cap: "Dispersión entre la edad del estudiante y las horas de uso diario de redes sociales"
-
-
 # 1. Gráfico de dispersión
 p <- ggplot(train, aes(x = Age, y = Daily_Usage_Hours)) +
   geom_jitter(alpha = 0.4, color = "#2c3e50", width = 0.2, height = 0.2) +
@@ -1059,32 +1057,12 @@ print(p)
 
 ```{r}
 # 2. Test de correlación de Pearson / Spearman
-cor.test(train$Age, train$Daily_Usage_Hours, method = "pearson")
+test_cor <- cor.test(train$Age, train$Daily_Usage_Hours, method = "pearson")
+mostrar_test(test_cor, "Edad vs Horas de Uso")
 ```
 
-##¿Existe diferencia entre la longitud del sueño y la edad?
 
-Vamos a estudiar la longitud del sueño dependiendo de la edad
 
-```{r}
-ggplot(train, aes(x = factor(Age), y = Sleep_Duration_Hours)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
-  labs(title = "Duración del Sueño por Edad", 
-       x = "Edad", 
-       y = "Horas de Sueño") +
-  theme_minimal()
-```
-
-# Comparación de Horas de sueño y Género
-
-```{r}
-ggplot(train, aes(x = Gender, y = Sleep_Duration_Hours)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue") +
-  labs(title = "Duración del Sueño por Edad", 
-       x = "Edad", 
-       y = "Horas de Sueño") +
-  theme_minimal()
-```
 
 # Análisis de multicolinealidad entre predictores
 
@@ -1101,8 +1079,6 @@ El análisis de la matriz de correlación evidencia fuertes independencias entre
 La presencia de coeficientes superioes a $|r| \ge 0.75$ señala una alta multicolinealidad y redundancia de información entre las variables explicativas.
 
 ```{r}
-#| label: fig-matriz-correlacion
-#| fig-cap: "Matriz de correlación de Pearson entre predictores cuantitativos"
 #| fig-width: 7
 #| fig-height: 6
 
@@ -1210,8 +1186,6 @@ tabla_seleccion %>%
 Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación $Z$-score, $\mu = 0, \sigma = 1$) sobre el conjunto `train`. Esta proyección permite comparar en una misma escala la magnitud de la sepación entre el grupo de `Rendimiento_alto` y el de `Rendimiento_medio`.
 
 ```{r}
-#| label: fig-capacidad-discriminante
-#| fig-cap: "Perfil de medias estandarizadas (Z-score) de los predictores numéricos seleccionados según la clase del target"
 #| fig-width: 9.5
 #| fig-height: 5.2
 
