@@ -103,7 +103,7 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
   - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
   - **Test Binomial (`binom.test`):** Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.
-
+  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso).
 # Datos
 
 ```{r}
@@ -149,7 +149,7 @@ En esta sección realizamos una inspección descriptiva individual de todas las 
 #(dfSummary(datos, graph.col = FALSE))
 #| results: asis
 print(
-  dfSummary(datos, graph.col = TRUE), # Activamos la columna de gráficos
+  dfSummary(select(datos, -Student_ID), graph.col = TRUE), # Activamos la columna de gráficos
   method = "render",
   headings = FALSE,      # Oculta cabeceras repetitivas
   bootstrap.css = FALSE  # Evita conflictos con el diseño de Quarto
@@ -868,11 +868,11 @@ test_chisq <- chisq.test(table(train$Overall_Impact, train$target))
 mostrar_test(test_chisq, "Overall_Impact")
 ```
 
-Como obtenemos un valor de $p$-value $< 2.2e-16$ nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban altamente correlacionadas.
+Como obtenemos un valor de $p$-valor $< 2.2e-16$ nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban altamente correlacionadas.
 
 # Relaciones entre variables.
 
-En este apartado analizaremos las interacciones cruzadas entre variables. Estudiar estas relaciones no ayuda a comprender los mecanismos subyacentes del comportamiento estudiantil y anticipar posibles relaciones indirectas o redundancias antes de la fase de modelado.
+En este apartado analizaremos las interacciones cruzadas entre variables. Estudiar estas relaciones nos ayuda a comprender los mecanismos subyacentes del comportamiento estudiantil y anticipar posibles relaciones indirectas o redundancias antes de la fase de modelado.
 
 Para abordar este análisis, nos planteamos las siguientes preguntas clave de investigación:
 
@@ -888,7 +888,7 @@ Para abordar este análisis, nos planteamos las siguientes preguntas clave de in
 
 ## Impacto del consumo diario de redes en la salud mental
 
-El diagrama de dispersión evidencia una clara relación inversa y lineal entre el tiempo dedicado diariamente a las redes sociales (`Daily_Usage_Hours`) y el bienestar psicológico del estudiante (`Mental_Health_Index`). Conforme aumentan las horas de uso diario, el índice de salud mental disminuye progresivamente, observándose además que el alumnado con rendimiento académico alto se concentra principalmente en la franja de bajo consumo digital (entre 2 y 6 horas) y puntuaciones elevadas de salud mental (superiores a 75). Este patrón confirma que la sobreexposición digital se asocia negativamente con el bienestar emocional de los estudiantes, posicionando a las horas de uso como un indicador determinante e interrelacionado con la salud mental como el rendimiento académico.
+Vamos a comparar **Daily_Usage_Hours** (variable continua) con **Mental_Health_Index** (variable continua), para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias visualmente. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 
@@ -916,9 +916,21 @@ ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target
   )
 ```
 
+El diagrama de dispersión evidencia una clara relación inversa y lineal entre el tiempo dedicado diariamente a las redes sociales (`Daily_Usage_Hours`) y el bienestar psicológico del estudiante (`Mental_Health_Index`). Conforme aumentan las horas de uso diario, el índice de salud mental disminuye progresivamente, observándose además que el alumnado con rendimiento académico alto se concentra principalmente en la franja de bajo consumo digital (entre 2 y 6 horas) y puntuaciones elevadas de salud mental (superiores a 75). Este patrón confirma que la sobreexposición digital se asocia negativamente con el bienestar emocional de los estudiantes, posicionando a las horas de uso como un indicador determinante e interrelacionado con la salud mental como el rendimiento académico.
+
+Aunque, parece evidente su correlación, aplicamos el test de independencia Chi-Cuadrado de Pearson.
+
+```{r}
+test_chisq <- chisq.test(table(train$Daily_Usage_Hours, train$Mental_Health_Index))
+mostrar_test(test_chisq, "DailyUH vs MentalHI")
+```
+
+El test nos devuelve un valor de $p$-valor muy por debajo del valor de significancia escogido de $\alpha = 0.05$. Como consecuencia, las variables no son independientes entre sí y presentan una correlación estadística significante.
+
 ## Interacción entre las horas de sueño y la calidad del descanso
 
-El diagrama de caja manifiesta una progresión directamente proporcional entre la duración media del descanso (`Sleep_Duration_Hours`) y la puntuación de calidad percibida (`Sleep_Quality_Score`). Aquellos estudiantes que reportan una calidad de sueño deficiente (puntuación de 1) presentan una mediana de descanso cercana a las 5 horas diarias, mientras que en el grupo con una calidad excelente (puntuación de 5) la mediana asciende prograsivamente hasta aproximarse a las 8,5 horas. Esta clara tendencia confirma una fuerte interdemendencia positiva entre ambas métricas, evidenciando que la cantidad de tiempo dormido es un condicionante principal de la percepción subjetiva del descanso. A efectos del modelado predictivo, este hallazgo ratifica la presencia de redundancia informativa en el bloque de variables de descanso, lo que respalda la necesidad de aplicar técnicas de selección de características.
+Vamos a comparar **`Sleep_Duration_Hours`** (variable continua) con **`Sleep_Quality_Score`** (variable categórica ordinal de 1 a 5); para ello usaremos un diagrama de caja (*boxplot*) que nos permitirá ver la distribución y diferencias entre grupos visualmente. Por último, aplicaremos el test de Kruskal-Wallis para verificar si existe una relación estadística significativa.
+
 
 ```{r}
 
@@ -940,9 +952,22 @@ ggplot(train, aes(x = factor(Sleep_Quality_Score), y = Sleep_Duration_Hours, fil
   )
 ```
 
+El diagrama de caja manifiesta una progresión directamente proporcional entre la duración media del descanso (`Sleep_Duration_Hours`) y la puntuación de calidad percibida (`Sleep_Quality_Score`). Aquellos estudiantes que reportan una calidad de sueño deficiente (puntuación de 1) presentan una mediana de descanso cercana a las 5 horas diarias, mientras que en el grupo con una calidad excelente (puntuación de 5) la mediana asciende prograsivamente hasta aproximarse a las 8,5 horas. Esta clara tendencia confirma una fuerte interdemendencia positiva entre ambas métricas, evidenciando que la cantidad de tiempo dormido es un condicionante principal de la percepción subjetiva del descanso. A efectos del modelado predictivo, este hallazgo ratifica la presencia de redundancia informativa en el bloque de variables de descanso, lo que respalda la necesidad de aplicar técnicas de selección de características.
+
+Hagamos el test de Kruskal para verificar si no son independientes con cierta significancia estadística.
+
+```{r}
+test_kruskal <- kruskal.test(Sleep_Duration_Hours ~ Sleep_Quality_Score, data = train)
+mostrar_test(test_kruskal,"Duración del sueño vs la calidad del sueño")
+```
+
+Las pruebas no paramétricas de Kruskal-Wallis nos confirman que existen diferencias altamente significativas en la duración del sueño entre los distintos niveles de calidad del descanso ($\chi^2 = 1646.39$, $p$-valor $< 2.2 \times 10^{-16}$), permitiendonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que la cantidad de horas dormidas es un factor determinante en la percepción de la calidad del descanso.
+
 ## Uso nocturno de las redes sociales y su impacto en el descanso
 
-La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (`Late_Night_Usage`) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas. Las pruebas no paramétricas de Wilcoxon confirman que estas diferencias son altamente significativase ambos indicadores ($p$-valor$<2.2 \times 10^{-16}$ en ambos contrastes), permitiendo rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, se concluye que el uso nocturno es un factor perturbador clave del descanso.
+Vamos a comparar **`Late_Night_Usage`** (variable binaria) con **`Sleep_Duration_Hours`** (variable continua); para ello usaremos un diagrama de caja (*boxplot*) comparativo que nos permitirá ver la diferencia en las medianas y la dispersión visualmente. Por último, aplicaremos el test de Mann-Whitney-Wilcoxon para verificar si existe una relación estadística significativa.
+
+
 
 ```{r}
 #| fig-width: 10
@@ -983,6 +1008,8 @@ p1 + p2
 
 ```
 
+La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (`Late_Night_Usage`) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas. 
+
 ```{r}
 
 # Pruebas estadísticas de Wilcoxon
@@ -993,11 +1020,13 @@ mostrar_test(test_duracion, "Horas de sueño vs Uso nocturno de redes sociales")
 mostrar_test(test_calidad, "Calidad del sueño vs Uso nocturno de redes sociales")
 ```
 
+Las pruebas no paramétricas de Wilcoxon nos confirman que estas diferencias son altamente significativas en ambos indicadores ($p$-valor$<2.2 \times 10^{-16}$ en ambos contrastes), permitiendonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que el uso nocturno es un factor perturbador clave del descanso.
+
 ## Relación entre el estrés percibido y el índice de salud mental
 
-El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante, lo que retifica estadísticamente mediante un coeficiente de correlación de Pearson fuertemente negativo ($r=-0.77$, $p$-valor$<2.2 \times 10^{-16}$.
+Vamos a comparar **`Perceived_Stress_Score`** (variable continua) con **`Mental_Health_Score`** (variable continua); para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias y la dirección de la asociación visualmente. Por último, aplicaremos el test de correlación de Pearson (o Spearman) para verificar si existe una relación estadística significativa.
 
-Además, al segmentar por rendimiento académico (`target`), se observa claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.
+
 
 ```{r}
 
@@ -1025,17 +1054,26 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
   )
 
 # Contraste de correlación de Pearson
-test_cor <- cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, use = "complete.obs")
-mostrar_test(test_cor, "Puntuación de estrés vs Índice salud mental")
-
 
 ```
 
+El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. Comprobémoslo con el test de Pearson. 
+
+```{r}
+test_chisq <- chisq.test(train$Perceived_Stress_Score, train$Mental_Health_Index)
+mostrar_test(test_chisq, "Puntuación de estrés vs Índice salud mental")
+```
+
+
+El test nos muestra un coeficiente de correlación de Pearson fuertemente negativo ($r=-0.77$, $p$-valor$<2.2 \times 10^{-16}$.
+
+Además, al segmentar por rendimiento académico (`target`), observamos claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.
+
 ## Evaluación de la relación entre la edad y las horas de uso diario.
 
-El gráfico de dispersión muestra una recta de ajuste prácticamente horizonal, lo que sugiere visulemente una ausencia de tendencia o asociación entre la edad del estudiante (`Age`) y el número de horas diarias dedicadas al uso de redes sociales (`Daily_Usage_Hours`). La distribuciónde las observaciones se extiende de manera uniforme a lo largo de los distintos rangos de edad analizados.
+Vamos a comparar **`Age`** (variable ordinal/discreta) con **`Daily_Usage_Hours`** (variable continua); para ello usaremos un diagrama de dispersión con *jittering* que nos permitirá ver la densidad y dispersión de los datos visualmente. Por último, aplicaremos el test de correlación de Spearman para verificar si existe una relación estadística significativa.
 
-Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson. Obtuvimos un coeficiente de correlación cercano a cero $r \approx 0.01$ con un $p$-valor ampliamente superior al nivel de significación estándar ($\alpha = 0.05$, $p > 0.05$), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.
+
 
 ```{r}
 # 1. Gráfico de dispersión
@@ -1058,12 +1096,17 @@ print(p)
 
 ```
 
+El gráfico de dispersión muestra una recta de ajuste prácticamente horizonal, lo que sugiere visulemente una ausencia de tendencia o asociación entre la edad del estudiante (`Age`) y el número de horas diarias dedicadas al uso de redes sociales (`Daily_Usage_Hours`). La distribuciónde las observaciones se extiende de manera uniforme a lo largo de los distintos rangos de edad analizados.
+
+Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson. 
+
 ```{r}
 # 2. Test de correlación de Pearson / Spearman
 test_cor <- cor.test(train$Age, train$Daily_Usage_Hours, method = "pearson")
 mostrar_test(test_cor, "Edad vs Horas de Uso")
 ```
 
+Obtuvimos un $p$-valor ampliamente superior al nivel de significación estándar ($\alpha = 0.05$, $p > 0.05$), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.
 
 
 

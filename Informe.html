@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,11 +37,11 @@ ul.task-list li input[type="checkbox"] {
 <script src="Informe_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Informe_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Informe_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Informe_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Informe_files/libs/bootstrap/bootstrap-62e2d20df198e8a01bb734742f2e28cf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="Informe_files/libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+<link href="Informe_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 
 <script src="Informe_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 
@@ -111,44 +111,41 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#partición-y-división-del-conjunto-de-datos" id="toc-partición-y-división-del-conjunto-de-datos" class="nav-link" data-scroll-target="#partición-y-división-del-conjunto-de-datos"><span class="header-section-number">2.1</span> Partición y División del Conjunto de Datos</a></li>
   <li><a href="#enfoque-del-análisis-exploratorio-de-datos-eda" id="toc-enfoque-del-análisis-exploratorio-de-datos-eda" class="nav-link" data-scroll-target="#enfoque-del-análisis-exploratorio-de-datos-eda"><span class="header-section-number">2.2</span> Enfoque del Análisis Exploratorio de Datos (EDA)</a></li>
+  <li><a href="#descripcion-de-las-variables" id="toc-descripcion-de-las-variables" class="nav-link" data-scroll-target="#descripcion-de-las-variables"><span class="header-section-number">2.3</span> Descripcion de las variables</a></li>
+  <li><a href="#estudio-univariante" id="toc-estudio-univariante" class="nav-link" data-scroll-target="#estudio-univariante"><span class="header-section-number">2.4</span> Estudio univariante</a></li>
+  <li><a href="#partición-de-los-datos" id="toc-partición-de-los-datos" class="nav-link" data-scroll-target="#partición-de-los-datos"><span class="header-section-number">2.5</span> Partición de los datos</a></li>
   </ul></li>
-  <li><a href="#datos" id="toc-datos" class="nav-link" data-scroll-target="#datos"><span class="header-section-number">3</span> Datos</a>
+  <li><a href="#análisis-exploratorio-de-datos" id="toc-análisis-exploratorio-de-datos" class="nav-link" data-scroll-target="#análisis-exploratorio-de-datos"><span class="header-section-number">3</span> Análisis exploratorio de datos</a></li>
+  <li><a href="#relaciones-entre-el-target-y-el-resto-de-variables." id="toc-relaciones-entre-el-target-y-el-resto-de-variables." class="nav-link" data-scroll-target="#relaciones-entre-el-target-y-el-resto-de-variables."><span class="header-section-number">4</span> Relaciones entre el target y el resto de variables.</a>
   <ul class="collapse">
-  <li><a href="#descripcion-de-las-variables" id="toc-descripcion-de-las-variables" class="nav-link" data-scroll-target="#descripcion-de-las-variables"><span class="header-section-number">3.1</span> Descripcion de las variables</a></li>
-  <li><a href="#estudio-univariante" id="toc-estudio-univariante" class="nav-link" data-scroll-target="#estudio-univariante"><span class="header-section-number">3.2</span> Estudio univariante</a></li>
-  <li><a href="#partición-de-los-datos" id="toc-partición-de-los-datos" class="nav-link" data-scroll-target="#partición-de-los-datos"><span class="header-section-number">3.3</span> Partición de los datos</a></li>
+  <li><a href="#comparación-de-edad-y-target" id="toc-comparación-de-edad-y-target" class="nav-link" data-scroll-target="#comparación-de-edad-y-target"><span class="header-section-number">4.1</span> Comparación de Edad y Target</a></li>
+  <li><a href="#comparación-de-horas-de-uso-diario-de-redes-sociales-y-target" id="toc-comparación-de-horas-de-uso-diario-de-redes-sociales-y-target" class="nav-link" data-scroll-target="#comparación-de-horas-de-uso-diario-de-redes-sociales-y-target"><span class="header-section-number">4.2</span> Comparación de Horas de uso diario de redes sociales y Target</a></li>
+  <li><a href="#comparación-de-tipo-de-dispositivo-y-target" id="toc-comparación-de-tipo-de-dispositivo-y-target" class="nav-link" data-scroll-target="#comparación-de-tipo-de-dispositivo-y-target"><span class="header-section-number">4.3</span> Comparación de Tipo de dispositivo y Target</a></li>
+  <li><a href="#comparación-de-puntuación-de-calidad-del-sueño-y-target" id="toc-comparación-de-puntuación-de-calidad-del-sueño-y-target" class="nav-link" data-scroll-target="#comparación-de-puntuación-de-calidad-del-sueño-y-target"><span class="header-section-number">4.4</span> Comparación de Puntuación de calidad del sueño y Target</a></li>
+  <li><a href="#comparación-de-uso-nocturno-de-redes-sociales-y-target" id="toc-comparación-de-uso-nocturno-de-redes-sociales-y-target" class="nav-link" data-scroll-target="#comparación-de-uso-nocturno-de-redes-sociales-y-target"><span class="header-section-number">4.5</span> Comparación de Uso nocturno de redes sociales y Target</a></li>
+  <li><a href="#comparación-de-frecuencia-de-comparación-social-y-target" id="toc-comparación-de-frecuencia-de-comparación-social-y-target" class="nav-link" data-scroll-target="#comparación-de-frecuencia-de-comparación-social-y-target"><span class="header-section-number">4.6</span> Comparación de Frecuencia de comparación social y Target</a></li>
+  <li><a href="#comparación-de-puntuación-de-estrés-percibido-y-target" id="toc-comparación-de-puntuación-de-estrés-percibido-y-target" class="nav-link" data-scroll-target="#comparación-de-puntuación-de-estrés-percibido-y-target"><span class="header-section-number">4.7</span> Comparación de Puntuación de estrés percibido y Target</a></li>
+  <li><a href="#comparación-de-índice-de-salud-mental-y-target" id="toc-comparación-de-índice-de-salud-mental-y-target" class="nav-link" data-scroll-target="#comparación-de-índice-de-salud-mental-y-target"><span class="header-section-number">4.8</span> Comparación de Índice de salud mental y Target</a></li>
+  <li><a href="#comparación-de-horas-de-sueño-y-target" id="toc-comparación-de-horas-de-sueño-y-target" class="nav-link" data-scroll-target="#comparación-de-horas-de-sueño-y-target"><span class="header-section-number">4.9</span> Comparación de Horas de Sueño y Target</a></li>
+  <li><a href="#comparación-de-género-y-target" id="toc-comparación-de-género-y-target" class="nav-link" data-scroll-target="#comparación-de-género-y-target"><span class="header-section-number">4.10</span> Comparación de Género y Target</a></li>
+  <li><a href="#comparación-de-nivel-académico-y-target" id="toc-comparación-de-nivel-académico-y-target" class="nav-link" data-scroll-target="#comparación-de-nivel-académico-y-target"><span class="header-section-number">4.11</span> Comparación de Nivel Académico y Target</a></li>
+  <li><a href="#comparación-de-plataforma-principal-y-target" id="toc-comparación-de-plataforma-principal-y-target" class="nav-link" data-scroll-target="#comparación-de-plataforma-principal-y-target"><span class="header-section-number">4.12</span> Comparación de Plataforma principal y Target</a></li>
+  <li><a href="#comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target." id="toc-comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target." class="nav-link" data-scroll-target="#comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target."><span class="header-section-number">4.13</span> Comparación entre Horas extra en fin de semana de uso de redes sociales y el target.</a></li>
+  <li><a href="#comparación-de-impacto-general-y-target" id="toc-comparación-de-impacto-general-y-target" class="nav-link" data-scroll-target="#comparación-de-impacto-general-y-target"><span class="header-section-number">4.14</span> Comparación de Impacto general y Target</a></li>
   </ul></li>
-  <li><a href="#análisis-exploratorio-de-datos" id="toc-análisis-exploratorio-de-datos" class="nav-link" data-scroll-target="#análisis-exploratorio-de-datos"><span class="header-section-number">4</span> Análisis exploratorio de datos</a></li>
-  <li><a href="#relaciones-entre-el-target-y-el-resto-de-variables." id="toc-relaciones-entre-el-target-y-el-resto-de-variables." class="nav-link" data-scroll-target="#relaciones-entre-el-target-y-el-resto-de-variables."><span class="header-section-number">5</span> Relaciones entre el target y el resto de variables.</a>
+  <li><a href="#relaciones-entre-variables." id="toc-relaciones-entre-variables." class="nav-link" data-scroll-target="#relaciones-entre-variables."><span class="header-section-number">5</span> Relaciones entre variables.</a>
   <ul class="collapse">
-  <li><a href="#comparación-de-edad-y-target" id="toc-comparación-de-edad-y-target" class="nav-link" data-scroll-target="#comparación-de-edad-y-target"><span class="header-section-number">5.1</span> Comparación de Edad y Target</a></li>
-  <li><a href="#comparación-de-horas-de-uso-diario-de-redes-sociales-y-target" id="toc-comparación-de-horas-de-uso-diario-de-redes-sociales-y-target" class="nav-link" data-scroll-target="#comparación-de-horas-de-uso-diario-de-redes-sociales-y-target"><span class="header-section-number">5.2</span> Comparación de Horas de uso diario de redes sociales y Target</a></li>
-  <li><a href="#comparación-de-tipo-de-dispositivo-y-target" id="toc-comparación-de-tipo-de-dispositivo-y-target" class="nav-link" data-scroll-target="#comparación-de-tipo-de-dispositivo-y-target"><span class="header-section-number">5.3</span> Comparación de Tipo de dispositivo y Target</a></li>
-  <li><a href="#comparación-de-puntuación-de-calidad-del-sueño-y-target" id="toc-comparación-de-puntuación-de-calidad-del-sueño-y-target" class="nav-link" data-scroll-target="#comparación-de-puntuación-de-calidad-del-sueño-y-target"><span class="header-section-number">5.4</span> Comparación de Puntuación de calidad del sueño y Target</a></li>
-  <li><a href="#comparación-de-uso-nocturno-de-redes-sociales-y-target" id="toc-comparación-de-uso-nocturno-de-redes-sociales-y-target" class="nav-link" data-scroll-target="#comparación-de-uso-nocturno-de-redes-sociales-y-target"><span class="header-section-number">5.5</span> Comparación de Uso nocturno de redes sociales y Target</a></li>
-  <li><a href="#comparación-de-frecuencia-de-comparación-social-y-target" id="toc-comparación-de-frecuencia-de-comparación-social-y-target" class="nav-link" data-scroll-target="#comparación-de-frecuencia-de-comparación-social-y-target"><span class="header-section-number">5.6</span> Comparación de Frecuencia de comparación social y Target</a></li>
-  <li><a href="#comparación-de-puntuación-de-estrés-percibido-y-target" id="toc-comparación-de-puntuación-de-estrés-percibido-y-target" class="nav-link" data-scroll-target="#comparación-de-puntuación-de-estrés-percibido-y-target"><span class="header-section-number">5.7</span> Comparación de Puntuación de estrés percibido y Target</a></li>
-  <li><a href="#comparación-de-índice-de-salud-mental-y-target" id="toc-comparación-de-índice-de-salud-mental-y-target" class="nav-link" data-scroll-target="#comparación-de-índice-de-salud-mental-y-target"><span class="header-section-number">5.8</span> Comparación de Índice de salud mental y Target</a></li>
-  <li><a href="#comparación-de-horas-de-sueño-y-target" id="toc-comparación-de-horas-de-sueño-y-target" class="nav-link" data-scroll-target="#comparación-de-horas-de-sueño-y-target"><span class="header-section-number">5.9</span> Comparación de Horas de Sueño y Target</a></li>
-  <li><a href="#comparación-de-género-y-target" id="toc-comparación-de-género-y-target" class="nav-link" data-scroll-target="#comparación-de-género-y-target"><span class="header-section-number">5.10</span> Comparación de Género y Target</a></li>
-  <li><a href="#comparación-de-nivel-académico-y-target" id="toc-comparación-de-nivel-académico-y-target" class="nav-link" data-scroll-target="#comparación-de-nivel-académico-y-target"><span class="header-section-number">5.11</span> Comparación de Nivel Académico y Target</a></li>
-  <li><a href="#comparación-de-plataforma-principal-y-target" id="toc-comparación-de-plataforma-principal-y-target" class="nav-link" data-scroll-target="#comparación-de-plataforma-principal-y-target"><span class="header-section-number">5.12</span> Comparación de Plataforma principal y Target</a></li>
-  <li><a href="#comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target." id="toc-comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target." class="nav-link" data-scroll-target="#comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target."><span class="header-section-number">5.13</span> Comparación entre Horas extra en fin de semana de uso de redes sociales y el target.</a></li>
-  <li><a href="#comparación-de-impacto-general-y-target" id="toc-comparación-de-impacto-general-y-target" class="nav-link" data-scroll-target="#comparación-de-impacto-general-y-target"><span class="header-section-number">5.14</span> Comparación de Impacto general y Target</a></li>
+  <li><a href="#impacto-del-consumo-diario-de-redes-en-la-salud-mental" id="toc-impacto-del-consumo-diario-de-redes-en-la-salud-mental" class="nav-link" data-scroll-target="#impacto-del-consumo-diario-de-redes-en-la-salud-mental"><span class="header-section-number">5.1</span> Impacto del consumo diario de redes en la salud mental</a></li>
+  <li><a href="#interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso" id="toc-interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso" class="nav-link" data-scroll-target="#interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso"><span class="header-section-number">5.2</span> Interacción entre las horas de sueño y la calidad del descanso</a></li>
+  <li><a href="#uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso" id="toc-uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso" class="nav-link" data-scroll-target="#uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso"><span class="header-section-number">5.3</span> Uso nocturno de las redes sociales y su impacto en el descanso</a></li>
+  <li><a href="#relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental" id="toc-relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental" class="nav-link" data-scroll-target="#relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental"><span class="header-section-number">5.4</span> Relación entre el estrés percibido y el índice de salud mental</a></li>
+  <li><a href="#evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." id="toc-evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." class="nav-link" data-scroll-target="#evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario."><span class="header-section-number">5.5</span> Evaluación de la relación entre la edad y las horas de uso diario.</a></li>
   </ul></li>
-  <li><a href="#relaciones-entre-variables." id="toc-relaciones-entre-variables." class="nav-link" data-scroll-target="#relaciones-entre-variables."><span class="header-section-number">6</span> Relaciones entre variables.</a>
+  <li><a href="#análisis-de-multicolinealidad-entre-predictores" id="toc-análisis-de-multicolinealidad-entre-predictores" class="nav-link" data-scroll-target="#análisis-de-multicolinealidad-entre-predictores"><span class="header-section-number">6</span> Análisis de multicolinealidad entre predictores</a></li>
+  <li><a href="#síntesis-y-selección-de-variables" id="toc-síntesis-y-selección-de-variables" class="nav-link" data-scroll-target="#síntesis-y-selección-de-variables"><span class="header-section-number">7</span> Síntesis y selección de variables</a>
   <ul class="collapse">
-  <li><a href="#impacto-del-consumo-diario-de-redes-en-la-salud-mental" id="toc-impacto-del-consumo-diario-de-redes-en-la-salud-mental" class="nav-link" data-scroll-target="#impacto-del-consumo-diario-de-redes-en-la-salud-mental"><span class="header-section-number">6.1</span> Impacto del consumo diario de redes en la salud mental</a></li>
-  <li><a href="#interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso" id="toc-interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso" class="nav-link" data-scroll-target="#interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso"><span class="header-section-number">6.2</span> Interacción entre las horas de sueño y la calidad del descanso</a></li>
-  <li><a href="#uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso" id="toc-uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso" class="nav-link" data-scroll-target="#uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso"><span class="header-section-number">6.3</span> Uso nocturno de las redes sociales y su impacto en el descanso</a></li>
-  <li><a href="#relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental" id="toc-relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental" class="nav-link" data-scroll-target="#relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental"><span class="header-section-number">6.4</span> Relación entre el estrés percibido y el índice de salud mental</a></li>
-  <li><a href="#evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." id="toc-evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." class="nav-link" data-scroll-target="#evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario."><span class="header-section-number">6.5</span> Evaluación de la relación entre la edad y las horas de uso diario.</a></li>
-  </ul></li>
-  <li><a href="#análisis-de-multicolinealidad-entre-predictores" id="toc-análisis-de-multicolinealidad-entre-predictores" class="nav-link" data-scroll-target="#análisis-de-multicolinealidad-entre-predictores"><span class="header-section-number">7</span> Análisis de multicolinealidad entre predictores</a></li>
-  <li><a href="#síntesis-y-selección-de-variables" id="toc-síntesis-y-selección-de-variables" class="nav-link" data-scroll-target="#síntesis-y-selección-de-variables"><span class="header-section-number">8</span> Síntesis y selección de variables</a>
-  <ul class="collapse">
-  <li><a href="#criterio-de-selección-y-justificación" id="toc-criterio-de-selección-y-justificación" class="nav-link" data-scroll-target="#criterio-de-selección-y-justificación"><span class="header-section-number">8.1</span> Criterio de selección y justificación</a></li>
-  <li><a href="#comparación-de-la-capacidad-discriminante" id="toc-comparación-de-la-capacidad-discriminante" class="nav-link" data-scroll-target="#comparación-de-la-capacidad-discriminante"><span class="header-section-number">8.2</span> Comparación de la capacidad discriminante</a></li>
+  <li><a href="#criterio-de-selección-y-justificación" id="toc-criterio-de-selección-y-justificación" class="nav-link" data-scroll-target="#criterio-de-selección-y-justificación"><span class="header-section-number">7.1</span> Criterio de selección y justificación</a></li>
+  <li><a href="#comparación-de-la-capacidad-discriminante" id="toc-comparación-de-la-capacidad-discriminante" class="nav-link" data-scroll-target="#comparación-de-la-capacidad-discriminante"><span class="header-section-number">7.2</span> Comparación de la capacidad discriminante</a></li>
   </ul></li>
   <li><a href="#uso-de-inteligencia-artificial" id="toc-uso-de-inteligencia-artificial" class="nav-link" data-scroll-target="#uso-de-inteligencia-artificial">Uso de Inteligencia Artificial</a>
   <ul class="collapse">
@@ -226,22 +223,20 @@ window.Quarto = {
 <li><strong>Test de Wilcoxon-Mann-Whitney (<code>wilcox.test</code>):</strong> Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del <em>target</em>.</li>
 <li><strong>Test de</strong> <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) de Independencia (<code>chisq.test</code>): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.</li>
 <li><strong>Test Binomial (<code>binom.test</code>):</strong> Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.</li>
+<li><strong>Test de Kruskal-Wallis (<code>kruskal.test</code>):</strong> Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso). # Datos</li>
 </ul></li>
 </ul>
-</section>
-</section>
-<section id="datos" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Datos</h1>
 <p>El conjunto de datos analizado cuenta con un total de 4500 observaciones y 16 variables, abarcando la información estructural necesaria para el estudio.</p>
 <p>A continuación, se presenta una tabla interactiva con una vista preliminar de los datos. Esta herramienta permite explorar las primeras filas de forma dinámica, facilitando la verificación inicial de los tipos de variables, la detección de posibles valores ausentes y la comprensión general de la estructura del dataset antes de proceder con los análisis estadísticos y los modelos.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-02a0760cd5ad4086dcc6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-02a0760cd5ad4086dcc6">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-44cf44db23ea666b00e7" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-44cf44db23ea666b00e7">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<section id="descripcion-de-las-variables" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="descripcion-de-las-variables"><span class="header-section-number">3.1</span> Descripcion de las variables</h2>
+</section>
+<section id="descripcion-de-las-variables" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="descripcion-de-las-variables"><span class="header-section-number">2.3</span> Descripcion de las variables</h2>
 <ul>
 <li><strong>Student_ID</strong>: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio.</li>
 <li><strong>Age</strong>: Edad del estudiante. Toma valores numéricos enteros.</li>
@@ -260,8 +255,8 @@ window.Quarto = {
 <li><strong>Overall_Impact</strong>: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.</li>
 </ul>
 </section>
-<section id="estudio-univariante" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="estudio-univariante"><span class="header-section-number">3.2</span> Estudio univariante</h2>
+<section id="estudio-univariante" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="estudio-univariante"><span class="header-section-number">2.4</span> Estudio univariante</h2>
 <p>En esta sección realizamos una inspección descriptiva individual de todas las variables de nuestro conjunto de datos. Evaluamos las medidas de tendencia central (media y mediana), la dispersión y la distribución de frecuencias de factores demográficos, de descanso, psicológicos y de consumo digital.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -291,120 +286,6 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">1</td>
-<td style="text-align: left;">Student_ID [character]</td>
-<td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. STU_2024000</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. STU_2024001</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. STU_2024002</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. STU_2024003</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. STU_2024004</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. STU_2024005</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. STU_2024006</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">8. STU_2024007</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">9. STU_2024008</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">10. STU_2024009</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: left; padding: 0; margin: 0; border: 0;">[ 4490 others ]</td>
-</tr>
-</tbody>
-</table></td>
-<td style="text-align: left; padding: 0; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
-<tbody>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="even" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">0.0%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-<tr class="odd" style="background-color:transparent">
-<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">4490</td>
-<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
-<td style="text-align: right; padding: 0; border: 0;">99.8%</td>
-<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
-</tr>
-</tbody>
-</table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAKIAAAEKBAMAAABj5JMfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAnklEQVR42u3VsQ2DUBQEQVpwCWd3AP33RuKMkBP6T8wWMOlum1rlU4tIJBKJxIvYA98thkgkEolEvy6LIRKJRCJxlNgDJ4khEolEInGU2AMniSESiUQi0V2XF0MkEolEol8vL4ZIJBKJRL8uiyESiUQicZTYAyeJIRKJRCJxlNgDJ4khEolEItFdlxe/vf7i72i1E4lEIvFhsX8F3e8EYwzOElxQWMEAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
-<td style="text-align: center;">4500 (100.0%)</td>
-<td style="text-align: center;">0 (0.0%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
 <td style="text-align: left;">Age [integer]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -423,12 +304,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">12 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAApElEQVRo3u3ZQQ7AEBCFYVfQG5Qb1P3v1gYLUg1mZtHF/xYWI75IhNA6RyTxTY6Qc/rtjLCUAwYGZoaVHRpssJjbCwwMDAzMEquXKSOsjAcDW8F2LglTbGd+YGBgT0Jz+quxbiQYGBiYGlv72LeIlRIYGBgY2KA0O2+3sDiZHxiYHfb910GA1Y7/YoONKsfSezVssLomWqwotaTFulL/ElbGEUluIHZGBQx2aX8AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAApElEQVRo3u3ZQQ7AEBCFYVfQG5Qb1P3v1gYLUg1mZtHF/xYWI75IhNA6RyTxTY6Qc/rtjLCUAwYGZoaVHRpssJjbCwwMDAzMEquXKSOsjAcDW8F2LglTbGd+YGBgT0Jz+quxbiQYGBiYGlv72LeIlRIYGBgY2KA0O2+3sDiZHxiYHfb910GA1Y7/YoONKsfSezVssLomWqwotaTFulL/ElbGEUluIHZGBQx2aX8AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
+<tr class="even">
+<td style="text-align: center;">2</td>
 <td style="text-align: left;">Gender [factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -474,12 +355,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFcAAABmBAMAAABMwBBXAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAZElEQVRYw+3UQQrAIAxEUY+gN6jJDer979aN4DIZsKXC/+u3EGFSyplZpmtiH4nAYLCCpQ22TPV1HD+4Lxz/BhgMFrG0wZ/cDfHI9Dz2AQaDN2Npg7H8BJsJ2G8wGLwZSxs8rQe+irM73gMangAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFcAAABmBAMAAABMwBBXAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAZElEQVRYw+3UQQrAIAxEUY+gN6jJDer979aN4DIZsKXC/+u3EGFSyplZpmtiH4nAYLCCpQ22TPV1HD+4Lxz/BhgMFrG0wZ/cDfHI9Dz2AQaDN2Npg7H8BJsJ2G8wGLwZSxs8rQe+irM73gMangAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
+<tr class="odd">
+<td style="text-align: center;">3</td>
 <td style="text-align: left;">Academic_Level [ordered, factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -516,12 +397,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOBAMAAADRBSWHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAV0lEQVRYw+3UuQ0AIAwEQUqADng6gP57Q0iERsiOeHbzSS44594trwpSfqrS5CoKhfpA2X4jqLpHZVVxs7wcCoU6Vdke4Pxns/9hUquxPAqF+lXZfuPFOgtfml2Hz5QfAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOBAMAAADRBSWHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAV0lEQVRYw+3UuQ0AIAwEQUqADng6gP57Q0iERsiOeHbzSS44594trwpSfqrS5CoKhfpA2X4jqLpHZVVxs7wcCoU6Vdke4Pxns/9hUquxPAqF+lXZfuPFOgtfml2Hz5QfAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
+<tr class="even">
+<td style="text-align: center;">4</td>
 <td style="text-align: left;">Primary_Platform [factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -594,12 +475,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAD0AAACsBAMAAAA6drk8AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAiklEQVRYw+3WUQqAIBBFUZfQ7KB0B+P+9xZCkJLjhKhT8O7v+VF4Us7Z54X2y0OsB4ePcG1/JLQNcu/bHhgOn+fa/ojmenprzfPHyHB4r2v7IqGV+6+dMbtfiuHwHtf2RUKr9593PO9XBIe/dW1fK/bd8vDx7yf83279/1O+vOr57xgOH+va/iw7Adzmz2N9h8ghAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAD0AAACsBAMAAAA6drk8AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAiklEQVRYw+3WUQqAIBBFUZfQ7KB0B+P+9xZCkJLjhKhT8O7v+VF4Us7Z54X2y0OsB4ePcG1/JLQNcu/bHhgOn+fa/ojmenprzfPHyHB4r2v7IqGV+6+dMbtfiuHwHtf2RUKr9593PO9XBIe/dW1fK/bd8vDx7yf83279/1O+vOr57xgOH+va/iw7Adzmz2N9h8ghAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">6</td>
+<tr class="odd">
+<td style="text-align: center;">5</td>
 <td style="text-align: left;">Daily_Usage_Hours [numeric]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -618,12 +499,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">129 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAsElEQVRo3u3Yyw2AIBBFUVrQDtQOpP/e1FloNPwGJn7ifQsSNiePoJDgHKlJd864Zei0CWOTXwOmx/S7kMD09cDAwMDAbsfk5LfCDsceU11ROUxVDwwMDAwM7KOYXJ5W2DbMYGBgYA9iBYdaOebz9cDAXoilfwMllq73DezypNGGxZyfYtGPrQaL1gNLY6FdqMZC9YywXoq2Yftae5m2YXu9d2KyVivsGP6FjSZxpCYL7+UfjtP2qGkAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAsElEQVRo3u3Yyw2AIBBFUVrQDtQOpP/e1FloNPwGJn7ifQsSNiePoJDgHKlJd864Zei0CWOTXwOmx/S7kMD09cDAwMDAbsfk5LfCDsceU11ROUxVDwwMDAwM7KOYXJ5W2DbMYGBgYA9iBYdaOebz9cDAXoilfwMllq73DezypNGGxZyfYtGPrQaL1gNLY6FdqMZC9YywXoq2Yftae5m2YXu9d2KyVivsGP6FjSZxpCYL7+UfjtP2qGkAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">7</td>
+<tr class="even">
+<td style="text-align: center;">6</td>
 <td style="text-align: left;">Weekend_Extra_Hours [numeric]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -642,12 +523,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">43 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAjElEQVRo3u3ZwQ2AIAxAUVbADcQNZP/dPNgmSiho4cb/FxITHpyEaAjkKdZL0h4/1caOfAcGBgYGtg62yUEyBxNEMT2lpmAynmBgYGBgYGBgYGBgD6xz6/6H5fYOC0yXnoIVs8DAwMDAwMAqWHp/yhvDjFmLY8ZfNx8mIxiYgZU3+SFMHxtvjbECeboAf4pG0terURcAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAjElEQVRo3u3ZwQ2AIAxAUVbADcQNZP/dPNgmSiho4cb/FxITHpyEaAjkKdZL0h4/1caOfAcGBgYGtg62yUEyBxNEMT2lpmAynmBgYGBgYGBgYGBgD6xz6/6H5fYOC0yXnoIVs8DAwMDAwMAqWHp/yhvDjFmLY8ZfNx8mIxiYgZU3+SFMHxtvjbECeboAf4pG0terURcAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
+<tr class="odd">
+<td style="text-align: center;">7</td>
 <td style="text-align: left;">Device_Type [factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -684,12 +565,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIoAAABOBAMAAAAN0JP1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAYklEQVRYw+3WsQ3AIAwFUVbICJgNwv67pQkUsZLi44LIdz2vsWRTCr1ls3oI3UrrIxQUFBSUbyVm7ypPMyi2lpu00omCgoLyCyVmY+50A3ZSxCv/UJr240BBQUFJqMTsXfJdCWfi0oUR9CsAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIoAAABOBAMAAAAN0JP1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAYklEQVRYw+3WsQ3AIAwFUVbICJgNwv67pQkUsZLi44LIdz2vsWRTCr1ls3oI3UrrIxQUFBSUbyVm7ypPMyi2lpu00omCgoLyCyVmY+50A3ZSxCv/UJr240BBQUFJqMTsXfJdCWfi0oUR9CsAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">9</td>
+<tr class="even">
+<td style="text-align: center;">8</td>
 <td style="text-align: left;">Sleep_Duration_Hours [numeric]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -708,12 +589,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">73 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAuklEQVRo3u3YDQqEIBCGYa+QN6huUPe/WyobZWq2jrv9vR8UCc1DoGSNUqQkTSa6M2lzdx3FRhOwkzE7o10trDfHAAb2G8yt1VqYM8DAwOpje7vK19i483hgl8bcOqiF9Z4BBgYGBgb2JEzPW2YMS/Rf0thcHsPsCQwMDAxMgHl9KSnmlb8ci7QRyjE3uiumgx9pCRaUg4Ft2utCLKz6L+Z/KX+wRDsqi9mLAEtUgS2j5f29ngBxFCnJBDI8NITbmpexAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAuklEQVRo3u3YDQqEIBCGYa+QN6huUPe/WyobZWq2jrv9vR8UCc1DoGSNUqQkTSa6M2lzdx3FRhOwkzE7o10trDfHAAb2G8yt1VqYM8DAwOpje7vK19i483hgl8bcOqiF9Z4BBgYGBgb2JEzPW2YMS/Rf0thcHsPsCQwMDAxMgHl9KSnmlb8ci7QRyjE3uiumgx9pCRaUg4Ft2utCLKz6L+Z/KX+wRDsqi9mLAEtUgS2j5f29ngBxFCnJBDI8NITbmpexAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">10</td>
+<tr class="odd">
+<td style="text-align: center;">9</td>
 <td style="text-align: left;">Sleep_Quality_Score [integer]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -775,12 +656,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEAAAAB9BAMAAADgo3ieAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAbElEQVRYw+3TsQ3AIAxEUVbwCMAGsP9uUaIoEIRzDTYp7tevsXQO4R+lIXm6Qa6vCgGBMYCbFLVlIE3Tr+huISAwAXCT2/7i7OuK6xICAhMAN+n6F3EO2hUEBC4AblLUFv4FALkQELgCuMndHavTjwYiAsUwAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEAAAAB9BAMAAADgo3ieAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAbElEQVRYw+3TsQ3AIAxEUVbwCMAGsP9uUaIoEIRzDTYp7tevsXQO4R+lIXm6Qa6vCgGBMYCbFLVlIE3Tr+huISAwAXCT2/7i7OuK6xICAhMAN+n6F3EO2hUEBC4AblLUFv4FALkQELgCuMndHavTjwYiAsUwAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">11</td>
+<tr class="even">
+<td style="text-align: center;">10</td>
 <td style="text-align: left;">Late_Night_Usage [factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -808,12 +689,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3BAMAAADnFJkAAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAP0lEQVRIx2NgGH5AiQSgANWjbEw8GNUzqmdUz/DWQ04ZIkgCEKCzHgJewKoHf7gZjeoZ1TOqZwTpIacMGU4AAM9RXE6bK1iVAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3BAMAAADnFJkAAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAP0lEQVRIx2NgGH5AiQSgANWjbEw8GNUzqmdUz/DWQ04ZIkgCEKCzHgJewKoHf7gZjeoZ1TOqZwTpIacMGU4AAM9RXE6bK1iVAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">12</td>
+<tr class="odd">
+<td style="text-align: center;">11</td>
 <td style="text-align: left;">Social_Comparison_Frequency [ordered, factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -868,12 +749,12 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEIAAAB9BAMAAADkVqijAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAbUlEQVRYw+3TsQ2AMAxE0azgEUg2iPffDQpABOV0Ddgp7tevsXQuZZ3q0WbTTtHcXUIiV/CdGu5DUZ/BW666hESK4Ds13F//Mja5ZaxLSAQJvtPEf4G/f18hIREq+E7D/wWI9r5AQiJc8J2u0A5JZ5bLQm/ZUwAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEIAAAB9BAMAAADkVqijAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAbUlEQVRYw+3TsQ2AMAxE0azgEUg2iPffDQpABOV0Ddgp7tevsXQuZZ3q0WbTTtHcXUIiV/CdGu5DUZ/BW666hESK4Ds13F//Mja5ZaxLSAQJvtPEf4G/f18hIREq+E7D/wWI9r5AQiJc8J2u0A5JZ5bLQm/ZUwAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">13</td>
+<tr class="even">
+<td style="text-align: center;">12</td>
 <td style="text-align: left;">Perceived_Stress_Score [numeric]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -892,12 +773,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">41 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAjUlEQVRo3u3ZQQqAIBBAUa9gN0hvkPe/WxudhSLKOETK/6tIetQiTXKONPm6K+RuP18XSzkwMDAtVl7JYIHFbDxgYGBgp2EyW1pgcgIMDAwMDAwM7EBMPpwssNhcCwa2Pzaxu5jH0vgWwcDAwPbC+j+RFFg5AAP7AmuX+AVMRv6LyfNaYDJSbyqWcqTpBV2taFx9wQRzAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAjUlEQVRo3u3ZQQqAIBBAUa9gN0hvkPe/WxudhSLKOETK/6tIetQiTXKONPm6K+RuP18XSzkwMDAtVl7JYIHFbDxgYGBgp2EyW1pgcgIMDAwMDAwM7EBMPpwssNhcCwa2Pzaxu5jH0vgWwcDAwPbC+j+RFFg5AAP7AmuX+AVMRv6LyfNaYDJSbyqWcqTpBV2taFx9wQRzAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4454 (99.0%)</td>
 <td style="text-align: center;">46 (1.0%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">14</td>
+<tr class="odd">
+<td style="text-align: center;">13</td>
 <td style="text-align: left;">Mental_Health_Index [integer]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -916,12 +797,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">67 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAp0lEQVRo3u3WzQ2AIAyGYVbQEXQD3X83FRNJCH8tTTD6fgcOHJ6Q0lCcI5pM0szLlWhTje1ntp9gUeH6sOh4YGBgI7H7XbTCggMGBgY2Ggu/FwMsHA9sHOav1ArziwyLR2YflnXAwN6HVZpfiJUdMDAwMDCwOtYwmNqxte6A/Q7zLWaFXc4O1oo9tbfAHgcMLNNieizh6LGE8zEsVy4pVnRUWHcc0eQAQfZjFwJrHIUAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAp0lEQVRo3u3WzQ2AIAyGYVbQEXQD3X83FRNJCH8tTTD6fgcOHJ6Q0lCcI5pM0szLlWhTje1ntp9gUeH6sOh4YGBgI7H7XbTCggMGBgY2Ggu/FwMsHA9sHOav1ArziwyLR2YflnXAwN6HVZpfiJUdMDAwMDCwOtYwmNqxte6A/Q7zLWaFXc4O1oo9tbfAHgcMLNNieizh6LGE8zEsVy4pVnRUWHcc0eQAQfZjFwJrHIUAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">15</td>
+<tr class="even">
+<td style="text-align: center;">14</td>
 <td style="text-align: left;">Academic_Performance_GPA [numeric]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -940,12 +821,12 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">194 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ0UU7WwAAAAmUlEQVRo3u3ZSwqAIBSFYbeQO0h3kPvfW6AOrtiD7nUQ+p+BSHA+HIhkOUc02T7Hh5xdPtNjKQcM7BErey6MwWKeHwqsLmMMVptg82FlmwzCohjBwMDAwMDA1sOaFwsr1jTBwMDAwH6LeXn6m7GLJhgYGNjCmJdfeM3YbRNsWUz+QzBjsgP2gvn+9mzAUteZBQsyQzF1HNHkBAk7a1C9O+egAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAmUlEQVRo3u3ZSwqAIBSFYbeQO0h3kPvfW6AOrtiD7nUQ+p+BSHA+HIhkOUc02T7Hh5xdPtNjKQcM7BErey6MwWKeHwqsLmMMVptg82FlmwzCohjBwMDAwMDA1sOaFwsr1jTBwMDAwH6LeXn6m7GLJhgYGNjCmJdfeM3YbRNsWUz+QzBjsgP2gvn+9mzAUteZBQsyQzF1HNHkBAk7a1C9O+egAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4415 (98.1%)</td>
 <td style="text-align: center;">85 (1.9%)</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">16</td>
+<tr class="odd">
+<td style="text-align: center;">15</td>
 <td style="text-align: left;">Overall_Impact [ordered, factor]</td>
 <td style="text-align: left; padding: 8; vertical-align: middle;"><table class="caption-top table table-sm table-striped small">
 <tbody>
@@ -982,21 +863,21 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOBAMAAAD4LhhFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcKGQ6NWuQKAAAAX0lEQVRYw+3UsQ3AIAxEUUYgGyTHBrD/bmkioggajCvn/96vsXQp0SxJh7n8IKVVEBAQEJARcdlYuxAX0dtlRkrrgYCAgARBXOZx+fAHiHY6xxevBwICAhIXcdlY+nYD0vrkvdHuVNAAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOBAMAAAD4LhhFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqChcPLwGSMqoFAAAAX0lEQVRYw+3UsQ3AIAxEUUYgGyTHBrD/bmkioggajCvn/96vsXQp0SxJh7n8IKVVEBAQEJARcdlYuxAX0dtlRkrrgYCAgARBXOZx+fAHiHY6xxevBwICAhIXcdlY+nYD0vrkvdHuVNAAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
 </tbody>
 </table>
 
-<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.5 (<a href="https://www.r-project.org/">R</a> version 4.6.1)<br>2026-10-23</p>
+<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.4 (<a href="https://www.r-project.org/">R</a> version 4.5.2)<br>2026-10-23</p>
 </div>
 </div>
 </div>
 <p>En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar. Por tanto proseguimos a la siguiente parte.</p>
 </section>
-<section id="partición-de-los-datos" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="partición-de-los-datos"><span class="header-section-number">3.3</span> Partición de los datos</h2>
+<section id="partición-de-los-datos" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="partición-de-los-datos"><span class="header-section-number">2.5</span> Partición de los datos</h2>
 <p>En este apartado debemos crear una división de nuestros datos. Como hemos nombrado anteriormente vamos a dividir el conjunto en <strong>tres</strong> partes, explicadas anteriormente en la metodología.</p>
 <ul>
 <li><strong>Train</strong>: La gran mayoría de los datos caerán aquí, aproximadamente el 65%.</li>
@@ -1041,8 +922,8 @@ window.Quarto = {
 <p>A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el análisis exploratorio de datos. Usaremos test para ir evaluando y estudiando la capacidad de generalización de los modelos que entrenemos en train. Por último, dejaremos la partición de validación para el final del todo del proyecto: una vez tengamos un modelo final seleccionado estudiaremos su rendimiento en esta partición de validación. Esto nos permitirá simular un caso real en el que podamos estudiar cómo funciona nuestro modelo final ante datos nunca vistos.</p>
 </section>
 </section>
-<section id="análisis-exploratorio-de-datos" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Análisis exploratorio de datos</h1>
+<section id="análisis-exploratorio-de-datos" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Análisis exploratorio de datos</h1>
 <p>Realizamos una exploración exclusivamente sobre el conjunto de entrenamientos (train) para evitar la fuga de información hacia los conjuntos de evaluación (test y validation).</p>
 <p>Como sabemos de la exploración inicial de nuestro datos, tenemos datos faltantes en dos columnas, la primera <code>Perceived_Stress_Score</code> tiene una cantidad de NA’s en porcentaje de <strong>1%</strong>, y la variable <code>Academic_Performance_GPA</code> <strong>2%</strong>. Dado que la proporción de datos ausentes en train es mínimo, decidimos no trabajar con dichas observaciones.</p>
 <p>Como no tenemos un target binario y tenemos dudas entre dos posibles candidatos para variable objetivo, vamos a estudiar el comportamiento y la relación de las variables <code>Academic_Performance_GPA</code> y <code>Overall_Impact</code>.</p>
@@ -1096,8 +977,8 @@ window.Quarto = {
 <p>Por tanto, obtenemos 0.5449438 para <strong>Rendimiento_bajo_medio</strong> y 0.4550562 para <strong>Rendimiento_bajo_medio</strong>. Valores que tendremos en cuenta para el análisis de estadístico de datos.</p>
 <p>En el siguiente apartado, estudiaremos la relación entre todas las variables y nuestro objetivo en este informe. Recapitulando, ya tenemos una descripción de todas las variables y nuestro target bien definido en una variable categórica que distingue entre las notas de los alumnos.</p>
 </section>
-<section id="relaciones-entre-el-target-y-el-resto-de-variables." class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Relaciones entre el target y el resto de variables.</h1>
+<section id="relaciones-entre-el-target-y-el-resto-de-variables." class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Relaciones entre el target y el resto de variables.</h1>
 <p>En este capítulo dedicaremos una subsección a la comparación de cada variable con el <em>target</em>. De manera complementaria a la visualización analítica, aplicaremos los test estadísticos correspondientes para contrastar formalmente si existe una diferencia o asociación estadísticamente significativa con respecto a nuestra variable objetivo.</p>
 <p>A continuación, se describen los test estadísticos que emplearemos según la naturaleza de las variables analizadas:</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -1149,8 +1030,8 @@ window.Quarto = {
 </div>
 </div>
 <p>En todos los casos, tomaremos como criterio general de decisión el <span class="math inline">\(p\)</span>-valor generado por cada prueba frente al nivel de significación estándar <span class="math inline">\(\alpha = 0.05\)</span>. Un <span class="math inline">\(p\text{-valor} &lt; 0.05\)</span> nos permitirá rechazar la hipótesis nula (<span class="math inline">\(H_0\)</span>) y concluir que existe una relación o diferencia estadísticamente significativa.</p>
-<section id="comparación-de-edad-y-target" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="comparación-de-edad-y-target"><span class="header-section-number">5.1</span> Comparación de Edad y Target</h2>
+<section id="comparación-de-edad-y-target" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="comparación-de-edad-y-target"><span class="header-section-number">4.1</span> Comparación de Edad y Target</h2>
 <p>Vamos a comparar la variable <code>Age</code> (variable categórica ordinal) contra el target. Para esto usaremos boxplot para obtener una visualización y el test de Wilcoxon para comprobar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1189,8 +1070,8 @@ window.Quarto = {
 </div>
 <p>Observamos que obtenemos los valores <span class="math inline">\(988026\)</span> para el estadístico W y para el p-valor <span class="math inline">\(0.4122\)</span>. Como el <span class="math inline">\(p\)</span>-valor es notablemente superior al nivel de significación habitual (<span class="math inline">\(\alpha = 0.05\)</span>), no podemos rechazar la hipótesis nula <span class="math inline">\(H_0\)</span>, lo que indica que <strong>no existen diferencias estadísticamente significativas</strong> en la edad entre los alumnos de alto rendimiento y los de rendimiento bajo o medio. Por lo tanto, la edad no presenta un comportamiento diferencial respecto al rendimiento académico, por lo que no muestra capacidad explicativa sobre el target.</p>
 </section>
-<section id="comparación-de-horas-de-uso-diario-de-redes-sociales-y-target" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="comparación-de-horas-de-uso-diario-de-redes-sociales-y-target"><span class="header-section-number">5.2</span> Comparación de Horas de uso diario de redes sociales y Target</h2>
+<section id="comparación-de-horas-de-uso-diario-de-redes-sociales-y-target" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="comparación-de-horas-de-uso-diario-de-redes-sociales-y-target"><span class="header-section-number">4.2</span> Comparación de Horas de uso diario de redes sociales y Target</h2>
 <p>Comparamos <code>Daily_Usage_Hours</code> (variable continua) con el target, para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias. Por último aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1207,11 +1088,11 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 23%">
+<col style="width: 22%">
 <col style="width: 16%">
 <col style="width: 7%">
-<col style="width: 21%">
-<col style="width: 30%">
+<col style="width: 22%">
+<col style="width: 31%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1236,8 +1117,8 @@ window.Quarto = {
 </div>
 <p>Con esta se obtiene un estadístico <span class="math inline">\(W = 1622909\)</span> y un <span class="math inline">\(p-valor&lt; 2.2 \times 10^{-16}\)</span> . Dado que el <span class="math inline">\(p\)</span>-valor es muy inferior al nivel de significación <span class="math inline">\((\alpha = 0.05)\)</span>, se rechaza la hipótesis nula <span class="math inline">\((H_0)\)</span>, por lo que se confirma que <strong><em>existe diferencia estadística significativa</em></strong> en el tiempo de uso de redes sociales diarias entre los dos grupos. Por tanto, <code>Daily_Usage_Hours</code> es un predictor altamente relevante e inversamente relacionado con el rendimiento académico.</p>
 </section>
-<section id="comparación-de-tipo-de-dispositivo-y-target" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="comparación-de-tipo-de-dispositivo-y-target"><span class="header-section-number">5.3</span> Comparación de Tipo de dispositivo y Target</h2>
+<section id="comparación-de-tipo-de-dispositivo-y-target" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="comparación-de-tipo-de-dispositivo-y-target"><span class="header-section-number">4.3</span> Comparación de Tipo de dispositivo y Target</h2>
 <p>Comparamos <code>Device_Type</code> (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente las proporciones de uso según el dispositivo. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1276,8 +1157,8 @@ window.Quarto = {
 </div>
 <p>El test muestra un estadístico <span class="math inline">\(X^2 = 0.51705\)</span> con 2 grados de libertad y un <span class="math inline">\(p\)</span>-valor = 0.7722. Como el <span class="math inline">\(p\)</span>-valor es superior al nivel de significación estándar, <strong>no existe evidencia estadística suficiente</strong> para rechazar la hipótesis nula <span class="math inline">\((H_0)\)</span>. Por lo que podemos concluir que el tipo de dispositivo utilizado y el rendimiento académico son independientes, la variable <code>Device_Type</code> no aporta capacidad discriminante ni predictiva relevante sobre la variable objetivo.</p>
 </section>
-<section id="comparación-de-puntuación-de-calidad-del-sueño-y-target" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="comparación-de-puntuación-de-calidad-del-sueño-y-target"><span class="header-section-number">5.4</span> Comparación de Puntuación de calidad del sueño y Target</h2>
+<section id="comparación-de-puntuación-de-calidad-del-sueño-y-target" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="comparación-de-puntuación-de-calidad-del-sueño-y-target"><span class="header-section-number">4.4</span> Comparación de Puntuación de calidad del sueño y Target</h2>
 <p>Comparamos <code>Sleep_Quality_Score</code> (variable discreta/ordinal) con el target; para ello usaremos un boxplot que nos permite observar visualmente la distribución de las puntuaciones. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1294,8 +1175,8 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 16%">
+<col style="width: 24%">
+<col style="width: 15%">
 <col style="width: 7%">
 <col style="width: 21%">
 <col style="width: 30%">
@@ -1323,8 +1204,8 @@ window.Quarto = {
 </div>
 <p>Con este test obtenemos <span class="math inline">\(W=536281\)</span> y un <span class="math inline">\(p-valor&lt;2.2 \times 10^{-16}\)</span>. Puesto que el <span class="math inline">\(p\)</span>-valor es ampliamente inferior al nivel de significación habitual <span class="math inline">\((\alpha = 0.05)\)</span>, se rechaza la hipótesis nula. Por consiguiente, se confirma que <strong>existen diferencias significativas</strong> en la calidad del sueño entre ambos grupo, concluyendo que <code>Sleep_Quality_Score</code> es un predictor relevante y positivamente asociado al rendimiento académico.</p>
 </section>
-<section id="comparación-de-uso-nocturno-de-redes-sociales-y-target" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="comparación-de-uso-nocturno-de-redes-sociales-y-target"><span class="header-section-number">5.5</span> Comparación de Uso nocturno de redes sociales y Target</h2>
+<section id="comparación-de-uso-nocturno-de-redes-sociales-y-target" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="comparación-de-uso-nocturno-de-redes-sociales-y-target"><span class="header-section-number">4.5</span> Comparación de Uso nocturno de redes sociales y Target</h2>
 <p>Comparamos <code>Late_Night_Usage</code> (variable booleana/dicotómica) con el target; para ello usaremos un gráfico de frecuencias relativas que nos permite observar visualmente las proporciones de uso a altas horas de la noche. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1341,7 +1222,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 22%">
+<col style="width: 21%">
 <col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 22%">
@@ -1370,8 +1251,8 @@ window.Quarto = {
 </div>
 <p>Los valores que devuelve son <span class="math inline">\(X^2 = 139.35\)</span> con 1 grado de libertad y un <span class="math inline">\(p-valor&lt;2.2 \times 10^{-16}\)</span>. Como el <span class="math inline">\(p\)</span>-valor es infinitamente menor que el nivel de significación estándar se rechaza la hipótesis nula <span class="math inline">\((H_0)\)</span>. Confirmamos así una <strong>asociación estadísticamente significativa</strong> entre el uso nocturno de las plataformas y las calificaciones, concluyendo que <code>Late_Night_Usage</code> es un factor altamente relevante e inversamente relacionado con la probabilidad de obtener un rendimiento académico alto.</p>
 </section>
-<section id="comparación-de-frecuencia-de-comparación-social-y-target" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="comparación-de-frecuencia-de-comparación-social-y-target"><span class="header-section-number">5.6</span> Comparación de Frecuencia de comparación social y Target</h2>
+<section id="comparación-de-frecuencia-de-comparación-social-y-target" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="comparación-de-frecuencia-de-comparación-social-y-target"><span class="header-section-number">4.6</span> Comparación de Frecuencia de comparación social y Target</h2>
 <p>Comparamos <code>Social_Comparison_Frequency</code> (variable categórica ordinal) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente la distribución de los niveles de comparación social. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1388,7 +1269,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 35%">
+<col style="width: 34%">
 <col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 11%">
@@ -1417,8 +1298,8 @@ window.Quarto = {
 </div>
 <p>En el análisis obtuvimos un estadístico de prueba <span class="math inline">\(X^2 = 1.4687\)</span> con 4 grados de libertad y un <span class="math inline">\(p\)</span>-valor = <span class="math inline">\(0.8322\)</span>, por lo que como <span class="math inline">\(p\)</span>-valor <span class="math inline">\(\ge \alpha\)</span>, no existe evidencia estadística para rechazar la hipótesis nula de independencia. Por lo tanto, concluimos que la frecuencia de comparación social y el rendimiento académico son <strong>variables independientes</strong>, lo que indica que <code>Social_Comparison_Frequency</code> no aporta capacidad predictiva ni discriminante sobre nuestro <code>target</code>.</p>
 </section>
-<section id="comparación-de-puntuación-de-estrés-percibido-y-target" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="comparación-de-puntuación-de-estrés-percibido-y-target"><span class="header-section-number">5.7</span> Comparación de Puntuación de estrés percibido y Target</h2>
+<section id="comparación-de-puntuación-de-estrés-percibido-y-target" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="comparación-de-puntuación-de-estrés-percibido-y-target"><span class="header-section-number">4.7</span> Comparación de Puntuación de estrés percibido y Target</h2>
 <p>Comparamos <code>Perceived_Stress_Score</code> (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias en las puntuaciones de estrés. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1438,8 +1319,8 @@ window.Quarto = {
 <col style="width: 27%">
 <col style="width: 15%">
 <col style="width: 7%">
-<col style="width: 20%">
-<col style="width: 28%">
+<col style="width: 21%">
+<col style="width: 29%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1464,8 +1345,8 @@ window.Quarto = {
 </div>
 <p>El contraste muestra un estadístico de prueba <span class="math inline">\(W= 1553782\)</span> y un <span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span>. Puesto que el <span class="math inline">\(p\)</span>-valor es infinitamente menor que el nivel de significación estándar <span class="math inline">\((\alpha = 0.05)\)</span>, se rechaza la hipótesis nula. Con esto, podemos confirmar la <strong>existencia de diferencia estadísticamente significativas</strong> en los niveles de estrés entre ambos grupos, concluyendo que <code>Perceived_Stress_Score</code> es un predictor altamente relevante e inversamente asociado al rendimiento académico, a menor nivel de estrés percibido, mayor probabilidad de pertenecer al grupo de rendimiento <em>alto</em>.</p>
 </section>
-<section id="comparación-de-índice-de-salud-mental-y-target" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="comparación-de-índice-de-salud-mental-y-target"><span class="header-section-number">5.8</span> Comparación de Índice de salud mental y Target</h2>
+<section id="comparación-de-índice-de-salud-mental-y-target" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="comparación-de-índice-de-salud-mental-y-target"><span class="header-section-number">4.8</span> Comparación de Índice de salud mental y Target</h2>
 <p>Comparamos <code>Mental_Health_Index</code> (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias en el índice de salud mental. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1482,8 +1363,8 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 16%">
+<col style="width: 24%">
+<col style="width: 15%">
 <col style="width: 7%">
 <col style="width: 21%">
 <col style="width: 30%">
@@ -1511,8 +1392,8 @@ window.Quarto = {
 </div>
 <p>Con este análisis obtenemos <span class="math inline">\(W = 449073\)</span> y un <span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span>. Al ser el <span class="math inline">\(p\)</span>-valor infitamente menor que el nivel de significación prefijado <span class="math inline">\((\alpha = 0.05)\)</span>, se rechaza la hipótesis nula <span class="math inline">\((H_0)\)</span> de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y <strong>altamente significativa</strong> con el desempeño estudiantil, conviertiendo a <code>Mental_Health_Index</code> en un predictor clave e inversamente condicionado por el malestar psicológico para la clasificación del target.</p>
 </section>
-<section id="comparación-de-horas-de-sueño-y-target" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="comparación-de-horas-de-sueño-y-target"><span class="header-section-number">5.9</span> Comparación de Horas de Sueño y Target</h2>
+<section id="comparación-de-horas-de-sueño-y-target" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="comparación-de-horas-de-sueño-y-target"><span class="header-section-number">4.9</span> Comparación de Horas de Sueño y Target</h2>
 <p>Comparamos <code>Sleep_Duration_Hours</code> (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias en el descanso. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1530,10 +1411,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
-<col style="width: 16%">
+<col style="width: 15%">
 <col style="width: 7%">
-<col style="width: 20%">
-<col style="width: 29%">
+<col style="width: 21%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1558,8 +1439,8 @@ window.Quarto = {
 </div>
 <p>Al obtener un <span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span> que está por debajo del umbral de significación <span class="math inline">\((\alpha = 0.05)\)</span> se rechaza la hipótesis nula <span class="math inline">\(H_0\)</span>. De este modo, afirmamos que la duración del suelo constituye una <strong>variable significativamente asociada</strong> al desempeño estudiantil, actuando la variable <code>Sleep_Duration_Hours</code> como un predictor del un rendimiento académico.</p>
 </section>
-<section id="comparación-de-género-y-target" class="level2" data-number="5.10">
-<h2 data-number="5.10" class="anchored" data-anchor-id="comparación-de-género-y-target"><span class="header-section-number">5.10</span> Comparación de Género y Target</h2>
+<section id="comparación-de-género-y-target" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="comparación-de-género-y-target"><span class="header-section-number">4.10</span> Comparación de Género y Target</h2>
 <p>Comparamos <code>Gender</code> (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente las posibles diferencias en las proporciones de la variable objetivo según el género. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1603,7 +1484,7 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 20%">
-<col style="width: 20%">
+<col style="width: 21%">
 <col style="width: 7%">
 <col style="width: 13%">
 <col style="width: 10%">
@@ -1658,8 +1539,8 @@ window.Quarto = {
 </div>
 <p>Los resultados de estas pruebas muestran <span class="math inline">\(p\)</span>-valores no significativas en la totalidad de las categorías analizadas: <span class="math inline">\(0.651\)</span> en <em>Female</em>, <span class="math inline">\(0.675\)</span> en <em>Male</em>, <span class="math inline">\(0.824\)</span> en <em>Non-Binary</em> y <span class="math inline">\(1.000\)</span> e <em>Prefer not to say</em>. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable <code>Gender</code> no ejerce ningún efecto relevante sobre las calificaciones, <strong>careciendo de capacidad explicativa o discriminante</strong> para el modelado de la variable respuesta.</p>
 </section>
-<section id="comparación-de-nivel-académico-y-target" class="level2" data-number="5.11">
-<h2 data-number="5.11" class="anchored" data-anchor-id="comparación-de-nivel-académico-y-target"><span class="header-section-number">5.11</span> Comparación de Nivel Académico y Target</h2>
+<section id="comparación-de-nivel-académico-y-target" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="comparación-de-nivel-académico-y-target"><span class="header-section-number">4.11</span> Comparación de Nivel Académico y Target</h2>
 <p>Comparamos <code>Academic_Level</code> (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas y tablas de contingencia que nos permiten observar visualmente la distribución de frecuencias entre categorías. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1680,7 +1561,7 @@ window.Quarto = {
 <col style="width: 19%">
 <col style="width: 8%">
 <col style="width: 13%">
-<col style="width: 35%">
+<col style="width: 36%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1705,8 +1586,8 @@ window.Quarto = {
 </div>
 <p>Del contraste resulta un estadístico de prueba <span class="math inline">\(X^2 = 0.88828\)</span> con 2 grados de libertad y un <span class="math inline">\(p\)</span>-valor <span class="math inline">\(= 0.6414\)</span>, como este es superior al nivel de significación prefijado, no se encuentra evidencia estadística para rechazar la hipótesis nula de independencia. Por consiguiente, determinamos que la etapa educativo <strong>no ejerce un efecto diferenciador</strong> sobre el rendimiento académico, lo que indica que <code>Academic_Level</code> no resulta una variable relevante para discriminar las clases de la variable objetivo.</p>
 </section>
-<section id="comparación-de-plataforma-principal-y-target" class="level2" data-number="5.12">
-<h2 data-number="5.12" class="anchored" data-anchor-id="comparación-de-plataforma-principal-y-target"><span class="header-section-number">5.12</span> Comparación de Plataforma principal y Target</h2>
+<section id="comparación-de-plataforma-principal-y-target" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="comparación-de-plataforma-principal-y-target"><span class="header-section-number">4.12</span> Comparación de Plataforma principal y Target</h2>
 <p>Comparamos <code>Primary_Platform</code> (variable categórica) con el target; para ello usaremos un gráfico de barras apiladas que nos permite observar visualmente cómo se distribuyen las distintas plataformas según la variable objetivo. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1726,8 +1607,8 @@ window.Quarto = {
 <col style="width: 24%">
 <col style="width: 18%">
 <col style="width: 8%">
-<col style="width: 13%">
-<col style="width: 34%">
+<col style="width: 12%">
+<col style="width: 35%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1752,8 +1633,8 @@ window.Quarto = {
 </div>
 <p>El contraste nos devuelve un estadístico <span class="math inline">\(X^2=3.0364\)</span> con 6 grados de libertad y un <span class="math inline">\(p\)</span>–valor <span class="math inline">\(= 0.8043\)</span>, como este supera el umbral de significación habitual, no existe evidencia estadísitca para rechazar la hipótesis nula <span class="math inline">\((H_0)\)</span> de independencia. En consecuencia, se concluye que la red social principal <strong>no influye</strong> en las calificaciones del estudiante, de modo que la variable <code>Primary_Platform</code> carece de capacidad discriminante o valor predictivo para el modelado de la variable objetivo.</p>
 </section>
-<section id="comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target." class="level2" data-number="5.13">
-<h2 data-number="5.13" class="anchored" data-anchor-id="comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target."><span class="header-section-number">5.13</span> Comparación entre Horas extra en fin de semana de uso de redes sociales y el target.</h2>
+<section id="comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target." class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="comparación-entre-horas-extra-en-fin-de-semana-de-uso-de-redes-sociales-y-el-target."><span class="header-section-number">4.13</span> Comparación entre Horas extra en fin de semana de uso de redes sociales y el target.</h2>
 <p>Comparamos <code>Weekend_Extra_Hours</code> (variable continua) con el target; para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias. Por último, aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1771,10 +1652,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 27%">
-<col style="width: 18%">
+<col style="width: 17%">
 <col style="width: 8%">
 <col style="width: 12%">
-<col style="width: 33%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1799,8 +1680,8 @@ window.Quarto = {
 </div>
 <p>Obtenemos los valores <span class="math inline">\(W = 1013076\)</span> y un <span class="math inline">\(p\)</span>-valor <span class="math inline">\(= 0.7354\)</span>. Como el <span class="math inline">\(p\)</span>-valor es notablemente superior al nivel de significación de referencia <span class="math inline">\((\alpha = 0.05)\)</span>, no se dispone de evidencia estadística para rechazar la hipótesis nula de igualdad de distribuciones. En consecuencia, concluimos que el número de horas extra consumidas durante el fin de semana no está asociado al desempeño escolar, por lo que <code>Weekend_Extra_Hours</code> <strong>carece de poder discriminante</strong> y puede descartarse como predictor explicativo para el target.</p>
 </section>
-<section id="comparación-de-impacto-general-y-target" class="level2" data-number="5.14">
-<h2 data-number="5.14" class="anchored" data-anchor-id="comparación-de-impacto-general-y-target"><span class="header-section-number">5.14</span> Comparación de Impacto general y Target</h2>
+<section id="comparación-de-impacto-general-y-target" class="level2" data-number="4.14">
+<h2 data-number="4.14" class="anchored" data-anchor-id="comparación-de-impacto-general-y-target"><span class="header-section-number">4.14</span> Comparación de Impacto general y Target</h2>
 <p>Estas variables eran con las que teníamos dudas a elegir target. Por tanto, ya conocemos que deben estar correlacionadas. Ahora que, hemos binarizado el target, veamos como se distribuyen en un gráfico:</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1817,10 +1698,10 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 17%">
-<col style="width: 8%">
-<col style="width: 22%">
+<col style="width: 19%">
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 23%">
 <col style="width: 32%">
 </colgroup>
 <thead>
@@ -1844,12 +1725,12 @@ window.Quarto = {
 </table>
 </div>
 </div>
-<p>Como obtenemos un valor de <span class="math inline">\(p\)</span>-value <span class="math inline">\(&lt; 2.2e-16\)</span> nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban altamente correlacionadas.</p>
+<p>Como obtenemos un valor de <span class="math inline">\(p\)</span>-valor <span class="math inline">\(&lt; 2.2e-16\)</span> nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban altamente correlacionadas.</p>
 </section>
 </section>
-<section id="relaciones-entre-variables." class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Relaciones entre variables.</h1>
-<p>En este apartado analizaremos las interacciones cruzadas entre variables. Estudiar estas relaciones no ayuda a comprender los mecanismos subyacentes del comportamiento estudiantil y anticipar posibles relaciones indirectas o redundancias antes de la fase de modelado.</p>
+<section id="relaciones-entre-variables." class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Relaciones entre variables.</h1>
+<p>En este apartado analizaremos las interacciones cruzadas entre variables. Estudiar estas relaciones nos ayuda a comprender los mecanismos subyacentes del comportamiento estudiantil y anticipar posibles relaciones indirectas o redundancias antes de la fase de modelado.</p>
 <p>Para abordar este análisis, nos planteamos las siguientes preguntas clave de investigación:</p>
 <ul>
 <li><p>¿Existe una relación directa entre las horas diarias de uso de redes sociales y el índice de salud mental?</p></li>
@@ -1858,9 +1739,9 @@ window.Quarto = {
 <li><p>¿Cómo se relaciona la puntuación de estrés percibido con el índice general de salud mental?</p></li>
 <li><p>¿Existe relación entre la edad del estudiante y las horas de uso diario?</p></li>
 </ul>
-<section id="impacto-del-consumo-diario-de-redes-en-la-salud-mental" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="impacto-del-consumo-diario-de-redes-en-la-salud-mental"><span class="header-section-number">6.1</span> Impacto del consumo diario de redes en la salud mental</h2>
-<p>El diagrama de dispersión evidencia una clara relación inversa y lineal entre el tiempo dedicado diariamente a las redes sociales (<code>Daily_Usage_Hours</code>) y el bienestar psicológico del estudiante (<code>Mental_Health_Index</code>). Conforme aumentan las horas de uso diario, el índice de salud mental disminuye progresivamente, observándose además que el alumnado con rendimiento académico alto se concentra principalmente en la franja de bajo consumo digital (entre 2 y 6 horas) y puntuaciones elevadas de salud mental (superiores a 75). Este patrón confirma que la sobreexposición digital se asocia negativamente con el bienestar emocional de los estudiantes, posicionando a las horas de uso como un indicador determinante e interrelacionado con la salud mental como el rendimiento académico.</p>
+<section id="impacto-del-consumo-diario-de-redes-en-la-salud-mental" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="impacto-del-consumo-diario-de-redes-en-la-salud-mental"><span class="header-section-number">5.1</span> Impacto del consumo diario de redes en la salud mental</h2>
+<p>Vamos a comparar <strong>Daily_Usage_Hours</strong> (variable continua) con <strong>Mental_Health_Index</strong> (variable continua), para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias visualmente. Por último, aplicaremos el test de <span class="math inline">\(\chi^2\)</span> (Chi-cuadrado) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1870,32 +1751,101 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>El diagrama de dispersión evidencia una clara relación inversa y lineal entre el tiempo dedicado diariamente a las redes sociales (<code>Daily_Usage_Hours</code>) y el bienestar psicológico del estudiante (<code>Mental_Health_Index</code>). Conforme aumentan las horas de uso diario, el índice de salud mental disminuye progresivamente, observándose además que el alumnado con rendimiento académico alto se concentra principalmente en la franja de bajo consumo digital (entre 2 y 6 horas) y puntuaciones elevadas de salud mental (superiores a 75). Este patrón confirma que la sobreexposición digital se asocia negativamente con el bienestar emocional de los estudiantes, posicionando a las horas de uso como un indicador determinante e interrelacionado con la salud mental como el rendimiento académico.</p>
+<p>Aunque, parece evidente su correlación, aplicamos el test de independencia Chi-Cuadrado de Pearson.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 15%">
+<col style="width: 7%">
+<col style="width: 21%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: center;">Estadístico</th>
+<th style="text-align: center;">G.L.</th>
+<th style="text-align: center;">p-valor</th>
+<th style="text-align: center;">Significativo (α=0.05)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">DailyUH vs MentalHI</td>
+<td style="text-align: center;">21368.28</td>
+<td style="text-align: center;">8316</td>
+<td style="text-align: center;">&lt; 2.2 ×10^(−16)</td>
+<td style="text-align: center;">Sí</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>El test nos devuelve un valor de <span class="math inline">\(p\)</span>-valor muy por debajo del valor de significancia escogido de <span class="math inline">\(\alpha = 0.05\)</span>. Como consecuencia, las variables no son independientes entre sí y presentan una correlación estadística significante.</p>
 </section>
-<section id="interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso"><span class="header-section-number">6.2</span> Interacción entre las horas de sueño y la calidad del descanso</h2>
+<section id="interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="interacción-entre-las-horas-de-sueño-y-la-calidad-del-descanso"><span class="header-section-number">5.2</span> Interacción entre las horas de sueño y la calidad del descanso</h2>
+<p>Vamos a comparar <strong><code>Sleep_Duration_Hours</code></strong> (variable continua) con <strong><code>Sleep_Quality_Score</code></strong> (variable categórica ordinal de 1 a 5); para ello usaremos un diagrama de caja (<em>boxplot</em>) que nos permitirá ver la distribución y diferencias entre grupos visualmente. Por último, aplicaremos el test de Kruskal-Wallis para verificar si existe una relación estadística significativa.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>El diagrama de caja manifiesta una progresión directamente proporcional entre la duración media del descanso (<code>Sleep_Duration_Hours</code>) y la puntuación de calidad percibida (<code>Sleep_Quality_Score</code>). Aquellos estudiantes que reportan una calidad de sueño deficiente (puntuación de 1) presentan una mediana de descanso cercana a las 5 horas diarias, mientras que en el grupo con una calidad excelente (puntuación de 5) la mediana asciende prograsivamente hasta aproximarse a las 8,5 horas. Esta clara tendencia confirma una fuerte interdemendencia positiva entre ambas métricas, evidenciando que la cantidad de tiempo dormido es un condicionante principal de la percepción subjetiva del descanso. A efectos del modelado predictivo, este hallazgo ratifica la presencia de redundancia informativa en el bloque de variables de descanso, lo que respalda la necesidad de aplicar técnicas de selección de características.</p>
+<p>Hagamos el test de Kruskal para verificar si no son independientes con cierta significancia estadística.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 12%">
+<col style="width: 5%">
+<col style="width: 17%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: center;">Estadístico</th>
+<th style="text-align: center;">G.L.</th>
+<th style="text-align: center;">p-valor</th>
+<th style="text-align: center;">Significativo (α=0.05)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Duración del sueño vs la calidad del sueño</td>
+<td style="text-align: center;">1646.39</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">&lt; 2.2 ×10^(−16)</td>
+<td style="text-align: center;">Sí</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
+<p>Las pruebas no paramétricas de Kruskal-Wallis nos confirman que existen diferencias altamente significativas en la duración del sueño entre los distintos niveles de calidad del descanso (<span class="math inline">\(\chi^2 = 1646.39\)</span>, <span class="math inline">\(p\)</span>-valor <span class="math inline">\(&lt; 2.2 \times 10^{-16}\)</span>), permitiendonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que la cantidad de horas dormidas es un factor determinante en la percepción de la calidad del descanso.</p>
 </section>
-<section id="uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso"><span class="header-section-number">6.3</span> Uso nocturno de las redes sociales y su impacto en el descanso</h2>
-<p>La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (<code>Late_Night_Usage</code>) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas. Las pruebas no paramétricas de Wilcoxon confirman que estas diferencias son altamente significativase ambos indicadores (<span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span> en ambos contrastes), permitiendo rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, se concluye que el uso nocturno es un factor perturbador clave del descanso.</p>
+<section id="uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="uso-nocturno-de-las-redes-sociales-y-su-impacto-en-el-descanso"><span class="header-section-number">5.3</span> Uso nocturno de las redes sociales y su impacto en el descanso</h2>
+<p>Vamos a comparar <strong><code>Late_Night_Usage</code></strong> (variable binaria) con <strong><code>Sleep_Duration_Hours</code></strong> (variable continua); para ello usaremos un diagrama de caja (<em>boxplot</em>) comparativo que nos permitirá ver la diferencia en las medianas y la dispersión visualmente. Por último, aplicaremos el test de Mann-Whitney-Wilcoxon para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="Informe_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (<code>Late_Night_Usage</code>) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1903,7 +1853,7 @@ window.Quarto = {
 <col style="width: 44%">
 <col style="width: 11%">
 <col style="width: 5%">
-<col style="width: 15%">
+<col style="width: 16%">
 <col style="width: 22%">
 </colgroup>
 <thead>
@@ -1929,7 +1879,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 46%">
+<col style="width: 45%">
 <col style="width: 11%">
 <col style="width: 5%">
 <col style="width: 15%">
@@ -1956,23 +1906,26 @@ window.Quarto = {
 </table>
 </div>
 </div>
+<p>Las pruebas no paramétricas de Wilcoxon nos confirman que estas diferencias son altamente significativas en ambos indicadores (<span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span> en ambos contrastes), permitiendonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que el uso nocturno es un factor perturbador clave del descanso.</p>
 </section>
-<section id="relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental"><span class="header-section-number">6.4</span> Relación entre el estrés percibido y el índice de salud mental</h2>
-<p>El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (<code>Perceived_Stress_Score</code>) y el índice general de salud mental (<code>Mental_Health_Score</code>). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante, lo que retifica estadísticamente mediante un coeficiente de correlación de Pearson fuertemente negativo (<span class="math inline">\(r=-0.77\)</span>, <span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span>.</p>
-<p>Además, al segmentar por rendimiento académico (<code>target</code>), se observa claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.</p>
+<section id="relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="relación-entre-el-estrés-percibido-y-el-índice-de-salud-mental"><span class="header-section-number">5.4</span> Relación entre el estrés percibido y el índice de salud mental</h2>
+<p>Vamos a comparar <strong><code>Perceived_Stress_Score</code></strong> (variable continua) con <strong><code>Mental_Health_Score</code></strong> (variable continua); para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias y la dirección de la asociación visualmente. Por último, aplicaremos el test de correlación de Pearson (o Spearman) para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Informe_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
+</div>
+<p>El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (<code>Perceived_Stress_Score</code>) y el índice general de salud mental (<code>Mental_Health_Score</code>). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. Comprobémoslo con el test de Pearson.</p>
+<div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 42%">
+<col style="width: 41%">
 <col style="width: 12%">
 <col style="width: 5%">
 <col style="width: 16%">
@@ -1990,8 +1943,8 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Puntuación de estrés vs Índice salud mental</td>
-<td style="text-align: center;">-65.08</td>
-<td style="text-align: center;">2846</td>
+<td style="text-align: center;">10596.28</td>
+<td style="text-align: center;">2508</td>
 <td style="text-align: center;">&lt; 2.2 ×10^(−16)</td>
 <td style="text-align: center;">Sí</td>
 </tr>
@@ -1999,20 +1952,23 @@ window.Quarto = {
 </table>
 </div>
 </div>
+<p>El test nos muestra un coeficiente de correlación de Pearson fuertemente negativo (<span class="math inline">\(r=-0.77\)</span>, <span class="math inline">\(p\)</span>-valor<span class="math inline">\(&lt;2.2 \times 10^{-16}\)</span>.</p>
+<p>Además, al segmentar por rendimiento académico (<code>target</code>), observamos claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.</p>
 </section>
-<section id="evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario."><span class="header-section-number">6.5</span> Evaluación de la relación entre la edad y las horas de uso diario.</h2>
-<p>El gráfico de dispersión muestra una recta de ajuste prácticamente horizonal, lo que sugiere visulemente una ausencia de tendencia o asociación entre la edad del estudiante (<code>Age</code>) y el número de horas diarias dedicadas al uso de redes sociales (<code>Daily_Usage_Hours</code>). La distribuciónde las observaciones se extiende de manera uniforme a lo largo de los distintos rangos de edad analizados.</p>
-<p>Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson. Obtuvimos un coeficiente de correlación cercano a cero <span class="math inline">\(r \approx 0.01\)</span> con un <span class="math inline">\(p\)</span>-valor ampliamente superior al nivel de significación estándar (<span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(p &gt; 0.05\)</span>), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.</p>
+<section id="evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario." class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="evaluación-de-la-relación-entre-la-edad-y-las-horas-de-uso-diario."><span class="header-section-number">5.5</span> Evaluación de la relación entre la edad y las horas de uso diario.</h2>
+<p>Vamos a comparar <strong><code>Age</code></strong> (variable ordinal/discreta) con <strong><code>Daily_Usage_Hours</code></strong> (variable continua); para ello usaremos un diagrama de dispersión con <em>jittering</em> que nos permitirá ver la densidad y dispersión de los datos visualmente. Por último, aplicaremos el test de correlación de Spearman para verificar si existe una relación estadística significativa.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Informe_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>El gráfico de dispersión muestra una recta de ajuste prácticamente horizonal, lo que sugiere visulemente una ausencia de tendencia o asociación entre la edad del estudiante (<code>Age</code>) y el número de horas diarias dedicadas al uso de redes sociales (<code>Daily_Usage_Hours</code>). La distribuciónde las observaciones se extiende de manera uniforme a lo largo de los distintos rangos de edad analizados.</p>
+<p>Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -2021,7 +1977,7 @@ window.Quarto = {
 <col style="width: 17%">
 <col style="width: 8%">
 <col style="width: 12%">
-<col style="width: 32%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2044,10 +2000,11 @@ window.Quarto = {
 </table>
 </div>
 </div>
+<p>Obtuvimos un <span class="math inline">\(p\)</span>-valor ampliamente superior al nivel de significación estándar (<span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(p &gt; 0.05\)</span>), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.</p>
 </section>
 </section>
-<section id="análisis-de-multicolinealidad-entre-predictores" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Análisis de multicolinealidad entre predictores</h1>
+<section id="análisis-de-multicolinealidad-entre-predictores" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Análisis de multicolinealidad entre predictores</h1>
 <p>La matriz de correlación de Pearson evalúa cuantitativamente la intensidad y direción de la relación lineal entre cada par de variables continuas predictoras del conjunto de datos. Los valores oscilan en el intervalo <span class="math inline">\([-1, 1]\)</span>:</p>
 <p>El análisis de la matriz de correlación evidencia fuertes independencias entre los predictores cuantitativos, destacando los siguientes hallazgos principales:</p>
 <ul>
@@ -2060,16 +2017,16 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Informe_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="síntesis-y-selección-de-variables" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Síntesis y selección de variables</h1>
-<section id="criterio-de-selección-y-justificación" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="criterio-de-selección-y-justificación"><span class="header-section-number">8.1</span> Criterio de selección y justificación</h2>
+<section id="síntesis-y-selección-de-variables" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Síntesis y selección de variables</h1>
+<section id="criterio-de-selección-y-justificación" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="criterio-de-selección-y-justificación"><span class="header-section-number">7.1</span> Criterio de selección y justificación</h2>
 <p>Tras finalizar la exploración bivariante sobre el subconjunto de entrenamiento (<code>train</code>), aplicamos el principio de parsimonia y reducción de dimensionalidad para definir el espacio final de características. En problemas de aprendizaje automático supervisado, incluir variables sin capacidad discriminante incrementa la complejidad del espacio de coordenadas, aumenta la varianza del modelo y eleva el riesgo de sobreajuste (<em>overfitting</em>).</p>
 <p>Dado un nivel de significación estadística fijado en <span class="math inline">\(\alpha = 0.05\)</span>, adoptamosla siguiente regla de decisión metodológica basada en métodos tipo filter:</p>
 <ul>
@@ -2200,14 +2157,14 @@ Table&nbsp;1: Cuadro resumen del análisis bivariante y decisión metodológica 
 <li><strong>Factores descartados:</strong> Se excluyen 7 variables: <code>Age</code>, <code>Device_Type</code>, <code>Social_Comparison_Frequency</code>, <code>Gender</code>, <code>Academic_Level</code>, <code>Primary_Platform</code> y <code>Weekend_Extra_Hours</code>. Al presentar <span class="math inline">\(p\)</span>-valores sustancialmente superiores al umbral de significación, estas variables actúan como ruido no informativo dentro del espacio de características y su eliminación simplifica la frontera de división de los algoritmos supervisados.</li>
 </ul>
 </section>
-<section id="comparación-de-la-capacidad-discriminante" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="comparación-de-la-capacidad-discriminante"><span class="header-section-number">8.2</span> Comparación de la capacidad discriminante</h2>
+<section id="comparación-de-la-capacidad-discriminante" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="comparación-de-la-capacidad-discriminante"><span class="header-section-number">7.2</span> Comparación de la capacidad discriminante</h2>
 <p>Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación <span class="math inline">\(Z\)</span>-score, <span class="math inline">\(\mu = 0, \sigma = 1\)</span>) sobre el conjunto <code>train</code>. Esta proyección permite comparar en una misma escala la magnitud de la sepación entre el grupo de <code>Rendimiento_alto</code> y el de <code>Rendimiento_medio</code>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="912"></p>
+<p><img src="Informe_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="912"></p>
 </figure>
 </div>
 </div>
