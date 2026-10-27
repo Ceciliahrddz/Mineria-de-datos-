@@ -366,6 +366,13 @@ A continuación, se describen los test estadísticos que emplearemos según la n
 - **Definición:** Es una prueba no paramétrica que evalúa si dos muestras independientes provienen de poblaciones con la misma distribución ($H_0$: la diferencia de posiciones/medianas entre ambos grupos es igual a cero), basándose en los rangos u orden de las observaciones.
 :::
 
+::: {.callout-note icon="false"}
+### 4. Test de Kruskal-Wallis (`kruskal.test`)
+
+- **Aplicación:** Se aplica al comparar una variable cuantitativa continua (o cualitativa ordinal) entre tres o más grupos independientes definidos por una variable categórica, especialmente cuando no se cumplen los supuestos de normalidad del ANOVA.
+- **Definición:** Es una prueba no paramétrica que evalúa si tres o más muestras independientes proceden de la misma distribución ($H_0$: las medianas/distribuciones de todos los grupos son iguales), basándose en la ordenación por rangos de las observaciones combinadas.
+:::
+
 En todos los casos, tomaremos como criterio general de decisión el $p$-valor generado por cada prueba frente al nivel de significación estándar $\alpha = 0.05$. Un $p\text{-valor} < 0.05$ nos permitirá rechazar la hipótesis nula ($H_0$) y concluir que existe una relación o diferencia estadísticamente significativa.
 
 ## Comparación de Edad y Target
@@ -1112,7 +1119,7 @@ El análisis de la matriz de correlación evidencia fuertes independencias entre
 
 - **Interrelación del descanso y bienestar**: la duración y la calidad del sueño están estrechamente alineadas entre sí $(r = 0.75)$, y ambas actúan como factores protectores vinculados a un mejor índice de salud mental $(r = 0.78$ y $r = 0.66$ , respectivamente).
 
-La presencia de coeficientes superioes a $|r| \ge 0.75$ señala una alta multicolinealidad y redundancia de información entre las variables explicativas.
+La presencia de coeficientes superiores a $|r| \ge 0.75$ señala una alta multicolinealidad y redundancia de información entre las variables explicativas.
 
 ```{r}
 #| fig-width: 7
