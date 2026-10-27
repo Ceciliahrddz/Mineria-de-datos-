@@ -29,8 +29,8 @@ pacman::p_load(summarytools,
                corrplot,
                broom,
                kableExtra,
+               dplyr,
                tidyr)
-
 
 #library(summarytools)
 #library(ggplot2)
@@ -103,8 +103,7 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
   - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
   - **Test Binomial (`binom.test`):** Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.
-  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso).
-# Datos
+  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso). \# Datos
 
 ```{r}
 n_filas <- nrow(datos)
@@ -174,6 +173,7 @@ En este apartado debemos crear una división de nuestros datos. Como hemos nombr
 - **Train**: La gran mayoría de los datos caerán aquí, aproximadamente el 65%.
 - **Valid**: Con este conjunto comprobaremos que nuestros modelos son certeros, acaparán el 21% de los datos.
 - **Test**: Con estos datos ejecutaremos el examen final de nuestro modelo, aproximadamente el 14% de los datos.
+
 ```{r}
 set.seed(54685)
 idx_train <- createDataPartition(datos$Overall_Impact, p=0.65)
@@ -335,7 +335,7 @@ prob_alto <- proporciones["Rendimiento_alto"]
 train <- train %>% select(-Academic_Performance_GPA)
 ```
 
-Por tanto, obtenemos `r prob_bajo_medio` para **Rendimiento_bajo_medio** y `r prob_alto` para **Rendimiento_bajo_medio**. Valores que tendremos en cuenta para el análisis de estadístico de datos.
+Por tanto, obtenemos `r prob_bajo_medio` para *Rendimiento_bajo_medio* y `r prob_alto` para *Rendimiento_bajo_medio*. Valores que tendremos en cuenta para el análisis de estadístico de datos.
 
 En el siguiente apartado, estudiaremos la relación entre todas las variables y nuestro objetivo en este informe. Recapitulando, ya tenemos una descripción de todas las variables y nuestro target bien definido en una variable categórica que distingue entre las notas de los alumnos.
 
@@ -398,7 +398,7 @@ mostrar_test(test_wilcox, "Age")
 
 Observamos que obtenemos los valores $988026$ para el estadístico W y para el p-valor $0.4122$. Como el $p$-valor es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no podemos rechazar la hipótesis nula $H_0$, lo que indica que **no existen diferencias estadísticamente significativas** en la edad entre los alumnos de alto rendimiento y los de rendimiento bajo o medio. Por lo tanto, la edad no presenta un comportamiento diferencial respecto al rendimiento académico, por lo que no muestra capacidad explicativa sobre el target.
 
-## Comparación de Horas de uso diario de redes sociales y Target
+## Comparación de Uso diario de redes sociales y Target
 
 Comparamos `Daily_Usage_Hours` (variable continua) con el target, para ello volveremos a usar un boxplot que nos permite observar visualmente las posibles diferencias. Por último aplicaremos el estadístico de Wilcoxon para verificar si existe una relación estadística significativa.
 
@@ -888,7 +888,7 @@ Para abordar este análisis, nos planteamos las siguientes preguntas clave de in
 
 ## Impacto del consumo diario de redes en la salud mental
 
-Vamos a comparar **Daily_Usage_Hours** (variable continua) con **Mental_Health_Index** (variable continua), para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias visualmente. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
+Vamos a comparar `Daily_Usage_Hours` (variable continua) con `Mental_Health_Index` (variable continua), para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias visualmente. Por último, aplicaremos el test de $\chi^2$ (Chi-cuadrado) para verificar si existe una relación estadística significativa.
 
 ```{r}
 
@@ -918,19 +918,18 @@ ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target
 
 El diagrama de dispersión evidencia una clara relación inversa y lineal entre el tiempo dedicado diariamente a las redes sociales (`Daily_Usage_Hours`) y el bienestar psicológico del estudiante (`Mental_Health_Index`). Conforme aumentan las horas de uso diario, el índice de salud mental disminuye progresivamente, observándose además que el alumnado con rendimiento académico alto se concentra principalmente en la franja de bajo consumo digital (entre 2 y 6 horas) y puntuaciones elevadas de salud mental (superiores a 75). Este patrón confirma que la sobreexposición digital se asocia negativamente con el bienestar emocional de los estudiantes, posicionando a las horas de uso como un indicador determinante e interrelacionado con la salud mental como el rendimiento académico.
 
-Aunque, parece evidente su correlación, aplicamos el test de independencia Chi-Cuadrado de Pearson.
+Aunque, parece evidente su correlación, aplicamos el test de correlación de Pearson entre estas dos variables continuas
 
 ```{r}
-test_chisq <- chisq.test(table(train$Daily_Usage_Hours, train$Mental_Health_Index))
-mostrar_test(test_chisq, "DailyUH vs MentalHI")
+test_cor <- cor.test(train$Mental_Health_Index, train$Daily_Usage_Hours, method = "pearson")
+mostrar_test(test_cor, "Uso diario vs Índice salud mental")
 ```
 
 El test nos devuelve un valor de $p$-valor muy por debajo del valor de significancia escogido de $\alpha = 0.05$. Como consecuencia, las variables no son independientes entre sí y presentan una correlación estadística significante.
 
 ## Interacción entre las horas de sueño y la calidad del descanso
 
-Vamos a comparar **`Sleep_Duration_Hours`** (variable continua) con **`Sleep_Quality_Score`** (variable categórica ordinal de 1 a 5); para ello usaremos un diagrama de caja (*boxplot*) que nos permitirá ver la distribución y diferencias entre grupos visualmente. Por último, aplicaremos el test de Kruskal-Wallis para verificar si existe una relación estadística significativa.
-
+Vamos a comparar `Sleep_Duration_Hours` (variable continua) con `Sleep_Quality_Score` (variable categórica ordinal de 1 a 5); para ello usaremos un diagrama de caja (*boxplot*) que nos permitirá ver la distribución y diferencias entre grupos visualmente. Por último, aplicaremos el test de Kruskal-Wallis para verificar si existe una relación estadística significativa.
 
 ```{r}
 
@@ -965,9 +964,7 @@ Las pruebas no paramétricas de Kruskal-Wallis nos confirman que existen diferen
 
 ## Uso nocturno de las redes sociales y su impacto en el descanso
 
-Vamos a comparar **`Late_Night_Usage`** (variable binaria) con **`Sleep_Duration_Hours`** (variable continua); para ello usaremos un diagrama de caja (*boxplot*) comparativo que nos permitirá ver la diferencia en las medianas y la dispersión visualmente. Por último, aplicaremos el test de Mann-Whitney-Wilcoxon para verificar si existe una relación estadística significativa.
-
-
+Vamos a comparar `Late_Night_Usage` (variable binaria) con `Sleep_Duration_Hours` (variable continua); para ello usaremos un diagrama de caja (*boxplot*) comparativo que nos permitirá ver la diferencia en las medianas y la dispersión visualmente. Por último, aplicaremos el test de Mann-Whitney-Wilcoxon para verificar si existe una relación estadística significativa.
 
 ```{r}
 #| fig-width: 10
@@ -1008,7 +1005,7 @@ p1 + p2
 
 ```
 
-La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (`Late_Night_Usage`) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas. 
+La comparación gráfica y estadística demuestra que el hábito de consultar redes sociales a altas horas de la noche (`Late_Night_Usage`) perjudica de forma directa tanto la cantidad como la calidad de descanso estudiantil. Los alumnos que declaran realizar un uso nocturno presentan una mediana de horas de sueño significativamente inferior (entorno a las 5,8 horas frente a las 7,5 horas del grupo que no las utiliza de noche) y puntuaciones de calidad del descanso sustancialmente más bajas.
 
 ```{r}
 
@@ -1025,8 +1022,6 @@ Las pruebas no paramétricas de Wilcoxon nos confirman que estas diferencias son
 ## Relación entre el estrés percibido y el índice de salud mental
 
 Vamos a comparar **`Perceived_Stress_Score`** (variable continua) con **`Mental_Health_Score`** (variable continua); para ello usaremos un diagrama de dispersión que nos permitirá ver tendencias y la dirección de la asociación visualmente. Por último, aplicaremos el test de correlación de Pearson (o Spearman) para verificar si existe una relación estadística significativa.
-
-
 
 ```{r}
 
@@ -1057,23 +1052,20 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
 
 ```
 
-El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. Comprobémoslo con el test de Pearson. 
+El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. Comprobémoslo con el test de Pearson.
 
 ```{r}
-test_chisq <- chisq.test(train$Perceived_Stress_Score, train$Mental_Health_Index)
+test_cor <- cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, method = "pearson")
 mostrar_test(test_chisq, "Puntuación de estrés vs Índice salud mental")
 ```
 
-
-El test nos muestra un coeficiente de correlación de Pearson fuertemente negativo ($r=-0.77$, $p$-valor$<2.2 \times 10^{-16}$.
+El test nos muestra un coeficiente de correlación de Pearson fuertemente negativo ($r=-0.77$, $p$-valor$<2.2 \times 10^{-16})$.
 
 Además, al segmentar por rendimiento académico (`target`), observamos claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.
 
 ## Evaluación de la relación entre la edad y las horas de uso diario.
 
 Vamos a comparar **`Age`** (variable ordinal/discreta) con **`Daily_Usage_Hours`** (variable continua); para ello usaremos un diagrama de dispersión con *jittering* que nos permitirá ver la densidad y dispersión de los datos visualmente. Por último, aplicaremos el test de correlación de Spearman para verificar si existe una relación estadística significativa.
-
-
 
 ```{r}
 # 1. Gráfico de dispersión
@@ -1098,7 +1090,7 @@ print(p)
 
 El gráfico de dispersión muestra una recta de ajuste prácticamente horizonal, lo que sugiere visulemente una ausencia de tendencia o asociación entre la edad del estudiante (`Age`) y el número de horas diarias dedicadas al uso de redes sociales (`Daily_Usage_Hours`). La distribuciónde las observaciones se extiende de manera uniforme a lo largo de los distintos rangos de edad analizados.
 
-Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson. 
+Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó el contraste de correlación de Pearson.
 
 ```{r}
 # 2. Test de correlación de Pearson / Spearman
@@ -1107,8 +1099,6 @@ mostrar_test(test_cor, "Edad vs Horas de Uso")
 ```
 
 Obtuvimos un $p$-valor ampliamente superior al nivel de significación estándar ($\alpha = 0.05$, $p > 0.05$), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.
-
-
 
 # Análisis de multicolinealidad entre predictores
 
@@ -1176,40 +1166,88 @@ Dado un nivel de significación estadística fijado en $\alpha = 0.05$, adoptamo
 - **Exclusión** $(p \ge 0.05)$: se descartan las variables descriptivas donde no existe evidencia estadística en contra de la hipótesis nula $(H_0)$, confirmando que su distribución es independiente del rendimiento académico del estudiante.
 
 ```{r}
-#| label: tbl-resumen-seleccion-variables
-#| tbl-cap: "Cuadro resumen del análisis bivariante y decisión metodológica de Feature Selection"
 
-# 1. Definición del dataframe con el histórico de contrastes sobre la partición 'train'
+# 1. Definición del dataframe con 14 elementos exactos por columna
 tabla_seleccion <- data.frame(
   Variable = c(
-    "Daily_Usage_Hours", "Sleep_Duration_Hours", "Sleep_Quality_Score",
-    "Late_Night_Usage", "Perceived_Stress_Score", "Mental_Health_Index",
-    "Age", "Device_Type", "Social_Comparison_Frequency",
-    "Gender", "Academic_Level", "Primary_Platform", "Weekend_Extra_Hours"
+    "Daily_Usage_Hours",
+    "Sleep_Duration_Hours",
+    "Sleep_Quality_Score",
+    "Late_Night_Usage",
+    "Perceived_Stress_Score",
+    "Mental_Health_Index",
+    "Overall_Impact",
+    "Age",
+    "Device_Type",
+    "Social_Comparison_Frequency",
+    "Gender",
+    "Academic_Level",
+    "Primary_Platform",
+    "Weekend_Extra_Hours"
   ),
   Tipo_Variable = c(
-    "Cuantitativa (continua)", "Cuantitativa (continua)", "Cuantitativa / Ordinal",
-    "Cualitativa (binaria)", "Cuantitativa (continua)", "Cuantitativa (continua)",
-    "Cuantitativa (continua)", "Cualitativa (nominal)", "Cualitativa (ordinal)",
-    "Cualitativa (nominal)", "Cualitativa (nominal)", "Cualitativa (nominal)", "Cuantitativa (continua)"
+    "Cuantitativa (continua)", # Daily_Usage_Hours
+    "Cuantitativa (continua)", # Sleep_Duration_Hours
+    "Categórica (ordinal)",    # Sleep_Quality_Score
+    "Categórica (binaria)",    # Late_Night_Usage
+    "Cuantitativa (continua)", # Perceived_Stress_Score
+    "Cuantitativa (continua)", # Mental_Health_Index
+    "Categórica (ordinal)",    # Overall_Impact
+    "Cuantitativa (continua)", # Age
+    "Categórica (nominal)",    # Device_Type
+    "Categórica (ordinal)",    # Social_Comparison_Frequency
+    "Categórica (nominal)",    # Gender
+    "Categórica (nominal)",    # Academic_Level
+    "Categórica (nominal)",    # Primary_Platform
+    "Cuantitativa (continua)"  # Weekend_Extra_Hours
   ),
   Contraste_Aplicado = c(
-    "Suma de rangos de Wilcoxon", "Suma de rangos de Wilcoxon", "Suma de rangos de Wilcoxon",
-    "Chi-cuadrado de independencia", "Suma de rangos de Wilcoxon", "Suma de rangos de Wilcoxon",
-    "Suma de rangos de Wilcoxon", "Chi-cuadrado de independencia", "Chi-cuadrado de independencia",
-    "Chi-cuadrado / Test Binomial", "Chi-cuadrado de independencia", "Chi-cuadrado de independencia", "Suma de rangos de Wilcoxon"
+    "Suma de rangos de Wilcoxon",
+    "Suma de rangos de Wilcoxon",
+    "Suma de rangos de Wilcoxon",
+    "Chi-cuadrado de independencia",
+    "Suma de rangos de Wilcoxon",
+    "Suma de rangos de Wilcoxon",
+    "Chi-cuadrado de independencia",
+    "Suma de rangos de Wilcoxon",
+    "Chi-cuadrado de independencia",
+    "Chi-cuadrado de independencia",
+    "Chi-cuadrado / Test Binomial",
+    "Chi-cuadrado de independencia",
+    "Chi-cuadrado de independencia",
+    "Suma de rangos de Wilcoxon"
   ),
   p_valor = c(
-    "< 2.2e-16", "< 2.2e-16", "< 2.2e-16",
-    "< 2.2e-16", "< 2.2e-16", "< 2.2e-16",
-    "0.4122", "0.7722", "0.8322",
-    "0.9272", "0.6414", "0.8043", "0.7354"
+    "< 2.2e-16",
+    "< 2.2e-16",
+    "< 2.2e-16",
+    "< 2.2e-16",
+    "< 2.2e-16",
+    "< 2.2e-16",
+    "< 2.2e-16",
+    "0.4122",
+    "0.7722",
+    "0.8322",
+    "0.9272",
+    "0.6414",
+    "0.8043",
+    "0.7354"
   ),
   Decision = c(
-    "SELECCIONADA", "SELECCIONADA", "SELECCIONADA",
-    "SELECCIONADA", "SELECCIONADA", "SELECCIONADA",
-    "Descartada", "Descartada", "Descartada",
-    "Descartada", "Descartada", "Descartada", "Descartada"
+    "SELECCIONADA",
+    "SELECCIONADA",
+    "SELECCIONADA",
+    "SELECCIONADA",
+    "SELECCIONADA",
+    "SELECCIONADA",
+    "SELECCIONADA",
+    "Descartada",
+    "Descartada",
+    "Descartada",
+    "Descartada",
+    "Descartada",
+    "Descartada",
+    "Descartada"
   )
 )
 
@@ -1220,8 +1258,8 @@ tabla_seleccion %>%
     align = c("l", "l", "c", "c", "c")
   ) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE) %>%
-  row_spec(1:6, bold = TRUE, background = "#E8F5E9", color = "#1B5E20") %>%  # Resaltado verde para retenidas
-  row_spec(7:13, background = "#FFEBEE", color = "#B71C1C")                  # Resaltado rojo claro para descartadas
+  row_spec(1:7, bold = TRUE, background = "#E8F5E9", color = "#1B5E20") %>%  # Verde para las 7 seleccionadas
+  row_spec(8:14, background = "#FFEBEE", color = "#B71C1C")                  # Rojo para las 7 descartadas
 ```
 
 - **Factores seleccionados:** Seleccionamos 6 predictores finales: `Daily_Usage_Hours`, `Sleep_Duration_Hours`, `Sleep_Quality_Score`, `Late_Night_Usage`, `Perceived_Stress_Score` y `Mental_Health_Index`. El análisis confirma que las dimensiones vinculadas a la exposición digital, los patrones de sueño y la salud psicológica contienen la variabilidad relevante para separar a los estudiantes según su rendimiento académico (`target`).
@@ -1229,7 +1267,7 @@ tabla_seleccion %>%
 
 ## Comparación de la capacidad discriminante
 
-Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación $Z$-score, $\mu = 0, \sigma = 1$) sobre el conjunto `train`. Esta proyección permite comparar en una misma escala la magnitud de la sepación entre el grupo de `Rendimiento_alto` y el de `Rendimiento_medio`.
+Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación $Z$-score, $\mu = 0, \sigma = 1$) sobre el conjunto `train`. Esta proyección permite comparar en una misma escala la magnitud de la sepación entre el grupo de *Rendimiento_alto* y el de *Rendimiento_medio*.
 
 ```{r}
 #| fig-width: 9.5
@@ -1267,13 +1305,11 @@ ggplot(train_scaled, aes(x = Predictor, y = Z_score, fill = target)) +
 
 El perfil de distribución estandarizada evidencia una separación clara entre las clases del `target`:
 
-- **Patrón de factores protectores:** Los estudiantes clasificados en `Rendimiento_alto` exhiben puntuaciones $Z$ marcadamente positivas en `Sleep_Duration_Hours`, `Sleep_Quality_Score` y `Mental_Health_Index`, confirmando que un descanso prolongado y un mayor bienestar psicológico se asocian de forma directa con el éxito académico.
+- **Predictores de impacto positivo/favorecedores:** Los estudiantes clasificados en *Rendimiento_alto* exhiben puntuaciones $Z$ marcadamente positivas en `Sleep_Duration_Hours`, `Sleep_Quality_Score` y `Mental_Health_Index`, confirmando que un descanso prolongado y un mayor bienestar psicológico se asocian de forma directa con el éxito académico.
 
 <!-- -->
 
-- **Patrón de factores de riesgo:** Por el contrario, la categoría de `Rendimiento_bajo_medio` se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
-
-
+- **Predictores de impacto negativo/desfavorables:** Por el contrario, la categoría de *Rendimiento_bajo_medio* se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
 
 # Uso de Inteligencia Artificial {.unnumbered}
 
@@ -1283,14 +1319,14 @@ En la elaboración de este trabajo hemos hecho uso puntual de un modelo de lengu
 
 Hemos integrado la IA como un asistente técnico puntual, sin delegar en ningún momento la redacción ni la interpretación de los resultados. Principalmente nos ha servido para:
 
-* **Consultar sintaxis y funciones específicas:** Buscar de forma rápida el nombre o el funcionamiento de ciertas librerías de R que necesitábamos para procesar los datos (como por ejemplo la función `createDataPartition()` del paquete `caret` para realizar el muestreo estratificado).
-* **Apoyo en el código de visualización:** Ayudarnos a estructurar y retocar el código para crear gráficos con `ggplot2` y maquetar tablas tanto estáticas como dinámicas (`knitr::kable` y `DT::datatable`).
-* **Resolver errores de entorno en R y RStudio:** Diagnosticar y solucionar fallos técnicos de configuración, instalación de paquetes y dependencias en Windows. Por ejemplo, la utilizamos para corregir un fallo en la ejecución del Quarto derivado de la corrupción del paquete `rmarkdown`, solucionar bloqueos de seguridad del sistema sobre archivos DLL (`lava` y `digest.dll`); dado que Windows Defender decidió bloquear dichos archivos sin razon aparente. En ese caso tuvimos que aprender a manejar el `AppLocker` de Windows.
+- **Consultar sintaxis y funciones específicas:** Buscar de forma rápida el nombre o el funcionamiento de ciertas librerías de R que necesitábamos para procesar los datos (como por ejemplo la función `createDataPartition()` del paquete `caret` para realizar el muestreo estratificado).
+- **Apoyo en el código de visualización:** Ayudarnos a estructurar y retocar el código para crear gráficos con `ggplot2` y maquetar tablas tanto estáticas como dinámicas (`knitr::kable` y `DT::datatable`).
+- **Resolver errores de entorno en R y RStudio:** Diagnosticar y solucionar fallos técnicos de configuración, instalación de paquetes y dependencias en Windows. Por ejemplo, la utilizamos para corregir un fallo en la ejecución del Quarto derivado de la corrupción del paquete `rmarkdown`, solucionar bloqueos de seguridad del sistema sobre archivos DLL (`lava` y `digest.dll`); dado que Windows Defender decidió bloquear dichos archivos sin razon aparente. En ese caso tuvimos que aprender a manejar el `AppLocker` de Windows.
 
 ## Verificación de la información y validación del código {.unnumbered}
 
 Para garantizar el rigor metodológico, la reproducibilidad del estudio y evitar la inclusión de código o interpretaciones erróneas, aplicamos una verificación en tres niveles:
 
-1. **Prueba y ejecución local:** Todo el código o sugerencia de configuración proporcionado por la IA fue ejecutado y probado previamente en la consola interactiva de RStudio para comprobar su comportamiento antes de incorporarlo al documento definitivo.
-2. **Contraste con la documentación oficial:** Contrastamos directamente los parámetros y argumentos de las funciones sugeridas con las guías de referencia de CRAN y la ayuda integrada de R (por ejemplo, verificación del parámetro `list = FALSE` dentro de `createDataPartition`).
-3. **Supervisión teórica y lógica:** Evaluamos críticamente cada respuesta para asegurar que las soluciones de código respetasen la lógica del proyecto (como el aislamiento estricto de las particiones de *Train*, *Test* y *Validation* para evitar la fuga de datos) y que los textos explicativos fuesen de autoría propia.
+1.  **Prueba y ejecución local:** Todo el código o sugerencia de configuración proporcionado por la IA fue ejecutado y probado previamente en la consola interactiva de RStudio para comprobar su comportamiento antes de incorporarlo al documento definitivo.
+2.  **Contraste con la documentación oficial:** Contrastamos directamente los parámetros y argumentos de las funciones sugeridas con las guías de referencia de CRAN y la ayuda integrada de R (por ejemplo, verificación del parámetro `list = FALSE` dentro de `createDataPartition`).
+3.  **Supervisión teórica y lógica:** Evaluamos críticamente cada respuesta para asegurar que las soluciones de código respetasen la lógica del proyecto (como el aislamiento estricto de las particiones de *Train*, *Test* y *Validation* para evitar la fuga de datos) y que los textos explicativos fuesen de autoría propia.
