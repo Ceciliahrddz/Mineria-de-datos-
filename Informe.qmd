@@ -882,19 +882,29 @@ Como obtenemos un valor de $p$-valor $< 2.2e-16$ nos cercioramos de que la difer
 
 # Relaciones entre variables.
 
-En este apartado analizaremos las interacciones cruzadas entre variables. Estudiar estas relaciones nos ayuda a comprender los mecanismos subyacentes del comportamiento estudiantil y anticipar posibles relaciones indirectas o redundancias antes de la fase de modelado.
+# Relaciones entre variables
 
-Para abordar este análisis, nos planteamos las siguientes preguntas clave de investigación:
+En este apartado analizaremos las interacciones cruzadas entre distintas variables explicativas. Estudiar estas relaciones resulta clave para comprender los mecanismos subyacentes del comportamiento estudiantil, además de ayudarnos a anticipar posibles efectos indirectos o solapamientos de información antes de la fase de modelado.
 
-- ¿Existe una relación directa entre las horas diarias de uso de redes sociales y el índice de salud mental?
+Para abordar este análisis, nos planteamos las siguientes preguntas e hipótesis de interés:
 
-- ¿Influye la duración del sueño en la calidad percibida del descanso?
+- **¿Existe una relación directa entre las horas diarias de uso de redes sociales (`Social_Media_Hours`) y el índice de salud mental (`Mental_Health_Index`)?**
+  * *¿Por qué es interesante?:* Nos permite explorar si un uso intensivo de plataformas digitales está asociado a un mayor deterioro del bienestar psicológico, o si existe algún umbral a partir del cual el impacto se vuelve crítico.
 
-- ¿Afecta el consumo de redes a altas horas de la noche al número total de horas dormidas y a su calidad?
+- **¿Influye la duración del sueño (`Sleep_Duration_Hours`) en la calidad percibida del descanso (`Sleep_Quality`)?**
+  * *¿Por qué es interesante?:* Resulta clave para comprobar si la percepción de "dormir bien" depende únicamente del número de horas cuantitativas o si entran en juego otros factores cualitativos.
 
-- ¿Cómo se relaciona la puntuación de estrés percibido con el índice general de salud mental?
+- **¿Afecta el consumo de redes a altas horas de la noche (`Late_Night_Usage`) al total de horas dormidas y a su calidad?**
+  * *¿Por qué es interesante?:* Ayuda a aislar el efecto específico del hábito nocturno: queremos ver si el uso tardío desplaza el horario de sueño (reduciendo horas totales) o si distorsiona directamente la calidad del descanso.
 
-- ¿Existe relación entre la edad del estudiante y las horas de uso diario?
+- **¿Cómo se relaciona el nivel de estrés percibido (`Stress_Level`) con el índice general de salud mental (`Mental_Health_Index`)?**
+  * *¿Por qué es interesante?:* Permite medir el grado de solapamiento entre ambos indicadores y verificar si actúan como dimensiones independientes o si existe una fuerte redundancia entre ellas.
+
+- **¿Existe relación entre la edad del estudiante (`Age`) y las horas de uso diario (`Social_Media_Hours`)?**
+  * *¿Por qué es interesante?:* Nos ayuda a identificar si los hábitos de consumo cambian conforme avanza la etapa académica y la madurez del estudiante, o si la exposición a redes es homogénea en todo el rango de edad.
+
+- **¿Existe algún tipo de relación entre el uso nocturno (`Late_Night_Usage`) y el tipo de dispositivo utilizado (`Device_Type`)?**
+  * *¿Por qué es interesante?:* Resulta curioso observar si la portabilidad y la ergonomía del hardware (por ejemplo, *smartphones* o *tablets* frente a portátiles) favorecen que el usuario consuma contenido desde la cama a altas horas de la noche.
 
 ## Impacto del consumo diario de redes en la salud mental
 
@@ -931,8 +941,8 @@ El diagrama de dispersión evidencia una clara relación inversa y lineal entre 
 Aunque, parece evidente su correlación, aplicamos el test de correlación de Pearson entre estas dos variables continuas
 
 ```{r}
-test_cor <- cor.test(train$Mental_Health_Index, train$Daily_Usage_Hours, method = "pearson")
-mostrar_test(test_cor, "Uso diario vs Índice salud mental")
+test_chisq <- chisq.test(train$Mental_Health_Index, train$Daily_Usage_Hours)
+mostrar_test(test_chisq, "Uso diario vs Índice salud mental")
 ```
 
 El test nos devuelve un valor de $p$-valor muy por debajo del valor de significancia escogido de $\alpha = 0.05$. Como consecuencia, las variables no son independientes entre sí y presentan una correlación estadística significante.
@@ -1065,7 +1075,7 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
 El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. Comprobémoslo con el test de Pearson.
 
 ```{r}
-test_cor <- cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, method = "pearson")
+test_chisq <- chisq.test(train$Perceived_Stress_Score, train$Mental_Health_Index)
 mostrar_test(test_chisq, "Puntuación de estrés vs Índice salud mental")
 ```
 
@@ -1104,11 +1114,44 @@ Para evidenciar estadísticamente la ausencia de dependencia lineal, se aplicó 
 
 ```{r}
 # 2. Test de correlación de Pearson / Spearman
-test_cor <- cor.test(train$Age, train$Daily_Usage_Hours, method = "pearson")
-mostrar_test(test_cor, "Edad vs Horas de Uso")
+test_chisq <- chisq.test(train$Age, train$Daily_Usage_Hours)
+mostrar_test(test_chisq, "Edad vs Horas de Uso")
 ```
 
 Obtuvimos un $p$-valor ampliamente superior al nivel de significación estándar ($\alpha = 0.05$, $p > 0.05$), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.
+
+## Relación entre el uso nocturno y el tipo de dispositivo
+
+En este apartado nos parece interesante comprobar si existe algún tipo de relacion entre **`Device_Type`** (variable categórica) y **`Late_Night_Usage`** (variable binaria), para observar como se distribuyen vamos a usar un gráfico de barras apiladas al 100%. Y para comprobar si tienen una relación estadística significativa aplicaremos el test de correlación de Spearman.
+
+```{r}
+ggplot(train, aes(x = Device_Type, fill = Late_Night_Usage)) +
+  geom_bar(position = "fill", alpha = 0.7, color = "#2c3e50") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = c("Sí" = "#E57373", "No" = "#81C784")) +
+  labs(
+    title = "Uso nocturno vs Tipo de dispositivo",
+    x = "Tipo de Dispositivo (Device_Type)",
+    y = "Proporción",
+    fill = "Uso nocturno"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5, color = "#2c3e50"),
+    legend.position = "right"
+  )
+```
+
+Como podemos observar en el gráfico no muestra una gran diferencia entre las proporciones en las tres categorías. La categoría `si` parece ser predominante con alrededor del $55-60\%$. El único dispositivo que parece tener un menor uso nocturno es `tablet`, aunque la diferencia es tan pequeña que su relevancia estadística parece ser baja. Es por tanto, que podríamos deducir que estas variables no están relacionadas entre si. 
+
+Ahora aplicamos el test $\chi^2$ (test Chi-cuadrado).
+
+```{r}
+test_chisq <- chisq.test(train$Device_Type, train$Late_Night_Usage)
+mostrar_test(test_chisq, "Comparación de Device_Type con Late_Night_Usage")
+```
+
+Obtenemos un $p$-valor que claramente esta por encima de nuestro nivel de significancia de $\alpha = 0.05$. Como consecuencia, confirmamos nuestra deducción sobre el gráfico anterior, las variables no parecen estar correlacionadas. Entonces, el uso nocturno de un dispositivo no parece estar relacionado con la elección de dispositivo que se haga.
 
 # Análisis de multicolinealidad entre predictores
 
