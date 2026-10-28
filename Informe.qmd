@@ -76,7 +76,7 @@ El objetivo principal de nuestro proyecto es analizar, comprender y predecir el 
 2.  **Hábitos tecnológicos:** Métricas sobre la exposición digital, incluyendo el promedio de horas de uso diario, el consumo adicional durante los fines de semana, la plataforma de redes sociales preferida, el tipo de dispositivo y el hábito de uso a altas horas de la noche.
 3.  **Patrones de descanso:** Indicadores asociados al sueño del estudiante, como la duración media del descanso nocturno en horas y una escala cuantitativa sobre la calidad del sueño.
 4.  **Bienestar y salud mental:** Métricas de naturaleza psicométrica, tales como la frecuencia de comparación social con otros usuarios, la puntuación de estrés percibido y un índice global de salud mental.
-5.  **Rendimiento y resultado global:** Variables que cuantifican directamente el éxito académico (calificación o promedio académico GPA) y la variable objetivo o *target* global (`Overall_Impact`), que resume el impacto neto del entorno digital en la vida del estudiante.
+5.  **Rendimiento y resultado global:** Variables que cuantifican directamente el éxito académico (calificación o promedio académico GPA) y la percepción global del usuario  de las plataformas digitales en la vida del estudiante (`Overall_Impact`). 
 
 A lo largo de las siguientes secciones, llevaremos a cabo una fase exhaustiva de análisis exploratorio y contraste estadístico sobre nuestra partición de entrenamiento (*train*), con el fin de desentrañar patrones ocultos y preparar el terreno para los futuros modelos predictivos.
 
@@ -101,9 +101,11 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
   - Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
 - **Contraste de Hipótesis Estadísticas:** Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
-  - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
+  - **Test de $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`)**: Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
   - **Test Binomial (`binom.test`):** Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.
-  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso). \# Datos
+  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso). 
+
+# Datos
 
 ```{r}
 n_filas <- nrow(datos)
@@ -124,21 +126,22 @@ datatable(
 
 ## Descripcion de las variables
 
-- **Student_ID**: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio.
+- **Student_ID**: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio. Es una variable identificadora de tipo texto. 
 - **Age**: Edad del estudiante. Toma valores numéricos enteros.
-- **Academic_Level**: Nivel académico o educativo. Variable categórica.
-- **Primary_Platform**: Plataforma de redes sociales principal que utiliza el usuario. Variable categórica.
+- **Gender:** Identidad de género del estudiante. Es una variable categórica nominal que puede tomar 4 valores: Female, Male, Non-Binary y Prefer not to say.  
+- **Academic_Level**: Nivel académico o educativo que cursa el estudiante. Variable categórica ordinal con 3 niveles jerárquicos: High School, Undergraduate, Postgraduate.
+- **Primary_Platform**: Plataforma de redes sociales principal utilizada ppor el usuario. Variable categórica con 7 niveles: Instagram, Tiktok, YouTube, Snapchat, Linked, Reddit y X.
 - **Daily_Usage_Hours**: Promedio de horas diarias dedicadas al uso de redes sociales, es una variable numérica continua.
-- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana.
-- **Device_Type**: Dispositivo principal desde el que accede a las redes, variable categórica.
+- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana. Es una variable cuantitavia continua que toma valores numéricos reales. 
+- **Device_Type**: Dispositivo principal desde el que accede a las redes, variable categórica con 3 niveles: Smartphone, Laptop/PC y Tablet.
 - **Sleep_Duration_Hours**: Duración media del sueño por noche en horas. Variable numérica continua.
 - **Sleep_Quality_Score**: Puntuación sobre la calidad del sueño. Toma valores numéricos enteros entre 1 y 5, donde los valores más bajos indican peor descanso.
-- **Late_Night_Usage**: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable booleana.
-- **Social_Comparison_Frequency**: Frecuencia con la que el estudiante se compara con otros en las redes sociales, variable categórica.
-- **Perceived_Stress_Score**: Nivel o puntuación de estrés. Es una variable numérica basada en escalas psicométricas.
-- **Mental_Health_Index**: Índice general de salud mental del estudiante. Variable numérica.
-- **Academic_Performance_GPA**: Calificación o promedio académico. Variable numérica continua.
-- **Overall_Impact**: Variable objetivo o de salida que resume el impacto global de las redes sociales en la vida del usuario. Esta variable es categórica.
+- **Late_Night_Usage**: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable binaria que toma 2 niveles dicotómicos: Si y No. 
+- **Social_Comparison_Frequency**: Frecuencia con la que el estudiante se compara con otros en las redes sociales, variable categórica ordinal con 5 niveles ordenados: Never, Rarely, Sometimes, Frequently y Always.
+- **Perceived_Stress_Score**: Nivel o puntuación de estrés percibido basado en escalas psicométricas.Es una variable cuantitativa continua que toma valores numéricos continuos en un rango de 1 a 30 puntos. 
+- **Mental_Health_Index**: Índice general de salud mental y bienestar psicológico del estudiante. Variable cuantitativa discreta que toma valores escalares enteros entre 0 a 100 puntos. 
+- **Academic_Performance_GPA**: Calificación o promedio académico ponderado (GPA). Es una variable numérica continua que toma valores numéricos reales continuos en una escala de 0.00 a 4.00.
+- **Overall_Impact**: Evaluación global sobre el impacto neto de las redes sociales en la vida del usuario. Es una variable categórica ordinal con 3 niveles evaluativos: Beneficial, Neutral y Negative. 
 
 ## Estudio univariante
 
