@@ -100,6 +100,7 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
 - **Análisis Visual:**
   - Para las **variables cuantitativas y continuas**, empleamos diagramas de cajas combinados y la representación explícita de la media estadística, lo que permite observar la forma de la distribución y las diferencias centrales entre grupos.
   - Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
+  
 - **Contraste de Hipótesis Estadísticas:** Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
   - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
@@ -131,15 +132,15 @@ datatable(
 - **Age**: Edad del estudiante. Toma valores numéricos enteros.
 - **Gender:** Identidad de género del estudiante. Es una variable categórica nominal que puede tomar 4 valores: Female, Male, Non-Binary y Prefer not to say.\
 - **Academic_Level**: Nivel académico o educativo que cursa el estudiante. Variable categórica ordinal con 3 niveles jerárquicos: High School, Undergraduate, Postgraduate.
-- **Primary_Platform**: Plataforma de redes sociales principal utilizada ppor el usuario. Variable categórica con 7 niveles: Instagram, Tiktok, YouTube, Snapchat, Linked, Reddit y X.
+- **Primary_Platform**: Plataforma de redes sociales principal utilizada por el usuario. Variable categórica con 7 niveles: Instagram, Tiktok, YouTube, Snapchat, Linkedin, Reddit y X.
 - **Daily_Usage_Hours**: Promedio de horas diarias dedicadas al uso de redes sociales, es una variable numérica continua.
-- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana. Es una variable cuantitavia continua que toma valores numéricos reales.
+- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana. Es una variable cuantitativa continua que toma valores numéricos reales.
 - **Device_Type**: Dispositivo principal desde el que accede a las redes, variable categórica con 3 niveles: Smartphone, Laptop/PC y Tablet.
 - **Sleep_Duration_Hours**: Duración media del sueño por noche en horas. Variable numérica continua.
 - **Sleep_Quality_Score**: Puntuación sobre la calidad del sueño. Toma valores numéricos enteros entre 1 y 5, donde los valores más bajos indican peor descanso.
 - **Late_Night_Usage**: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable binaria que toma 2 niveles dicotómicos: Si y No.
 - **Social_Comparison_Frequency**: Frecuencia con la que el estudiante se compara con otros en las redes sociales, variable categórica ordinal con 5 niveles ordenados: Never, Rarely, Sometimes, Frequently y Always.
-- **Perceived_Stress_Score**: Nivel o puntuación de estrés percibido basado en escalas psicométricas.Es una variable cuantitativa continua que toma valores numéricos continuos en un rango de 1 a 30 puntos.
+- **Perceived_Stress_Score**: Nivel o puntuación de estrés percibido basado en escalas psicométricas.Es una variable cuantitativa continua que toma valores en un rango de 1 a 30 puntos.
 - **Mental_Health_Index**: Índice general de salud mental y bienestar psicológico del estudiante. Variable cuantitativa discreta que toma valores escalares enteros entre 0 a 100 puntos.
 - **Academic_Performance_GPA**: Calificación o promedio académico ponderado (GPA). Es una variable numérica continua que toma valores numéricos reales continuos en una escala de 0.00 a 4.00.
 - **Overall_Impact**: Evaluación global sobre el impacto neto de las redes sociales en la vida del usuario. Es una variable categórica ordinal con 3 niveles evaluativos: Beneficial, Neutral y Negative.
@@ -175,7 +176,7 @@ En base a este primer vistazo a los datos no hemos detectado ningún valor clara
 En este apartado debemos crear una división de nuestros datos. Como hemos nombrado anteriormente vamos a dividir el conjunto en **tres** partes, explicadas anteriormente en la metodología.
 
 - **Train**: La gran mayoría de los datos caerán aquí, aproximadamente el 65%.
-- **Valid**: Con este conjunto comprobaremos que nuestros modelos son certeros, acaparán el 21% de los datos.
+- **Valid**: Con este conjunto comprobaremos que nuestros modelos son certeros, acapararán el 21% de los datos.
 - **Test**: Con estos datos ejecutaremos el examen final de nuestro modelo, aproximadamente el 14% de los datos.
 
 ```{r}
@@ -268,7 +269,7 @@ ggplot(train, aes(x = Overall_Impact, y = Academic_Performance_GPA, fill = Overa
   )
 ```
 
-Como podemos observar, ambas colas se solapan, por tanto, una no es una categorización de la otra. Ya hemos solventado la duda que teníamos sobre si `Overall_Impact` podría ser una categorización de `Academic_Performance_GPA` . Aunque no sea una cateogorización una de otra, el boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral. Antes de deducir si existe diferencia significativa entre ambas variables hagamos lo siguiente:
+Como podemos observar, ambas colas se solapan, por tanto, una no es una categorización de la otra. Ya hemos solventado la duda que teníamos sobre si `Overall_Impact` podría ser una categorización de `Academic_Performance_GPA` . Aunque no sea una categorización una de otra, el boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral. Antes de deducir si existe diferencia significativa entre ambas variables hagamos lo siguiente:
 
 Decidimos que nuestro target será `Academic_Performance_GPA`. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.
 
@@ -339,7 +340,7 @@ prob_alto <- proporciones["Rendimiento_alto"]
 train <- train %>% select(-Academic_Performance_GPA)
 ```
 
-Por tanto, obtenemos `r prob_bajo_medio` para *Rendimiento_bajo_medio* y `r prob_alto` para *Rendimiento_bajo_medio*. Valores que tendremos en cuenta para el análisis de estadístico de datos.
+Por tanto, obtenemos `r prob_bajo_medio` para **Rendimiento_bajo_medio** y `r prob_alto` para **Rendimiento_alto**. Valores que tendremos en cuenta para el análisis de estadístico de datos.
 
 En el siguiente apartado, estudiaremos la relación entre todas las variables y nuestro objetivo en este informe. Recapitulando, ya tenemos una descripción de todas las variables y nuestro target bien definido en una variable categórica que distingue entre las notas de los alumnos.
 
@@ -377,11 +378,18 @@ A continuación, se describen los test estadísticos que emplearemos según la n
 - **Definición:** Es una prueba no paramétrica que evalúa si tres o más muestras independientes proceden de la misma distribución ($H_0$: las medianas/distribuciones de todos los grupos son iguales), basándose en la ordenación por rangos de las observaciones combinadas.
 :::
 
-::: {.callout-note icon=false appearance="simple" style="background-color: #f0f4f8; border-left: 4px solid #2b5c8f; border-radius: 4px; padding: 12px;"}
+::: {.callout-note icon="false"}
 ### 5. Test de Correlación de Pearson (`cor.test`)
 
 * **Aplicación:** Se aplica al evaluar la relación entre dos variables cuantitativas continuas (por ejemplo, relacionar la puntuación de estrés frente al índice de salud mental, o las horas diarias de uso frente a la salud mental).
 * **Definición:** Evalúa si existe una asociación lineal estadísticamente significativa entre ambas variables métricas, calculando el coeficiente de correlación de Pearson ($r \in [-1, 1]$) bajo la hipótesis nula de ausencia de correlación lineal ($H_0: \rho = 0$).
+:::
+
+::: {.callout-note icon="false"}
+### Test de Correlación de Spearman (`cor.test(..., method = "spearman")`)
+
+- **Aplicación:** Se utiliza para evaluar la asociación entre dos variables cuantitativas (continuas o discretas) o cualitativas ordinales, especialmente cuando no se cumple la hipótesis de normalidad bivariada o la relación no es estrictamente lineal.
+- **Definición:** Evalúa si existe una relación monótona entre dos variables analizando el orden de los rangos (*ranks*) de los datos en lugar de sus valores numéricos absolutos, ofreciendo una medida de dependencia robusta frente a valores atípicos (*outliers*).
 :::
 
 En todos los casos, tomaremos como criterio general de decisión el $p$-valor generado por cada prueba frente al nivel de significación estándar $\alpha = 0.05$. Un $p\text{-valor} < 0.05$ nos permitirá rechazar la hipótesis nula ($H_0$) y concluir que existe una relación o diferencia estadísticamente significativa.
@@ -404,7 +412,7 @@ ggplot(train, aes(x = target, y = Age, fill = target)) +
 
 ```
 
-Para evaluar la relación entre estas dos variables una cuantitativa y la otra binaria, empleamos la prueba no paramétrica e Wilcoxon.
+Para evaluar la relación entre estas dos variables una cuantitativa y la otra binaria, empleamos la prueba no paramétrica de Wilcoxon.
 
 ```{r}
 #Test estadístico (Wilcoxon)
@@ -479,7 +487,7 @@ El test muestra un estadístico $X^2 = 0.51705$ con 2 grados de libertad y un $p
 
 ## Comparación de Puntuación de calidad del sueño y Target
 
-En esta gráfico que muestra la relación entre la calidad percibida del descanso (`Sleep_Quality_Score`) y el target, vemos que en el grupo de rendimiento bajo/medio, la mediana de calidad del sueño se sitúa en un 2, mientras que en grupo de rendimiento alto, la mediana asciende a 3. Lo que indica que los estudiantes con calificaciones más altas tienden a reportar un mejor descanso.
+En este gráfico que muestra la relación entre la calidad percibida del descanso (`Sleep_Quality_Score`) y el target, vemos que en el grupo de rendimiento bajo/medio, la mediana de calidad del sueño se sitúa en un 2, mientras que en grupo de rendimiento alto, la mediana asciende a 3. Lo que indica que los estudiantes con calificaciones más altas tienden a reportar un mejor descanso.
 
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
@@ -502,7 +510,7 @@ test_wilcox<-wilcox.test(Sleep_Quality_Score ~ target, data = train)
 mostrar_test(test_wilcox, "Sleep_Quality_Score")
 ```
 
-Con este test nos proporciona un estadístico $W=536281$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el $p$-valor es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupo, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
+Con este test nos proporciona un estadístico $W=536281$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el $p$-valor es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupos, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
 
 ## Comparación de Uso nocturno de redes sociales y Target
 
@@ -579,7 +587,7 @@ En el análisis obtuvimos un estadístico de prueba $X^2 = 1.4687$ con 4 grados 
 
 ## Comparación de Puntuación de estrés percibido y Target
 
-El diagrama de caja refleja una clara diferencia en la puntuación de estrés percibido (`Perceived_Stress_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento bajo/medio, la mediana de estrés se sitúa en torno a los 16 punto con un rango intercuartílico aproximado de 12 a 21, mientras que en el grupo de rendimiento alto, la mediana desciente a los 10 puntos con un rango de 6 a 14, mostrando además valores máximos sensiblemente menores.
+El diagrama de caja refleja una clara diferencia en la puntuación de estrés percibido (`Perceived_Stress_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento bajo/medio, la mediana de estrés se sitúa en torno a los 16 punto con un rango intercuartílico aproximado de 12 a 21, mientras que en el grupo de rendimiento alto, la mediana desciende a los 10 puntos con un rango de 6 a 14, mostrando además valores máximos sensiblemente menores.
 
 ```{r}
 ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
@@ -629,7 +637,7 @@ test_wilcox<-wilcox.test(Mental_Health_Index ~ target, data = train)
 mostrar_test(test_wilcox, "Mental_Health_Index")
 ```
 
-Con este análisis obtenemos $W = 449073$ y un $p$-valor$<2.2 \times 10^{-16}$. Al ser el $p$-valor infinitamente menor que el nivel de significación prefijado $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$ de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y **altamente significativa** con el desempeño estudiantil, conviertiendo a `Mental_Health_Index` en un predictor clave e inversamente condicionado por el malestar psicológico para la clasificación del target.
+Con este análisis obtenemos $W = 449073$ y un $p$-valor$<2.2 \times 10^{-16}$. Al ser el $p$-valor infinitamente menor que el nivel de significación prefijado $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$ de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y **altamente significativa** con el desempeño estudiantil, convirtiendo a `Mental_Health_Index` en un predictor clave e inversamente condicionado por el malestar psicológico para la clasificación del target.
 
 ## Comparación de Horas de Sueño y Target
 
@@ -652,11 +660,11 @@ test_wilcox<-wilcox.test(Sleep_Duration_Hours ~ target, data = train)
 mostrar_test(test_wilcox, "Sleep_Duration_Hours")
 ```
 
-Al obtener un $p$-valor$<2.2 \times 10^{-16}$ que está por debajo del umbral de significación $(\alpha = 0.05)$ se rechaza la hipótesis nula $H_0$. De este modo, afirmamos que la duración del sueño constituye una **variable significativamente asociada** al desempeño estudiantil, actuando la variable `Sleep_Duration_Hours` como un predictor del un rendimiento académico.
+Al obtener un $p$-valor$<2.2 \times 10^{-16}$ que está por debajo del umbral de significación $(\alpha = 0.05)$ se rechaza la hipótesis nula $H_0$. De este modo, afirmamos que la duración del sueño constituye una **variable significativamente asociada** al desempeño estudiantil, actuando la variable `Sleep_Duration_Hours` como un predictor del rendimiento académico.
 
 ## Comparación de Género y Target
 
-Analizamos la relación entre el género del estudiante (variable categórica, `Gender`) y la variable target mediante un diagrama de barras apiladas. Para confirmar si las diferencias observadas son estadísticamente relevantes, aplicamos la prueba de independiencia de Chi-cuadrado $(\chi^2)$
+Analizamos la relación entre el género del estudiante (variable categórica, `Gender`) y la variable target mediante un diagrama de barras apiladas. Para confirmar si las diferencias observadas son estadísticamente relevantes, aplicamos la prueba de independencia de Chi-cuadrado $(\chi^2)$
 
 ```{r}
 ggplot(train, aes(x = Gender, fill = target, group = target)) +
@@ -728,7 +736,7 @@ resultados_binomiales %>%
   )
 ```
 
-Los resultados de estas pruebas muestran $p$-valores no significativas en la totalidad de las categorías analizadas: $0.651$ en *Female*, $0.675$ en *Male*, $0.824$ en *Non-Binary* y $1.000$ e *Prefer not to say*. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable `Gender` no ejerce ningún efecto relevante sobre las calificaciones, **careciendo de capacidad explicativa o discriminante** para el modelado de la variable respuesta.
+Los resultados de estas pruebas muestran $p$-valores no significativos en la totalidad de las categorías analizadas: $0.651$ en *Female*, $0.675$ en *Male*, $0.824$ en *Non-Binary* y $1.000$ en *Prefer not to say*. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable `Gender` no ejerce ningún efecto relevante sobre las calificaciones, **careciendo de capacidad explicativa o discriminante** para el modelado de la variable respuesta.
 
 ## Comparación de Nivel Académico y Target
 
@@ -750,7 +758,7 @@ ggplot(train, aes(x = Academic_Level, fill = target)) +
   theme_minimal()
 ```
 
-Con el propósito de evaluar formalmente si el nivel académico alcanzado condiona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson.
+Con el propósito de evaluar formalmente si el nivel académico alcanzado condiciona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson.
 
 ```{r}
 #Test Estadístico (Chi cuadrado)
@@ -758,7 +766,7 @@ test_chisq<-chisq.test(table(train$Academic_Level, train$target))
 mostrar_test(test_chisq, "Academic_Level")
 ```
 
-Del contraste resulta un estadístico de prueba $X^2 = 0.88828$ con 2 grados de libertad y un $p$-valor $= 0.6414$, como este es superior al nivel de significación prefijado, no se encuentra evidencia estadística para rechazar la hipótesis nula de independencia. Por consiguiente, determinamos que la etapa educativo **no ejerce un efecto diferenciador** sobre el rendimiento académico, lo que indica que `Academic_Level` no resulta una variable relevante para discriminar las clases de la variable objetivo.
+Del contraste resulta un estadístico de prueba $X^2 = 0.88828$ con 2 grados de libertad y un $p$-valor $= 0.6414$, como este es superior al nivel de significación prefijado, no se encuentra evidencia estadística para rechazar la hipótesis nula de independencia. Por consiguiente, determinamos que la etapa educativa **no ejerce un efecto diferenciador** sobre el rendimiento académico, lo que indica que `Academic_Level` no resulta una variable relevante para discriminar las clases de la variable objetivo.
 
 ## Comparación de Plataforma principal y Target
 
@@ -1256,13 +1264,13 @@ tabla_seleccion <- data.frame(
     "Categórica (ordinal)",    # Sleep_Quality_Score
     "Categórica (binaria)",    # Late_Night_Usage
     "Cuantitativa (continua)", # Perceived_Stress_Score
-    "Cuantitativa (continua)", # Mental_Health_Index
+    "Cuantitativa (discreta)", # Mental_Health_Index
     "Categórica (ordinal)",    # Overall_Impact
-    "Cuantitativa (continua)", # Age
+    "Cuantitativa (discreta)", # Age
     "Categórica (nominal)",    # Device_Type
     "Categórica (ordinal)",    # Social_Comparison_Frequency
     "Categórica (nominal)",    # Gender
-    "Categórica (nominal)",    # Academic_Level
+    "Categórica (ordinal)",    # Academic_Level
     "Categórica (nominal)",    # Primary_Platform
     "Cuantitativa (continua)"  # Weekend_Extra_Hours
   ),
@@ -1327,7 +1335,7 @@ tabla_seleccion %>%
   row_spec(8:14, background = "#FFEBEE", color = "#B71C1C")                  # Rojo para las 7 descartadas
 ```
 
-- **Factores seleccionados:** Seleccionamos 6 predictores finales: `Daily_Usage_Hours`, `Sleep_Duration_Hours`, `Sleep_Quality_Score`, `Late_Night_Usage`, `Perceived_Stress_Score` y `Mental_Health_Index`. El análisis confirma que las dimensiones vinculadas a la exposición digital, los patrones de sueño y la salud psicológica contienen la variabilidad relevante para separar a los estudiantes según su rendimiento académico (`target`).
+- **Factores seleccionados:** Seleccionamos 7 predictores finales: `Daily_Usage_Hours`, `Sleep_Duration_Hours`, `Sleep_Quality_Score`, `Late_Night_Usage`, `Perceived_Stress_Score`, `Mental_Health_Index` y `Overall_Impact`. El análisis confirma que las dimensiones vinculadas a la exposición digital, los patrones de sueño y la salud psicológica contienen la variabilidad relevante para separar a los estudiantes según su rendimiento académico (`target`).
 - **Factores descartados:** Se excluyen 7 variables: `Age`, `Device_Type`, `Social_Comparison_Frequency`, `Gender`, `Academic_Level`, `Primary_Platform` y `Weekend_Extra_Hours`. Al presentar $p$-valores sustancialmente superiores al umbral de significación, estas variables actúan como ruido no informativo dentro del espacio de características y su eliminación simplifica la frontera de división de los algoritmos supervisados.
 
 ## Comparación de la capacidad discriminante
