@@ -77,7 +77,7 @@ El objetivo principal de nuestro proyecto es analizar, comprender y predecir el 
 2.  **Hábitos tecnológicos:** Métricas sobre la exposición digital, incluyendo el promedio de horas de uso diario, el consumo adicional durante los fines de semana, la plataforma de redes sociales preferida, el tipo de dispositivo y el hábito de uso a altas horas de la noche.
 3.  **Patrones de descanso:** Indicadores asociados al sueño del estudiante, como la duración media del descanso nocturno en horas y una escala cuantitativa sobre la calidad del sueño.
 4.  **Bienestar y salud mental:** Métricas de naturaleza psicométrica, tales como la frecuencia de comparación social con otros usuarios, la puntuación de estrés percibido y un índice global de salud mental.
-5.  **Rendimiento y resultado global:** Variables que cuantifican directamente el éxito académico (calificación o promedio académico GPA) y la percepción global del usuario  de las plataformas digitales en la vida del estudiante (`Overall_Impact`). 
+5.  **Rendimiento y resultado global:** Variables que cuantifican directamente el éxito académico (calificación o promedio académico GPA) y la percepción global del usuario de las plataformas digitales en la vida del estudiante (`Overall_Impact`).
 
 A lo largo de las siguientes secciones, llevaremos a cabo una fase exhaustiva de análisis exploratorio y contraste estadístico sobre nuestra partición de entrenamiento (*train*), con el fin de desentrañar patrones ocultos y preparar el terreno para los futuros modelos predictivos.
 
@@ -102,9 +102,9 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
   - Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
 - **Contraste de Hipótesis Estadísticas:** Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
-  - **Test de $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`)**: Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
+  - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
   - **Test Binomial (`binom.test`):** Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.
-  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso). 
+  - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso).
 
 # Datos
 
@@ -127,22 +127,22 @@ datatable(
 
 ## Descripcion de las variables
 
-- **Student_ID**: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio. Es una variable identificadora de tipo texto. 
+- **Student_ID**: Identificador único (alfanumérico) asignado a cada alumno registrado en el estudio. Es una variable identificadora de tipo texto.
 - **Age**: Edad del estudiante. Toma valores numéricos enteros.
-- **Gender:** Identidad de género del estudiante. Es una variable categórica nominal que puede tomar 4 valores: Female, Male, Non-Binary y Prefer not to say.  
+- **Gender:** Identidad de género del estudiante. Es una variable categórica nominal que puede tomar 4 valores: Female, Male, Non-Binary y Prefer not to say.\
 - **Academic_Level**: Nivel académico o educativo que cursa el estudiante. Variable categórica ordinal con 3 niveles jerárquicos: High School, Undergraduate, Postgraduate.
 - **Primary_Platform**: Plataforma de redes sociales principal utilizada ppor el usuario. Variable categórica con 7 niveles: Instagram, Tiktok, YouTube, Snapchat, Linked, Reddit y X.
 - **Daily_Usage_Hours**: Promedio de horas diarias dedicadas al uso de redes sociales, es una variable numérica continua.
-- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana. Es una variable cuantitavia continua que toma valores numéricos reales. 
+- **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana. Es una variable cuantitavia continua que toma valores numéricos reales.
 - **Device_Type**: Dispositivo principal desde el que accede a las redes, variable categórica con 3 niveles: Smartphone, Laptop/PC y Tablet.
 - **Sleep_Duration_Hours**: Duración media del sueño por noche en horas. Variable numérica continua.
 - **Sleep_Quality_Score**: Puntuación sobre la calidad del sueño. Toma valores numéricos enteros entre 1 y 5, donde los valores más bajos indican peor descanso.
-- **Late_Night_Usage**: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable binaria que toma 2 niveles dicotómicos: Si y No. 
+- **Late_Night_Usage**: Indica si el usuario utiliza las redes sociales a altas horas de la noche. Es una variable binaria que toma 2 niveles dicotómicos: Si y No.
 - **Social_Comparison_Frequency**: Frecuencia con la que el estudiante se compara con otros en las redes sociales, variable categórica ordinal con 5 niveles ordenados: Never, Rarely, Sometimes, Frequently y Always.
-- **Perceived_Stress_Score**: Nivel o puntuación de estrés percibido basado en escalas psicométricas.Es una variable cuantitativa continua que toma valores numéricos continuos en un rango de 1 a 30 puntos. 
-- **Mental_Health_Index**: Índice general de salud mental y bienestar psicológico del estudiante. Variable cuantitativa discreta que toma valores escalares enteros entre 0 a 100 puntos. 
+- **Perceived_Stress_Score**: Nivel o puntuación de estrés percibido basado en escalas psicométricas.Es una variable cuantitativa continua que toma valores numéricos continuos en un rango de 1 a 30 puntos.
+- **Mental_Health_Index**: Índice general de salud mental y bienestar psicológico del estudiante. Variable cuantitativa discreta que toma valores escalares enteros entre 0 a 100 puntos.
 - **Academic_Performance_GPA**: Calificación o promedio académico ponderado (GPA). Es una variable numérica continua que toma valores numéricos reales continuos en una escala de 0.00 a 4.00.
-- **Overall_Impact**: Evaluación global sobre el impacto neto de las redes sociales en la vida del usuario. Es una variable categórica ordinal con 3 niveles evaluativos: Beneficial, Neutral y Negative. 
+- **Overall_Impact**: Evaluación global sobre el impacto neto de las redes sociales en la vida del usuario. Es una variable categórica ordinal con 3 niveles evaluativos: Beneficial, Neutral y Negative.
 
 ## Estudio univariante
 
@@ -345,7 +345,7 @@ En el siguiente apartado, estudiaremos la relación entre todas las variables y 
 
 # Relaciones entre el target y el resto de variables.
 
-En este capítulo dedicaremos una subsección a la comparación de cada variable con el *target*. De manera complementaria a la visualización analítica, aplicaremos los test estadísticos correspondientes para contrastar formalmente si existe una diferencia o asociación estadísticamente significativa con respecto a nuestra variable objetivo.
+En este capítulo dedicaremos una subsección a la comparación de cada variable con el *target*. De manera complementaria a la visualización analítica, aplicaremos los test estadísticos correspondientes para contrastar formalmente si existe una diferencia o asociación estadísticamente significativa con respecto a nuestra variable objetivo, respondiendo así a la cuestión de si cada variable está efectivamente relacionada con el *target*.
 
 A continuación, se describen los test estadísticos que emplearemos según la naturaleza de las variables analizadas:
 
@@ -377,6 +377,13 @@ A continuación, se describen los test estadísticos que emplearemos según la n
 - **Definición:** Es una prueba no paramétrica que evalúa si tres o más muestras independientes proceden de la misma distribución ($H_0$: las medianas/distribuciones de todos los grupos son iguales), basándose en la ordenación por rangos de las observaciones combinadas.
 :::
 
+::: {.callout-note icon=false appearance="simple" style="background-color: #f0f4f8; border-left: 4px solid #2b5c8f; border-radius: 4px; padding: 12px;"}
+### 5. Test de Correlación de Pearson (`cor.test`)
+
+* **Aplicación:** Se aplica al evaluar la relación entre dos variables cuantitativas continuas (por ejemplo, relacionar la puntuación de estrés frente al índice de salud mental, o las horas diarias de uso frente a la salud mental).
+* **Definición:** Evalúa si existe una asociación lineal estadísticamente significativa entre ambas variables métricas, calculando el coeficiente de correlación de Pearson ($r \in [-1, 1]$) bajo la hipótesis nula de ausencia de correlación lineal ($H_0: \rho = 0$).
+:::
+
 En todos los casos, tomaremos como criterio general de decisión el $p$-valor generado por cada prueba frente al nivel de significación estándar $\alpha = 0.05$. Un $p\text{-valor} < 0.05$ nos permitirá rechazar la hipótesis nula ($H_0$) y concluir que existe una relación o diferencia estadísticamente significativa.
 
 ## Comparación de Edad y Target
@@ -397,8 +404,8 @@ ggplot(train, aes(x = target, y = Age, fill = target)) +
 
 ```
 
+Para evaluar la relación entre estas dos variables una cuantitativa y la otra binaria, empleamos la prueba no paramétrica e Wilcoxon.
 
-Para evaluar la relación entre estas dos variables una cuantitativa y la otra binaria, empleamos la prueba no paramétrica e Wilcoxon. 
 ```{r}
 #Test estadístico (Wilcoxon)
 test_wilcox <- wilcox.test(Age ~ target, data = train)
@@ -424,8 +431,7 @@ ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
   theme_minimal()
 ```
 
-
-Para corroborar que existe una diferencia estadísticamente significativa entre ambas variables utilizamos la prueba no paramétrica de suma de rangos de Wilcoxon. 
+Para corroborar que existe una diferencia estadísticamente significativa entre ambas variables utilizamos la prueba no paramétrica de suma de rangos de Wilcoxon.
 
 ```{r}
 # Test estadístico (Wilcoxon)
@@ -438,7 +444,6 @@ Obtenemos un estadístico $W = 1622909$ y un $p-valor< 2.2 \times 10^{-16}$ . Da
 ## Comparación de Tipo de dispositivo y Target
 
 Exploramos la distribución bivariante cruzando el tipo de dispositivo (`Device_Type`, variable categórica) con la variable respuesta a través de barras apiladas.Podemos ver que el *smartphone* es el dispositivo predominante utilizado tanto en el grupo de rendimiento bajo/medio como en el alto (alrededor del 85%), seguido de *Laptop/PC* (\~12-13 %) y por último la *tablet* (\~2-3%). Destacamos que la proporción de alumnos con alto rendimiento frente a bajo o medio resulta prácticamente idéntica en las tres categorías de dispositivos.
-
 
 ```{r}
 ggplot(train, aes(x = Device_Type, fill = target)) +
@@ -462,8 +467,8 @@ ggplot(train, aes(x = Device_Type, fill = target)) +
   theme_minimal()
 ```
 
+Con el fin de verificar si las variaciones observadas en las proporciones alcanzan significación estadística, contrastamos la independencia de ambos factores mediante el test de $\chi^2$
 
-Con el fin de verificar si las variaciones observadas en las proporciones alcanzan significación estadística, contrastamos la independencia de ambos factores mediante el test de  $\chi^2$
 ```{r}
 #Test de independencia Chi-cuadrado
 test_chisq<-chisq.test(table(train$Device_Type, train$target))
@@ -490,6 +495,7 @@ ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
 ```
 
 Con el propósito de verificar formalmente la existencia de una asociación estadísticamente relevante, aplicamos el test de Wilcoxon como contraste de hipótesis.
+
 ```{r}
 #Test estadístico (Wilcoxon)
 test_wilcox<-wilcox.test(Sleep_Quality_Score ~ target, data = train)
@@ -499,6 +505,7 @@ mostrar_test(test_wilcox, "Sleep_Quality_Score")
 Con este test nos proporciona un estadístico $W=536281$ y un $p-valor<2.2 \times 10^{-16}$. Puesto que el $p$-valor es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupo, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
 
 ## Comparación de Uso nocturno de redes sociales y Target
+
 Este gráfico de barras agrupadas muestra la relación entre el uso nocturno de redes sociales (`Late_Night_Usage`) y el target. Podemos ver que hay un patrón entre ambos grupos: entre los alumnos que si utilizan las redes sociales a altas horas de la noche, predomina ampliamente el grupo de rendimiento bajo/medio, aproximadamente un 68% frente a un 32% de rendimiento alto. Por el contrario, aquellos estudiantes que declaran no realizar uso nocturno, las proporciones se invierten, alcanzando el rendimiento alto cerca del 53%.
 
 ```{r}
@@ -523,18 +530,19 @@ ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
   theme_minimal()
 ```
 
-Confirmamos formalmente la significación estadística de esta posible relación mediante el test de Chi-cuadrado ($\chi^2)$. 
+Confirmamos formalmente la significación estadística de esta posible relación mediante el test de Chi-cuadrado ($\chi^2)$.
+
 ```{r}
 #Test de independencia Chi-cuadrado
 test_chisq <- chisq.test(table(train$Late_Night_Usage, train$target))
 mostrar_test(test_chisq, "Late_Night_Usage")
 ```
 
-El test nos devuelve  $X^2 = 139.35$ con 1 grado de libertad y un $p-valor<2.2 \times 10^{-16}$. Como el $p$-valor es infinitamente menor que el nivel de significación estándar se rechaza la hipótesis nula $(H_0)$. Confirmamos así una **asociación estadísticamente significativa** entre el uso nocturno de las plataformas y las calificaciones, concluyendo que `Late_Night_Usage` es un factor altamente relevante e inversamente relacionado con la probabilidad de obtener un rendimiento académico alto.
+El test nos devuelve $X^2 = 139.35$ con 1 grado de libertad y un $p-valor<2.2 \times 10^{-16}$. Como el $p$-valor es infinitamente menor que el nivel de significación estándar se rechaza la hipótesis nula $(H_0)$. Confirmamos así una **asociación estadísticamente significativa** entre el uso nocturno de las plataformas y las calificaciones, concluyendo que `Late_Night_Usage` es un factor altamente relevante e inversamente relacionado con la probabilidad de obtener un rendimiento académico alto.
 
 ## Comparación de Frecuencia de comparación social y Target
 
-La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) exhibe su mayor densidad en *Sometimes* (alrededor del 35%), seguida de *Frequently* (\~28%), *Rarely* (\~16-17%), *Always* (\~14-15%) y *Never* (\~5-6%). En todas las categorías, la relación entre estudiantes de rendimiento alto y de rendimiento bajo/medio se conserva prácticamente constante. 
+La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) exhibe su mayor densidad en *Sometimes* (alrededor del 35%), seguida de *Frequently* (\~28%), *Rarely* (\~16-17%), *Always* (\~14-15%) y *Never* (\~5-6%). En todas las categorías, la relación entre estudiantes de rendimiento alto y de rendimiento bajo/medio se conserva prácticamente constante.
 
 ```{r}
 ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
@@ -559,8 +567,8 @@ ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
-
 Comprobamos la relación mediante el test de $\chi^2$.
+
 ```{r}
 #Test de independencia Chi-cuadrado
 test_chisq <- chisq.test(table(train$Social_Comparison_Frequency, train$target))
@@ -586,8 +594,8 @@ ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
   theme_minimal()
 ```
 
+A continuación, se presentan los resultados obtenidos de la prueba estadística de Wilcoxon que permite evaluar las diferencias entre las dos variables.
 
-A continuación, se presentan los resultados obtenidos de la prueba estadística de Wilcoxon que permite evaluar las diferencias entre las dos variables. 
 ```{r}
 #Test estadístico (Wilcoxon)
 test_wilcox<-wilcox.test(Perceived_Stress_Score ~ target, data = train)
@@ -613,8 +621,8 @@ ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
   theme_minimal()
 ```
 
+Estos son los resultados obtenidos tras aplicar la prueba de Wilcoxon para ver si existe una relación de dependencia o asociación.
 
-Estos son los resultados obtenidos tras aplicar la prueba de Wilcoxon para ver si existe una relación de dependencia o asociación. 
 ```{r}
 #Test estadístico (Wilcoxon)
 test_wilcox<-wilcox.test(Mental_Health_Index ~ target, data = train)
@@ -627,7 +635,6 @@ Con este análisis obtenemos $W = 449073$ y un $p$-valor$<2.2 \times 10^{-16}$. 
 
 El diagrama de caja permite evaluar la distribución de la duración del descanso nocturno (`Sleep_Duration_Hours`) en función de la categoría de rendimiento académico (`target`). En la representación gráfica apreciamos que los estudiantes del grupo con rendimiento alto presentan, en general, un promedio de horas de sueño más elevado y constante, mientras que los alumnos con rendimiento bajo/medio registra periodos de descanso sensiblemente más reducidos y con mayor variabilidad.
 
-
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
   geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
@@ -636,7 +643,6 @@ ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
   labs(title = "Duración del sueño según rendimiento académico", x = "Rendimiento académico", y = "Horas de sueño") +
   theme_minimal()
 ```
-
 
 Para determinar si estas diferencias en la calidad de descanso resultan estadísticamente significativas entre ambos grupos, se aplica la prueba no paramétrica de suma de rangos de Wilcoxon.
 
@@ -649,6 +655,7 @@ mostrar_test(test_wilcox, "Sleep_Duration_Hours")
 Al obtener un $p$-valor$<2.2 \times 10^{-16}$ que está por debajo del umbral de significación $(\alpha = 0.05)$ se rechaza la hipótesis nula $H_0$. De este modo, afirmamos que la duración del sueño constituye una **variable significativamente asociada** al desempeño estudiantil, actuando la variable `Sleep_Duration_Hours` como un predictor del un rendimiento académico.
 
 ## Comparación de Género y Target
+
 Analizamos la relación entre el género del estudiante (variable categórica, `Gender`) y la variable target mediante un diagrama de barras apiladas. Para confirmar si las diferencias observadas son estadísticamente relevantes, aplicamos la prueba de independiencia de Chi-cuadrado $(\chi^2)$
 
 ```{r}
@@ -727,7 +734,6 @@ Los resultados de estas pruebas muestran $p$-valores no significativas en la tot
 
 El gráfico de barras refleja el volumen de estudiantes distribuido según su nivel educativo (`Academic_Level`) y clasificado en función del `target`. Aunque hay un volumen marcadamente superior en el nivel universitario (*Undergraduate*), seguido de la educación secundaria (*High School*) y, de forma minoritaria los estudios de posgrado (*Postgraduate*), la proporción interna entre los estudiantes de rendimiento *alto* y *bajo/medio* guarda un patrón uniforme y constante en los tres estratos.
 
-
 ```{r}
 ggplot(train, aes(x = Academic_Level, fill = target)) +
   geom_bar(position = position_dodge(width = 0.8), width = 0.7) +
@@ -744,7 +750,6 @@ ggplot(train, aes(x = Academic_Level, fill = target)) +
   theme_minimal()
 ```
 
-
 Con el propósito de evaluar formalmente si el nivel académico alcanzado condiona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson.
 
 ```{r}
@@ -756,8 +761,8 @@ mostrar_test(test_chisq, "Academic_Level")
 Del contraste resulta un estadístico de prueba $X^2 = 0.88828$ con 2 grados de libertad y un $p$-valor $= 0.6414$, como este es superior al nivel de significación prefijado, no se encuentra evidencia estadística para rechazar la hipótesis nula de independencia. Por consiguiente, determinamos que la etapa educativo **no ejerce un efecto diferenciador** sobre el rendimiento académico, lo que indica que `Academic_Level` no resulta una variable relevante para discriminar las clases de la variable objetivo.
 
 ## Comparación de Plataforma principal y Target
-El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedkn*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones dentre enstudiantes de rendimiento alto y bajo/medio resultan prácticamente idénticas en todas las categorías analizadas.
 
+El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedkn*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones dentre enstudiantes de rendimiento alto y bajo/medio resultan prácticamente idénticas en todas las categorías analizadas.
 
 ```{r}
 ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
@@ -808,7 +813,6 @@ ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
   theme_minimal()
 ```
 
-
 Para evaluar cuantitativamente si la dedicación extra durante el fin de semana difiere de manera significativa entre ambos grupos de alumnos, aplicamos la prueba no paramétrica de suma de rangos de Wilcoxon.
 
 ```{r}
@@ -820,8 +824,8 @@ mostrar_test(test_wilcox, "Weekend_Extra_Hours")
 Obtenemos los valores $W = 1013076$ y un $p$-valor $= 0.7354$. Como el $p$-valor es notablemente superior al nivel de significación de referencia $(\alpha = 0.05)$, no se dispone de evidencia estadística para rechazar la hipótesis nula de igualdad de distribuciones. En consecuencia, concluimos que el número de horas extra consumidas durante el fin de semana no está asociado al desempeño escolar, por lo que `Weekend_Extra_Hours` **carece de poder discriminante** y puede descartarse como predictor explicativo para el target.
 
 ## Comparación de Impacto general y Target
-Dado que ambas métricas han estado conceptualmente vinculadas desde el planteamiento inicial del proyecto, resulta esperable observar una estrecha dependencia entre la percepción global del usuario (`Overall_Impact`) y el desempeño académico. A continuación, analizamos la distribución bivariante de la variable respuesta binarizada (target) a través de las distintas categorías de impacto percibido. 
 
+Dado que ambas métricas han estado conceptualmente vinculadas desde el planteamiento inicial del proyecto, resulta esperable observar una estrecha dependencia entre la percepción global del usuario (`Overall_Impact`) y el desempeño académico. A continuación, analizamos la distribución bivariante de la variable respuesta binarizada (target) a través de las distintas categorías de impacto percibido.
 
 ```{r}
 ggplot(train, aes(x = Overall_Impact, fill = target)) +
@@ -849,8 +853,7 @@ ggplot(train, aes(x = Overall_Impact, fill = target)) +
   theme_minimal()
 ```
 
-El análisis visual pone de manifiesto una clara asimetría en la distribución del rendimiento académico según el impacto percibido (`Overall_Impact). En la categoría de impacto *Negativo*, el $100%$ de los registros corresponden a estudiantes de rendimiento bajo o medio, no observamos ningún caso de alto desempeño. De forma análoga, en el nivel *Neutro* predomina de manera muy amplia el rendimiento bajo o medio, mientras que el grupo que percibe un impacto *Beneficioso* concentra la totalidad de los alumnos con rendimiento alto. Esta clara progresión confirma que la percepción del impacto de las redes sociales está estrechamente alineada con el desempeño escolar. 
-
+El análisis visual pone de manifiesto una clara asimetría en la distribución del rendimiento académico según el impacto percibido (\`Overall_Impact). En la categoría de impacto *Negativo*, el $100%$ de los registros corresponden a estudiantes de rendimiento bajo o medio, no observamos ningún caso de alto desempeño. De forma análoga, en el nivel *Neutro* predomina de manera muy amplia el rendimiento bajo o medio, mientras que el grupo que percibe un impacto *Beneficioso* concentra la totalidad de los alumnos con rendimiento alto. Esta clara progresión confirma que la percepción del impacto de las redes sociales está estrechamente alineada con el desempeño escolar.
 
 Para validar analíticamente esta dependencia entre ambas variables, aplicamos la prueba de independencia Chi-cuadrado de Pearson:
 
@@ -868,22 +871,17 @@ En este apartado analizaremos las interacciones cruzadas entre distintas variabl
 Para abordar este análisis, nos planteamos las siguientes preguntas e hipótesis de interés:
 
 - **¿Existe una relación directa entre las horas diarias de uso de redes sociales (`Social_Media_Hours`) y el índice de salud mental (`Mental_Health_Index`)?**
-  * *¿Por qué es interesante?:* Nos permite explorar si un uso intensivo de plataformas digitales está asociado a un mayor deterioro del bienestar psicológico, o si existe algún umbral a partir del cual el impacto se vuelve crítico.
-
+  - *¿Por qué es interesante?:* Nos permite explorar si un uso intensivo de plataformas digitales está asociado a un mayor deterioro del bienestar psicológico, o si existe algún umbral a partir del cual el impacto se vuelve crítico.
 - **¿Influye la duración del sueño (`Sleep_Duration_Hours`) en la calidad percibida del descanso (`Sleep_Quality`)?**
-  * *¿Por qué es interesante?:* Resulta clave para comprobar si la percepción de "dormir bien" depende únicamente del número de horas cuantitativas o si entran en juego otros factores cualitativos.
-
+  - *¿Por qué es interesante?:* Resulta clave para comprobar si la percepción de "dormir bien" depende únicamente del número de horas cuantitativas o si entran en juego otros factores cualitativos.
 - **¿Afecta el consumo de redes a altas horas de la noche (`Late_Night_Usage`) al total de horas dormidas y a su calidad?**
-  * *¿Por qué es interesante?:* Ayuda a aislar el efecto específico del hábito nocturno: queremos ver si el uso tardío desplaza el horario de sueño (reduciendo horas totales) o si distorsiona directamente la calidad del descanso.
-
+  - *¿Por qué es interesante?:* Ayuda a aislar el efecto específico del hábito nocturno: queremos ver si el uso tardío desplaza el horario de sueño (reduciendo horas totales) o si distorsiona directamente la calidad del descanso.
 - **¿Cómo se relaciona el nivel de estrés percibido (`Stress_Level`) con el índice general de salud mental (`Mental_Health_Index`)?**
-  * *¿Por qué es interesante?:* Permite medir el grado de solapamiento entre ambos indicadores y verificar si actúan como dimensiones independientes o si existe una fuerte redundancia entre ellas.
-
+  - *¿Por qué es interesante?:* Permite medir el grado de solapamiento entre ambos indicadores y verificar si actúan como dimensiones independientes o si existe una fuerte redundancia entre ellas.
 - **¿Existe relación entre la edad del estudiante (`Age`) y las horas de uso diario (`Social_Media_Hours`)?**
-  * *¿Por qué es interesante?:* Nos ayuda a identificar si los hábitos de consumo cambian conforme avanza la etapa académica y la madurez del estudiante, o si la exposición a redes es homogénea en todo el rango de edad.
-
+  - *¿Por qué es interesante?:* Nos ayuda a identificar si los hábitos de consumo cambian conforme avanza la etapa académica y la madurez del estudiante, o si la exposición a redes es homogénea en todo el rango de edad.
 - **¿Existe algún tipo de relación entre el uso nocturno (`Late_Night_Usage`) y el tipo de dispositivo utilizado (`Device_Type`)?**
-  * *¿Por qué es interesante?:* Resulta curioso observar si la portabilidad y la ergonomía del hardware (por ejemplo, *smartphones* o *tablets* frente a portátiles) favorecen que el usuario consuma contenido desde la cama a altas horas de la noche.
+  - *¿Por qué es interesante?:* Resulta curioso observar si la portabilidad y la ergonomía del hardware (por ejemplo, *smartphones* o *tablets* frente a portátiles) favorecen que el usuario consuma contenido desde la cama a altas horas de la noche.
 
 ## Impacto del consumo diario de redes en la salud mental
 
@@ -914,7 +912,6 @@ ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target
     legend.title = element_text(face = "bold")
   )
 ```
-
 
 Aunque, parece evidente su correlación, aplicamos el test de correlación de Pearson entre estas dos variables continuas:
 
@@ -949,7 +946,6 @@ ggplot(train, aes(x = factor(Sleep_Quality_Score), y = Sleep_Duration_Hours, fil
   )
 ```
 
-
 Hagamos el test de Kruskal para verificar si no son independientes con cierta significancia estadística.
 
 ```{r}
@@ -960,7 +956,8 @@ mostrar_test(test_kruskal,"Duración del sueño vs la calidad del sueño")
 Las pruebas no paramétricas de Kruskal-Wallis nos confirman que existen diferencias altamente significativas en la duración del sueño entre los distintos niveles de calidad del descanso ($\chi^2 = 1646.39$, $p$-valor $< 2.2 \times 10^{-16}$), permitiendonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que la cantidad de horas dormidas es un factor determinante en la percepción de la calidad del descanso.
 
 ## Uso nocturno de las redes sociales y su impacto en el descanso
-Para analizar de qué modo el hábito de conexión nocturna (`Late_Night_Usage`) condiciona el descanso de los alumnos, evaluamos conjuntamente su efecto sobre la duración del sueño (`Sleep_Duration_Hours`) y la calidad percibida del mismo (`Sleep_Quality_Score`). A través de los diagramas de caja, se observa que la consulta de redes sociales a altas horas de la noche se asocia co un claro deterioro de ambos indicadores: los estudiantes que declaran realizar uso nocturno presentan una mediana de descando sensiblemente menor (6.5 aproximadamente frente a las 7.0 horas del grupo sin hábito nocturno), así como una distribución de la calidad del sueño desplazada hacia las puntuaciones inferiores de escala. 
+
+Para analizar de qué modo el hábito de conexión nocturna (`Late_Night_Usage`) condiciona el descanso de los alumnos, evaluamos conjuntamente su efecto sobre la duración del sueño (`Sleep_Duration_Hours`) y la calidad percibida del mismo (`Sleep_Quality_Score`). A través de los diagramas de caja, se observa que la consulta de redes sociales a altas horas de la noche se asocia co un claro deterioro de ambos indicadores: los estudiantes que declaran realizar uso nocturno presentan una mediana de descando sensiblemente menor (6.5 aproximadamente frente a las 7.0 horas del grupo sin hábito nocturno), así como una distribución de la calidad del sueño desplazada hacia las puntuaciones inferiores de escala.
 
 ```{r}
 #| fig-width: 10
@@ -1001,7 +998,7 @@ p1 + p2
 
 ```
 
-Para verificar si las diferencias observadas entre las distribuciones de ambos subgrupos resultan estadísticamente significativas, aplicamos la prueba no paramétrica de suma de rangos de Wilcoxon. 
+Para verificar si las diferencias observadas entre las distribuciones de ambos subgrupos resultan estadísticamente significativas, aplicamos la prueba no paramétrica de suma de rangos de Wilcoxon.
 
 ```{r}
 
@@ -1017,7 +1014,7 @@ Los resultados del análisis nos confirman que estas diferencias son altamente s
 
 ## Relación entre el estrés percibido y el índice de salud mental
 
-El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. A continuación, vamos a comprobarlo usando el test de Pearson. 
+El gráfico de dispersión refleja una relación lineal inversa muy pronunciada entre la puntuación de estrés percibido (`Perceived_Stress_Score`) y el índice general de salud mental (`Mental_Health_Score`). Conforme aumentan los niveles de estrés en el alumnado, el bienestar psicológico disminuye de manera constante. A continuación, vamos a comprobarlo usando el test de Pearson.
 
 ```{r}
 
@@ -1045,7 +1042,6 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
   )
 
 ```
-
 
 ```{r}
 #Test de Pearson
@@ -1082,9 +1078,7 @@ print(p)
 
 ```
 
-
-
-Para evaluar la asociación entre la edad del estudiante y el tiempo de consumo digital, empleamos el contraste de correlación no paramétrico de Spearman. La elección de esta prueba se justifica por la naturaleza de las métricas analizadas, al relacionar una variable cuantitativa discreta con una cuantitativa continua. Usamos la prueba de Spearman porque analiza el orden de los datos en lugar de exigir que sigan una distribución normal en forma de campana como requiere Pearson. De este modo, podemos comprobar de forma fiable si ambas variables aumentan o disminuyen juntas, sin que los datos repetidos o los valores extremos distorsionen el resultado.  
+Para evaluar la asociación entre la edad del estudiante y el tiempo de consumo digital, empleamos el contraste de correlación no paramétrico de Spearman. La elección de esta prueba se justifica por la naturaleza de las métricas analizadas, al relacionar una variable cuantitativa discreta con una cuantitativa continua. Usamos la prueba de Spearman porque analiza el orden de los datos en lugar de exigir que sigan una distribución normal en forma de campana como requiere Pearson. De este modo, podemos comprobar de forma fiable si ambas variables aumentan o disminuyen juntas, sin que los datos repetidos o los valores extremos distorsionen el resultado.
 
 ```{r}
 # 2. Test de correlación de Spearman
@@ -1095,7 +1089,8 @@ mostrar_test(test_spearman, "Edad vs Horas de Uso")
 Obtuvimos un $p$-valor ampliamente superior al nivel de significación estándar ($\alpha = 0.05$, $p > 0.05$), por lo que no existe evidencia estadística para rechazar la hipótesis nula de ausencia de correlación. Podemos concluir que la edad y el tiempo de consumo digital son variables independientes dentro de esta muestra, por lo que no hay riesgo de multicolinealidad entre ellas.
 
 ## Relación entre el uso nocturno y el tipo de dispositivo
-Para analizar si el hábito de conexión nocturna (`Late_Night_Usage`) varía según dispositivo empleado (`Device_Type`), examinamos las proporciones de uso dentro de cada categoría. Como se aprecia en la representación gráfica, la distribución se mantiene notablemente uniforme entre las distintas modalidades, situándose la respuesta afirmativa, *Sí*, como predominante con aproximadamente un 55%-60% en todos los casos. Aunque los usuarios de *tablet* registran una proporción de uso nocturno ligeramente inferior, las discrepancias observadas son cuantitativamente reducidas, lo que sugiere visualmente una aparente independencia entre ambos factores. 
+
+Para analizar si el hábito de conexión nocturna (`Late_Night_Usage`) varía según dispositivo empleado (`Device_Type`), examinamos las proporciones de uso dentro de cada categoría. Como se aprecia en la representación gráfica, la distribución se mantiene notablemente uniforme entre las distintas modalidades, situándose la respuesta afirmativa, *Sí*, como predominante con aproximadamente un 55%-60% en todos los casos. Aunque los usuarios de *tablet* registran una proporción de uso nocturno ligeramente inferior, las discrepancias observadas son cuantitativamente reducidas, lo que sugiere visualmente una aparente independencia entre ambos factores.
 
 ```{r}
 ggplot(train, aes(x = Device_Type, fill = Late_Night_Usage)) +
@@ -1160,8 +1155,6 @@ ggplot(train_prop, aes(x = Device_Type, y = porcentaje, fill = Late_Night_Usage)
     panel.grid.major.x = element_blank()
   )
 ```
-
-
 
 Ahora aplicamos el test $\chi^2$ ( Chi-cuadrado) para verificarlo formalmente.
 
@@ -1377,11 +1370,11 @@ ggplot(train_scaled, aes(x = Predictor, y = Z_score, fill = target)) +
 
 El perfil de distribución estandarizada evidencia una separación clara entre las clases del `target`:
 
-- **Predictores de impacto positivo/favorecedores:** Los estudiantes clasificados en *Rendimiento_alto* exhiben puntuaciones $Z$ marcadamente positivas en `Sleep_Duration_Hours`, `Sleep_Quality_Score` y `Mental_Health_Index`, confirmando que un descanso prolongado y un mayor bienestar psicológico se asocian de forma directa con el éxito académico.
+- **Predictores de impacto positivo/favorecedores:** Los estudiantes clasificados en Rendimiento_alto exhiben puntuaciones $Z$ marcadamente positivas en `Sleep_Duration_Hours`, `Sleep_Quality_Score` y `Mental_Health_Index`, confirmando que un descanso prolongado y un mayor bienestar psicológico se asocian de forma directa con el éxito académico.
 
 <!-- -->
 
-- **Predictores de impacto negativo/desfavorables:** Por el contrario, la categoría de *Rendimiento_bajo_medio* se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
+- **Predictores de impacto negativo/desfavorables:** Por el contrario, la categoría de Rendimiento_bajo_medio se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
 
 # Uso de Inteligencia Artificial {.unnumbered}
 
