@@ -104,7 +104,6 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
 - **Contraste de Hipótesis Estadísticas:** Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
   - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
-  - **Test Binomial (`binom.test`):** Empleado en el contraste de proporciones para variables dicotómicas o de naturaleza binaria.
   - **Test de Kruskal-Wallis (`kruskal.test`):** Aplicado como extensión no paramétrica para evaluar si existen diferencias estadísticamente significativas en la distribución de una variable cuantitativa continua cuando se compara a través de tres o más grupos independientes (como las categorías ordinales de la calidad del descanso).
 
 # Datos
@@ -351,10 +350,10 @@ En este capítulo dedicaremos una subsección a la comparación de cada variable
 A continuación, se describen los test estadísticos que emplearemos según la naturaleza de las variables analizadas:
 
 ::: {.callout-note icon="false"}
-### 1. Test Binomial (`binom.test`)
+### Test de Comparación de Proporciones (`prop.test`)
 
-- **Aplicación:** Se utiliza cuando comparamos una variable cualitativa dicotómica (dos categorías) frente a una proporción teórica o esperada.
-- **Definición:** Evalúa si la frecuencia observada de un éxito en una muestra binaria difiere significativamente de una probabilidad de éxito esperada bajo la hipótesis nula ($H_0: p = p_0$).
+- **Aplicación:** Se utiliza para comparar la proporción de éxito de una variable cualitativa dicotómica entre dos grupos independientes (por ejemplo, evaluar la tasa de rendimiento alto de una categoría frente al resto de la muestra) o para estimar el intervalo de confianza de una proporción poblacional.
+- **Definición:** Evalúa si la diferencia entre las proporciones observadas en dos subconjuntos es estadísticamente significativa ($H_0: p_1 = p_2$) mediante una aproximación a la distribución $\chi^2$ o $Z$, proporcionando además sus correspondientes intervalos de confianza al 95%.
 :::
 
 ::: {.callout-note icon="false"}
@@ -700,7 +699,7 @@ mostrar_test(test_chisq, "Gender")
 
 El análisis devuelve un estadístico de contraste $X^2 = 0.46186$ con 3 grados de libertad y un $p$-valor $= 0.9272$. Al ser este $p$-valor claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$, confirmando que la distribución global del rendimiento académico es independiente del género.
 
-Además nos parece interesante preguntarnos si existe diferencia en las categorías individualmente; esto se debe a la existencia de la creencia de que las mujeres maduran antes y, por tanto, mejoran sus resultados antes. Para ello hagamos un test binomial. Este análisis evalúa si la proporción de estudiantes con rendimiento alto dentro de cada subgrupo específico difiere de forma relevante del `r prob_alto` teórico esperado por azar.
+Para profundizar en el análisis intrínseco de cada subgrupo y evaluar si la probabilidad de obtener un rendimiento alto en una categoría concreta difiere de manera significativa respecto al resto del alumnado, realizamos un test de dos proporciones independientes (`prop.test`) comparando cada género frente al subconjunto complementario, calculando además los intervalos de confianza al 95% para la probabilidad de rendimiento alto.
 
 ```{r}
 evaluar_proporcion_genero <- function(df, grupo_evaluado) {
@@ -757,7 +756,7 @@ resultados_proporciones %>%
   )
 ```
 
-Los resultados de estas pruebas muestran $p$-valores no significativos en la totalidad de las categorías analizadas: $0.651$ en *Female*, $0.675$ en *Male*, $0.824$ en *Non-Binary* y $1.000$ en *Prefer not to say*. Dado que ninguna de las comparaciones individuales muestra desviaciones estadísticamente significativas, se concluye que la variable `Gender` no ejerce ningún efecto relevante sobre las calificaciones, **careciendo de capacidad explicativa o discriminante** para el modelado de la variable respuesta.
+Los resultados confirman que las probabilidades estimadas de rendimiento alto son prácticamente idénticas entre categorías: **44.9%** en mujeres ($\text{IC}_{95\%} = [0.423, 0.475]$) y **46.1%** en hombres ($\text{IC}_{95\%} = [0.434, 0.488]$), arrojando $p$-valores ajustados de $1.0000$ en la totalidad de los subgrupos. Dado que ningún intervalo de confianza muestra variaciones significativas respecto a la tasa global y que todos los contrastes resultan no significativos, concluimos que la variable `Gender` **carece de capacidad explicativa o discriminante** para predecir el rendimiento académico.
 
 ## Comparación de Nivel Académico y Target
 
@@ -1306,7 +1305,7 @@ tabla_seleccion <- data.frame(
     "Suma de rangos de Wilcoxon",
     "Chi-cuadrado de independencia",
     "Chi-cuadrado de independencia",
-    "Chi-cuadrado / Test Binomial",
+    "Chi-cuadrado / Prop test",
     "Chi-cuadrado de independencia",
     "Chi-cuadrado de independencia",
     "Suma de rangos de Wilcoxon"
