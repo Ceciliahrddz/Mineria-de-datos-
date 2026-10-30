@@ -100,7 +100,6 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
 - **Análisis Visual:**
   - Para las **variables cuantitativas y continuas**, empleamos diagramas de cajas combinados y la representación explícita de la media estadística, lo que permite observar la forma de la distribución y las diferencias centrales entre grupos.
   - Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
-  
 - **Contraste de Hipótesis Estadísticas:** Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
   - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
@@ -380,8 +379,8 @@ A continuación, se describen los test estadísticos que emplearemos según la n
 ::: {.callout-note icon="false"}
 ### 5. Test de Correlación de Pearson (`cor.test`)
 
-* **Aplicación:** Se aplica al evaluar la relación entre dos variables cuantitativas continuas (por ejemplo, relacionar la puntuación de estrés frente al índice de salud mental, o las horas diarias de uso frente a la salud mental).
-* **Definición:** Evalúa si existe una asociación lineal estadísticamente significativa entre ambas variables métricas, calculando el coeficiente de correlación de Pearson ($r \in [-1, 1]$) bajo la hipótesis nula de ausencia de correlación lineal ($H_0: \rho = 0$).
+- **Aplicación:** Se aplica al evaluar la relación entre dos variables cuantitativas continuas (por ejemplo, relacionar la puntuación de estrés frente al índice de salud mental, o las horas diarias de uso frente a la salud mental).
+- **Definición:** Evalúa si existe una asociación lineal estadísticamente significativa entre ambas variables métricas, calculando el coeficiente de correlación de Pearson ($r \in [-1, 1]$) bajo la hipótesis nula de ausencia de correlación lineal ($H_0: \rho = 0$).
 :::
 
 ::: {.callout-note icon="false"}
@@ -397,19 +396,46 @@ En todos los casos, tomaremos como criterio general de decisión el $p$-valor ge
 
 Este diagrama de caja muestra una distribución de la variable edad (`Age`) prácticamente idéntica entre los estudiantes con rendimiento académico bajo/ medio y aquellos que con un rendimiento alto. En ambos grupos, la mediana de edad se sitúa en torno a los 19 años.
 
+
 ```{r}
 ggplot(train, aes(x = target, y = Age, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  geom_boxplot(
+    alpha = 0.85, 
+    color = "darkblue", 
+    width = 0.5, 
+    outlier.color = "darkblue", 
+    outlier.size = 2
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
   labs(
     title = "Edad según el rendimiento académico",
     x = "Rendimiento académico",
     y = "Edad"
   ) +
-  theme_minimal()
-
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    # Título centrado (hjust = 0.5) y más grande (size = 16)
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    # Nombres de variables en los ejes destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de categorías
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
+
 
 Para evaluar la relación entre estas dos variables una cuantitativa y la otra binaria, empleamos la prueba no paramétrica de Wilcoxon.
 
@@ -427,16 +453,42 @@ El gráfico muestra una clara diferencia en el tiempo diario dedicado a las rede
 
 ```{r}
 ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  geom_boxplot(
+    alpha = 0.85, 
+    color = "darkblue", 
+    width = 0.5, 
+    outlier.color = "darkblue", 
+    outlier.size = 2
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
   labs(
     title = "Horas de uso diario de redes sociales según el rendimiento académico",
     x = "Rendimiento académico",
     y = "Horas de uso diario"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    # Título destacado, centrado y más grande que los ejes
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833", margin = margin(b = 11)),
+    # Nombres de variables en los ejes bien visibilizados y destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de categorías
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
 
 Para corroborar que existe una diferencia estadísticamente significativa entre ambas variables utilizamos la prueba no paramétrica de suma de rangos de Wilcoxon.
 
@@ -455,14 +507,17 @@ Exploramos la distribución bivariante cruzando el tipo de dispositivo (`Device_
 ```{r}
 ggplot(train, aes(x = Device_Type, fill = target)) +
   geom_bar(
-    aes(y = after_stat(prop), group = target), 
-    position = position_dodge(width = 0.8), 
+    aes(y = after_stat(prop), group = target),
+    position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
@@ -471,8 +526,21 @@ ggplot(train, aes(x = Device_Type, fill = target)) +
     y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    # Título centrado (hjust = 0.5) y destacado (size = 16)
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    # Nombre de las variables en los ejes bien visibles y destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de las categorías en los ejes
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold")
+  )
 ```
+
 
 Con el fin de verificar si las variaciones observadas en las proporciones alcanzan significación estadística, contrastamos la independencia de ambos factores mediante el test de $\chi^2$
 
@@ -490,16 +558,42 @@ En este gráfico que muestra la relación entre la calidad percibida del descans
 
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  geom_boxplot(
+    alpha = 0.85, 
+    color = "darkblue", 
+    width = 0.5, 
+    outlier.color = "darkblue", 
+    outlier.size = 2
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
   labs(
     title = "Puntuación de calidad de sueño según el rendimiento académico",
     x = "Rendimiento académico",
     y = "Calidad de sueño (1-5)"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    # Título centrado (hjust = 0.5) y más grande que los ejes (size = 16)
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833", margin = margin(b = 12)),
+    # Nombres de variables en los ejes bien visibles y destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de categorías
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
 
 Con el propósito de verificar formalmente la existencia de una asociación estadísticamente relevante, aplicamos el test de Wilcoxon como contraste de hipótesis.
 
@@ -518,14 +612,17 @@ Este gráfico de barras agrupadas muestra la relación entre el uso nocturno de 
 ```{r}
 ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
   geom_bar(
-    aes(y = after_stat(prop), group = target), 
-    position = position_dodge(width = 0.8), 
+    aes(y = after_stat(prop), group = target),
+    position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
@@ -534,8 +631,21 @@ ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
     y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    # Título centrado (hjust = 0.5), más grande (size = 16) y en color NEGRO
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "black", margin = margin(b = 12)),
+    # Nombres de variables en los ejes destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de categorías
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold")
+  )
 ```
+
 
 Confirmamos formalmente la significación estadística de esta posible relación mediante el test de Chi-cuadrado ($\chi^2)$.
 
@@ -551,17 +661,21 @@ El test nos devuelve $X^2 = 139.35$ con 1 grado de libertad y un $p-valor<2.2 \t
 
 La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) exhibe su mayor densidad en *Sometimes* (alrededor del 35%), seguida de *Frequently* (\~28%), *Rarely* (\~16-17%), *Always* (\~14-15%) y *Never* (\~5-6%). En todas las categorías, la relación entre estudiantes de rendimiento alto y de rendimiento bajo/medio se conserva prácticamente constante.
 
+
 ```{r}
 ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
   geom_bar(
-    aes(y = after_stat(prop), group = target), 
-    position = position_dodge(width = 0.8), 
+    aes(y = after_stat(prop), group = target),
+    position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
@@ -570,9 +684,21 @@ ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
     y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  theme_minimal(base_size = 13) +
+  theme(
+    # Título centrado (hjust = 0.5) y más grande que los ejes (size = 16)
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833", margin = margin(b = 11)),
+    # Nombres de variables en los ejes destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de categorías con rotación para evitar solapamientos
+    axis.text.x = element_text(face = "bold", size = 11, angle = 30, hjust = 1),
+    axis.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold")
+  )
 ```
+
 
 Comprobamos la relación mediante el test de $\chi^2$.
 
@@ -588,18 +714,41 @@ En el análisis obtuvimos un estadístico de prueba $X^2 = 1.4687$ con 4 grados 
 
 El diagrama de caja refleja una clara diferencia en la puntuación de estrés percibido (`Perceived_Stress_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento bajo/medio, la mediana de estrés se sitúa en torno a los 16 punto con un rango intercuartílico aproximado de 12 a 21, mientras que en el grupo de rendimiento alto, la mediana desciende a los 10 puntos con un rango de 6 a 14, mostrando además valores máximos sensiblemente menores.
 
+
 ```{r}
 ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  geom_boxplot(
+    color = "darkblue", 
+    alpha = 0.7, 
+    show.legend = FALSE,
+    outlier.color = "darkblue", 
+    outlier.alpha = 0.5
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
   labs(
     title = "Puntuación de estrés percibido según el rendimiento académico",
     x = "Rendimiento académico",
     y = "Estrés percibido"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833", margin = margin(b = 12)),
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
 
 A continuación, se presentan los resultados obtenidos de la prueba estadística de Wilcoxon que permite evaluar las diferencias entre las dos variables.
 
@@ -615,18 +764,42 @@ El contraste muestra un estadístico de prueba $W= 1553782$ y un $p$-valor$<2.2 
 
 El diagrama de caja manifiesta una clara brecha en el índice de salud mental (`Mental_Health_Index`) en función del rendimiento académico de los estudiantes. Quienes se encuentran en el grupo de rendimiento alto presentan niveles sensiblementes superiores, con una mediana que ronda los 87 puntos y un rango intercuartílico concentrado en su mayoría entre los 81 y 94 puntos. Sin embargo, los alumnos con rendimiento bajo/medio exhiben puntuaciones de bienestar psicológico sensiblemente inferiores y más dispersas, situando su mediana en torno a los 76 puntos y registrando numerosos valores atípicos en la zona inferior de la escala.
 
+
 ```{r}
 ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
+  geom_boxplot(
+    alpha = 0.8, 
+    color = "darkblue", 
+    width = 0.5, 
+    outlier.color = "darkblue", 
+    outlier.alpha = 0.5
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
   labs(
     title = "Índice de salud mental según el rendimiento académico",
     x = "Rendimiento académico",
     y = "Índice de salud mental"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
 
 Estos son los resultados obtenidos tras aplicar la prueba de Wilcoxon para ver si existe una relación de dependencia o asociación.
 
@@ -642,14 +815,42 @@ Con este análisis obtenemos $W = 449073$ y un $p$-valor$<2.2 \times 10^{-16}$. 
 
 El diagrama de caja permite evaluar la distribución de la duración del descanso nocturno (`Sleep_Duration_Hours`) en función de la categoría de rendimiento académico (`target`). En la representación gráfica apreciamos que los estudiantes del grupo con rendimiento alto presentan, en general, un promedio de horas de sueño más elevado y constante, mientras que los alumnos con rendimiento bajo/medio registra periodos de descanso sensiblemente más reducidos y con mayor variabilidad.
 
+
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
-  labs(title = "Duración del sueño según rendimiento académico", x = "Rendimiento académico", y = "Horas de sueño") +
-  theme_minimal()
+  geom_boxplot(
+    alpha = 0.8, 
+    color = "darkblue", 
+    width = 0.5, 
+    outlier.color = "darkblue", 
+    outlier.alpha = 0.5
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
+  labs(
+    title = "Duración del sueño según el rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Horas de sueño"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
+
 
 Para determinar si estas diferencias en la calidad de descanso resultan estadísticamente significativas entre ambos grupos, se aplica la prueba no paramétrica de suma de rangos de Wilcoxon.
 
@@ -665,27 +866,41 @@ Al obtener un $p$-valor$<2.2 \times 10^{-16}$ que está por debajo del umbral de
 
 Analizamos la relación entre el género del estudiante (variable categórica, `Gender`) y la variable target mediante un diagrama de barras apiladas. Para confirmar si las diferencias observadas son estadísticamente relevantes, aplicamos la prueba de independencia de Chi-cuadrado $(\chi^2)$
 
+
 ```{r}
 ggplot(train, aes(x = Gender, fill = target, group = target)) +
   geom_bar(
-    aes(y = after_stat(prop)), 
-    position = position_dodge(width = 0.8), 
-    width = 0.7, 
+    aes(y = after_stat(prop)),
+    position = position_dodge(width = 0.8),
+    width = 0.7,
     color = "darkblue"
   ) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
-    title = "Rendimiento académico por género (Estandarizado)",
+    title = "Rendimiento académico según el género",
     x = "Género",
     y = "Porcentaje dentro de cada género",
     fill = "Rendimiento"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold")
+  )
 ```
+
 
 El gráfico de barras estandarizada muestra la proporción del rendimiento académico (`target`) desglosada por las distintas categorías de género del estudiante (`Gender`). Tanto en los grupos mayoritarios (*Female* y *Male*) como en las categorías *Non-Binary* y *Prefer not to say*, la distribución interna entre alumnos de rendimiento alto y rendimiento bajo/medio se mantiene prácticamente simétrica y equilibrada, sin que ninguna identidad muestre una prevalencia destacable sobre el rendimiento académico.
 
@@ -762,11 +977,19 @@ Los resultados confirman que las probabilidades estimadas de rendimiento alto so
 
 El gráfico de barras refleja el volumen de estudiantes distribuido según su nivel educativo (`Academic_Level`) y clasificado en función del `target`. Aunque hay un volumen marcadamente superior en el nivel universitario (*Undergraduate*), seguido de la educación secundaria (*High School*) y, de forma minoritaria los estudios de posgrado (*Postgraduate*), la proporción interna entre los estudiantes de rendimiento *alto* y *bajo/medio* guarda un patrón uniforme y constante en los tres estratos.
 
+
 ```{r}
 ggplot(train, aes(x = Academic_Level, fill = target)) +
-  geom_bar(position = position_dodge(width = 0.8), width = 0.7) +
+  geom_bar(
+    position = position_dodge(width = 0.8), 
+    width = 0.7,
+    color = "darkblue"
+  ) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
@@ -775,8 +998,21 @@ ggplot(train, aes(x = Academic_Level, fill = target)) +
     y = "Número de estudiantes",
     fill = "Rendimiento"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    # Título centrado, en negrita y más grande que los ejes
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    # Nombres de los ejes destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de las categorías con rotación para legibilidad
+    axis.text.x = element_text(face = "bold", size = 11, angle = 20, hjust = 1),
+    axis.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold")
+  )
 ```
+
 
 Con el propósito de evaluar formalmente si el nivel académico alcanzado condiciona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson.
 
@@ -792,31 +1028,45 @@ Del contraste resulta un estadístico de prueba $X^2 = 0.88828$ con 2 grados de 
 
 El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedln*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones entre estudiantes de rendimiento alto y bajo/medio resultan prácticamente idénticas en todas las categorías analizadas.
 
+
 ```{r}
+
 ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
   geom_bar(
-    aes(y = after_stat(prop)), 
-    position = position_dodge(width = 0.8), 
+    aes(y = after_stat(prop)),
+    position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
     title = "Rendimiento académico según la plataforma principal",
     x = "Plataforma principal",
-    y = "Porcentaje",
+    y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
-  theme_minimal() +
+  theme_minimal(base_size = 13) +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1), # Rota los nombres para que no se solapen
-    legend.position = "right"
+    # Título centrado, en negrita y más grande que los ejes
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    # Nombres de los ejes destacados
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    # Etiquetas de las categorías con rotación para legibilidad
+    axis.text.x = element_text(face = "bold", size = 11, angle = 30, hjust = 1),
+    axis.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold")
   )
 ```
+
 
 Para evaluar si la elección de la red social predominante está vinculada al desempeño académico, aplicamos la prueba de independencia de Chi-Cuadrado de Pearson.
 
@@ -832,13 +1082,40 @@ El contraste nos devuelve un estadístico $X^2=3.0364$ con 6 grados de libertad 
 
 Comparamos la distribución del tiempo adicional dedicado a las redes sociales durante el fin de semana (`Weekend_Extra_Hours`) en función de la categoría de rendimiento académico (target) mediante el siguiente gráfico. Ambas distribuciones resultan visualmente simétricas e indistinguibles, tanto en el grupo de rendimiento bajo/medio como en el de alto, la mediana de uso extraordinario se sitúa en torno a las 1.8 horas, compartiendo un rango intercuartílico equivalente (de 1.3 a 2.3. horas aproximadamente) y un patrón similar de valores atípicos en la zona superior.
 
+
 ```{r}
 ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
-  geom_boxplot(color = "darkblue", alpha = 0.7, show.legend = FALSE) +
-  scale_fill_manual(values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue")) +
-  scale_x_discrete(labels = c("Bajo / Medio", "Alto")) +
-  labs(title = "Horas extra en fin de semana según rendimiento académico", x = "Rendimiento académico", y = "Horas extra fin de semana") +
-  theme_minimal()
+  geom_boxplot(
+    alpha = 0.8, 
+    color = "darkblue", 
+    width = 0.5, 
+    outlier.color = "darkblue", 
+    outlier.alpha = 0.5
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    )
+  ) +
+  scale_x_discrete(
+    labels = c("Bajo / Medio", "Alto")
+  ) +
+  labs(
+    title = "Horas extra en fin de semana según rendimiento académico",
+    x = "Rendimiento académico",
+    y = "Horas extra fin de semana"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
+    axis.text.x = element_text(face = "bold", size = 11),
+    axis.text.y = element_text(size = 10),
+    panel.grid.major.x = element_blank()
+  )
 ```
 
 Para evaluar cuantitativamente si la dedicación extra durante el fin de semana difiere de manera significativa entre ambos grupos de alumnos, aplicamos la prueba no paramétrica de suma de rangos de Wilcoxon.
@@ -858,14 +1135,16 @@ Dado que ambas métricas han estado conceptualmente vinculadas desde el planteam
 ```{r}
 ggplot(train, aes(x = Overall_Impact, fill = target)) +
   geom_bar(
-    aes(y = after_stat(prop), group = target), 
-    position = position_dodge(width = 0.8), 
-    width = 0.7,
+    position = "fill", 
+    width = 0.7, 
     color = "darkblue"
   ) +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   scale_fill_manual(
-    values = c("Rendimiento_bajo_medio" = "skyblue", "Rendimiento_alto" = "steelblue"),
+    values = c(
+      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
+      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+    ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   scale_x_discrete(
@@ -878,12 +1157,19 @@ ggplot(train, aes(x = Overall_Impact, fill = target)) +
     y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
-  theme_minimal()
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833"),
+    axis.title.x = element_text(face = "bold", margin = margin(t = 10)),
+    axis.title.y = element_text(face = "bold", margin = margin(r = 10)),
+    legend.position = "bottom",
+    legend.title = element_text(face = "bold"),
+    panel.grid.major.x = element_blank()
+  )
 ```
 
-El análisis visual pone de manifiesto una clara asimetría en la distribución del rendimiento académico según el impacto percibido (\`Overall_Impact). En la categoría de impacto *Negativo*, el $100%$ de los registros corresponden a estudiantes de rendimiento bajo o medio, no observamos ningún caso de alto desempeño. De forma análoga, en el nivel *Neutro* predomina de manera muy amplia el rendimiento bajo o medio, mientras que el grupo que percibe un impacto *Beneficioso* concentra la totalidad de los alumnos con rendimiento alto. Esta clara progresión confirma que la percepción del impacto de las redes sociales está estrechamente alineada con el desempeño escolar.
+El análisis visual pone de manifiesto una clara asimetría en la distribución del rendimiento académico según el impacto percibido (`Overall_Impact`). En la categoría de impacto *Negativo*, la totalidad de los registros (100 %) corresponde a estudiantes del grupo de rendimiento bajo o medio, evidenciando que una percepción perjudicial del entorno digital es incompatible con el alto desempeño en la muestra.De forma análoga, en el nivel *Neutro* la presencia de alumnos con notas elevadas es casi residual. Por el contrario, la categoría *Beneficioso* es donde se concentra la inmensa mayoría del grupo de rendimiento alto.  Sin embargo, no se trata de una relación determinista ya que dentro de este grupo que percibe un impacto positivo del entorno digital, la mayor parte del alumnado (aproximadamente un 65-70%) sigue perteneciendo a la categoría de rendimiento bajo o medio, correspondiendo al alto unicamente el 30-35% restante. Esta distribución implica que recibir un impacto beneficioso actúa como una condición fuertemente asociada al éxito escolar, pero no resulta una condición suficiente por sí sola. Por lo tanto, vamos a utilizar el test de Chi-cuadrado pero consilidar si `Overall_Impact` es un predictor estadísticamente muy significativo y con una capacidad discriminante alta, rozando el comportamiento de una variable "chivato", pero sin llegar a actuar como un separados perfecto de las clases que genere una fuga de información total.  
 
-Para validar analíticamente esta dependencia entre ambas variables, aplicamos la prueba de independencia Chi-cuadrado de Pearson:
 
 ```{r}
 test_chisq <- chisq.test(table(train$Overall_Impact, train$target))
@@ -891,6 +1177,7 @@ mostrar_test(test_chisq, "Overall_Impact")
 ```
 
 Como obtenemos un valor de $p$-valor $< 2.2e-16$ nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podíamos intuir dado que sospechamos que las dos variables estaban **altamente correlacionadas**.
+
 
 # Relaciones entre variables
 
@@ -920,7 +1207,7 @@ El diagrama de dispersión evidencia una clara relación inversa y lineal entre 
 
 ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target)) +
   geom_point(alpha = 0.5, size = 2) +
-  geom_smooth(method = "lm", se = TRUE, color = "#2c3e50", linetype = "dashed", linewidth = 1) +
+  geom_smooth(method = "lm", se = TRUE, color = "#1C2833", linetype = "dashed", linewidth = 1) +
   scale_color_manual(
     values = c("Rendimiento_bajo_medio" = "#E57373", "Rendimiento_alto" = "#4FC3F7"),
     labels = c("Rendimiento Bajo / Medio", "Rendimiento Alto"),
@@ -928,12 +1215,12 @@ ggplot(train, aes(x = Mental_Health_Index, y = Daily_Usage_Hours, color = target
   ) +
   labs(
     title = "Horas de Uso Diario vs. Índice de Salud Mental",
-    x = "Índice de Salud Mental (Mental_Health_Index)",
-    y = "Horas de Uso Diario (Daily_Usage_Hours)"
+    x = "Índice de Salud Mental ",
+    y = "Horas de Uso Diario"
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#2c3e50"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833"),
     axis.title.x = element_text(face = "bold", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", margin = margin(r = 10)),
     legend.position = "top",
@@ -958,16 +1245,16 @@ El diagrama de caja manifiesta una progresión directamente proporcional entre l
 
 
 ggplot(train, aes(x = factor(Sleep_Quality_Score), y = Sleep_Duration_Hours, fill = factor(Sleep_Quality_Score))) +
-  geom_boxplot(alpha = 0.75, color = "#2c3e50", outlier.color = "black", outlier.alpha = 0.5) +
+  geom_boxplot(alpha = 0.75, color = "darkblue", outlier.color = "darkblue", outlier.alpha = 0.5) +
   scale_fill_brewer(palette = "Blues") +
   labs(
     title = "Duración del Sueño según la Calidad del Descanso",
-    x = "Puntuación de Calidad del Sueño (Sleep_Quality_Score)",
-    y = "Duración del Sueño en Horas (Sleep_Duration_Hours)"
+    x = "Puntuación de Calidad del Sueño",
+    y = "Duración del Sueño en Hora"
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#2c3e50"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833"),
     axis.title.x = element_text(face = "bold", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", margin = margin(r = 10)),
     legend.position = "none"
@@ -993,7 +1280,7 @@ Para analizar de qué modo el hábito de conexión nocturna (`Late_Night_Usage`)
 
 # Gráfico 1: Horas de sueño vs Uso nocturno
 p1 <- ggplot(train, aes(x = Late_Night_Usage, y = Sleep_Duration_Hours, fill = Late_Night_Usage)) +
-  geom_boxplot(alpha = 0.7, color = "#2c3e50", outlier.alpha = 0.4) +
+  geom_boxplot(alpha = 0.7, color = "#1C2833", outlier.alpha = 0.4) +
   scale_fill_manual(values = c("Sí" = "#E57373", "No" = "#81C784")) +
   labs(
     title = "Duración del Sueño",
@@ -1002,22 +1289,22 @@ p1 <- ggplot(train, aes(x = Late_Night_Usage, y = Sleep_Duration_Hours, fill = L
   ) +
   theme_minimal(base_size = 12) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, color = "#2c3e50"),
+    plot.title = element_text(face = "bold", hjust = 0.5, color = "#1C2833"),
     legend.position = "none"
   )
 
 # Gráfico 2: Calidad del sueño vs Uso nocturno
 p2 <- ggplot(train, aes(x = Late_Night_Usage, y = Sleep_Quality_Score, fill = Late_Night_Usage)) +
-  geom_boxplot(alpha = 0.7, color = "#2c3e50", outlier.alpha = 0.4) +
+  geom_boxplot(alpha = 0.7, color = "#1C2833", outlier.alpha = 0.4) +
   scale_fill_manual(values = c("Sí" = "#E57373", "No" = "#81C784")) +
   labs(
     title = "Calidad del Descanso",
-    x = "Uso Nocturno (Late_Night_Usage)",
-    y = "Puntuación de Calidad (Sleep_Quality_Score)"
+    x = "Uso Nocturno ",
+    y = "Puntuación de Calidad"
   ) +
   theme_minimal(base_size = 12) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, color = "#2c3e50"),
+    plot.title = element_text(face = "bold", hjust = 0.5, color = "#1C2833"),
     legend.position = "none"
   )
 
@@ -1049,7 +1336,7 @@ El gráfico de dispersión refleja una relación lineal inversa muy pronunciada 
 
 ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = target)) +
   geom_point(alpha = 0.5, size = 2) +
-  geom_smooth(method = "lm", se = TRUE, color = "#2c3e50", linetype = "dashed", linewidth = 1) +
+  geom_smooth(method = "lm", se = TRUE, color = "#1C2833", linetype = "dashed", linewidth = 1) +
   scale_color_manual(
     values = c("Rendimiento_bajo_medio" = "#E57373", "Rendimiento_alto" = "#4FC3F7"),
     labels = c("Rendimiento Bajo / Medio", "Rendimiento Alto"),
@@ -1057,12 +1344,12 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
   ) +
   labs(
     title = "Estrés Percibido vs. Índice de Salud Mental",
-    x = "Puntuación de Estrés Percibido (Perceived_Stress_Score)",
-    y = "Índice de Salud Mental (Mental_Health_Index)"
+    x = "Puntuación de Estrés Percibido ",
+    y = "Índice de Salud Mental"
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#2c3e50"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833"),
     axis.title.x = element_text(face = "bold", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", margin = margin(r = 10)),
     legend.position = "top",
@@ -1088,16 +1375,16 @@ Evaluamos la posible relación entre la edad del estudiante (`Age`) y el tiempo 
 ```{r}
 # 1. Gráfico de dispersión
 p <- ggplot(train, aes(x = Age, y = Daily_Usage_Hours)) +
-  geom_jitter(alpha = 0.4, color = "#2c3e50", width = 0.2, height = 0.2) +
+  geom_jitter(alpha = 0.4, color = "#1C2833", width = 0.2, height = 0.2) +
   geom_smooth(method = "lm", se = TRUE, color = "#e74c3c", linetype = "dashed", linewidth = 1) +
   labs(
     title = "Edad vs. Horas Diarias en Redes Sociales",
-    x = "Edad (Age)",
-    y = "Horas de Uso Diario (Daily_Usage_Hours)"
+    x = "Edad ",
+    y = "Horas de Uso Diario "
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#2c3e50"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833"),
     axis.title.x = element_text(face = "bold", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", margin = margin(r = 10))
   )
@@ -1122,7 +1409,7 @@ Para analizar si el hábito de conexión nocturna (`Late_Night_Usage`) varía se
 
 ```{r}
 ggplot(train, aes(x = Device_Type, fill = Late_Night_Usage)) +
-  geom_bar(position = "fill", alpha = 0.7, color = "#2c3e50") +
+  geom_bar(position = "fill", alpha = 0.7, color = "#1C2833") +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_manual(values = c("Sí" = "#E57373", "No" = "#81C784")) +
   labs(
@@ -1133,56 +1420,14 @@ ggplot(train, aes(x = Device_Type, fill = Late_Night_Usage)) +
   ) +
   theme_minimal(base_size = 12) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, color = "#2c3e50"),
-    legend.position = "right"
-  )
-```
-
-```{r}
-
-# 1. Cálculo explícito del porcentaje de uso nocturno dentro de cada dispositivo
-train_prop <- train %>%
-  count(Device_Type, Late_Night_Usage) %>%
-  group_by(Device_Type) %>%
-  mutate(porcentaje = n / sum(n))
-
-# 2. Gráfico de barras agrupadas (lado a lado) con etiquetas porcentuales
-ggplot(train_prop, aes(x = Device_Type, y = porcentaje, fill = Late_Night_Usage)) +
-  geom_col(
-    position = position_dodge(width = 0.8),
-    width = 0.7,
-    color = "#1C2833",
-    alpha = 0.85
-  ) +
-  geom_text(
-    aes(label = percent(porcentaje, accuracy = 1)),
-    position = position_dodge(width = 0.8),
-    vjust = -0.5,
-    fontface = "bold",
-    size = 3.8,
-    color = "#1C2833"
-  ) +
-  scale_y_continuous(labels = percent_format(), limits = c(0, 1)) +
-  scale_fill_manual(
-    values = c("Sí" = "#E57373", "No" = "#81C784")
-  ) +
-  labs(
-    title = "Uso nocturno de redes sociales según el tipo de dispositivo",
-    x = "Tipo de Dispositivo (Device_Type)",
-    y = "Porcentaje dentro de cada dispositivo",
-    fill = "Uso nocturno"
-  ) +
-  theme_minimal(base_size = 13) +
-  theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1B4F72"),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833"),
     axis.title.x = element_text(face = "bold", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", margin = margin(r = 10)),
-    axis.text.x = element_text(face = "bold"),
-    legend.position = "bottom",
-    legend.title = element_text(face = "bold"),
-    panel.grid.major.x = element_blank()
+    legend.position = "none"
   )
 ```
+
+
 
 Ahora aplicamos el test $\chi^2$ ( Chi-cuadrado) para verificarlo formalmente.
 
