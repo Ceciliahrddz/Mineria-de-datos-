@@ -132,7 +132,7 @@ datatable(
 - **Age**: Edad del estudiante. Toma valores numéricos enteros.
 - **Gender:** Identidad de género del estudiante. Es una variable categórica nominal que puede tomar 4 valores: Female, Male, Non-Binary y Prefer not to say.\
 - **Academic_Level**: Nivel académico o educativo que cursa el estudiante. Variable categórica ordinal con 3 niveles jerárquicos: High School, Undergraduate, Postgraduate.
-- **Primary_Platform**: Plataforma de redes sociales principal utilizada por el usuario. Variable categórica con 7 niveles: Instagram, Tiktok, YouTube, Snapchat, Linkedin, Reddit y X.
+- **Primary_Platform**: Plataforma de redes sociales principal utilizada por el usuario. Variable categórica con 7 niveles: Instagram, Tiktok, YouTube, Snapchat, Linkedln, Reddit y X.
 - **Daily_Usage_Hours**: Promedio de horas diarias dedicadas al uso de redes sociales, es una variable numérica continua.
 - **Weekend_Extra_Hours**: Horas adicionales de consumo digital durante los findes de semana. Es una variable cuantitativa continua que toma valores numéricos reales.
 - **Device_Type**: Dispositivo principal desde el que accede a las redes, variable categórica con 3 niveles: Smartphone, Laptop/PC y Tablet.
@@ -703,36 +703,57 @@ El análisis devuelve un estadístico de contraste $X^2 = 0.46186$ con 3 grados 
 Además nos parece interesante preguntarnos si existe diferencia en las categorías individualmente; esto se debe a la existencia de la creencia de que las mujeres maduran antes y, por tanto, mejoran sus resultados antes. Para ello hagamos un test binomial. Este análisis evalúa si la proporción de estudiantes con rendimiento alto dentro de cada subgrupo específico difiere de forma relevante del `r prob_alto` teórico esperado por azar.
 
 ```{r}
-resultados_binomiales <- train %>%
-  group_by(Gender) %>%
-  summarise(
-    n_bajo_medio = sum(target == "Rendimiento_bajo_medio"),
-    n_alto = sum(target == "Rendimiento_alto"),
-    total = n()
-  ) %>%
-  rowwise() %>%
+evaluar_proporcion_genero <- function(df, grupo_evaluado) {
+  # Conteos del grupo
+  n_grupo <- sum(df$Gender == grupo_evaluado)
+  x_grupo <- sum(df$Gender == grupo_evaluado & df$target == "Rendimiento_alto")
+  
+  # Conteos del resto de la muestra
+  n_resto <- sum(df$Gender != grupo_evaluado)
+  x_resto <- sum(df$Gender != grupo_evaluado & df$target == "Rendimiento_alto")
+  
+  # 1. IC de la proporción individual del grupo
+  ci_indiv <- prop.test(x_grupo, n_grupo)$conf.int
+  
+  # 2. p-valor de la comparación frente al resto de la muestra
+  p_val_comp <- prop.test(c(x_grupo, x_resto), c(n_grupo, n_resto), correct = FALSE)$p.value
+  
+  data.frame(
+    Grupo = grupo_evaluado,
+    N_Alto = x_grupo,
+    Total = n_grupo,
+    Proporcion = x_grupo / n_grupo,
+    IC_Inferior = ci_indiv[1],
+    IC_Superior = ci_indiv[2],
+    p_valor = p_val_comp
+  )
+}
+
+# Ejecución y formateo
+resultados_proporciones <- bind_rows(lapply(levels(train$Gender), function(g) {
+  evaluar_proporcion_genero(train, g)
+})) %>%
   mutate(
-    p_value = binom.test(n_alto, total, p = prob_alto)$p.value,
-    es_significativo = p_value < 0.05
+    p_valor_adj = p.adjust(p_valor, method = "bonferroni"),
+    `Proporción` = round(Proporcion, 3),
+    `IC 95%` = sprintf("[%.3f, %.3f]", IC_Inferior, IC_Superior),
+    `p-valor (Ajustado)` = ifelse(p_valor_adj < 0.001, "< 0.001", sprintf("%.4f", p_valor_adj)),
+    `Significativo (α=0.05)` = ifelse(p_valor_adj < 0.05, "Sí", "No")
   )
 
-resultados_binomiales %>%
-  mutate(
-    `Proporción (Alto)` = round(n_alto / total, 3),
-    `p-valor` = ifelse(p_value < 0.001, "< 0.001", sprintf("%.4f", p_value)),
-    `Significativo (α=0.05)` = ifelse(p_value < 0.05, "Sí", "No")
-  ) %>%
+resultados_proporciones %>%
   select(
-    Grupo = Gender, 
-    `Nº Éxitos (Alto)` = n_alto, 
-    `Total` = total, 
-    `Proporción` = `Proporción (Alto)`, 
-    `p-valor`, 
+    `Grupo (Gender)` = Grupo,
+    `Nº Éxitos (Alto)` = N_Alto,
+    `Total` = Total,
+    `Proporción`,
+    `IC 95%`,
+    `p-valor (Ajustado)`,
     `Significativo (α=0.05)`
   ) %>%
   kable(
-    align = c('l', 'c', 'c', 'c', 'c', 'c'),
-    col.names = c("Grupo (Gender)", "Nº Éxitos (Alto)", "Total", "Proporción", "p-valor", "Significativo (α=0.05)")
+    align = c('l', 'c', 'c', 'c', 'c', 'c', 'c'),
+    caption = "Comparación de proporciones de rendimiento alto e intervalos de confianza por género"
   )
 ```
 
@@ -770,7 +791,7 @@ Del contraste resulta un estadístico de prueba $X^2 = 0.88828$ con 2 grados de 
 
 ## Comparación de Plataforma principal y Target
 
-El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedkn*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones dentre enstudiantes de rendimiento alto y bajo/medio resultan prácticamente idénticas en todas las categorías analizadas.
+El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *Linkedln*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones entre estudiantes de rendimiento alto y bajo/medio resultan prácticamente idénticas en todas las categorías analizadas.
 
 ```{r}
 ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
@@ -870,7 +891,7 @@ test_chisq <- chisq.test(table(train$Overall_Impact, train$target))
 mostrar_test(test_chisq, "Overall_Impact")
 ```
 
-Como obtenemos un valor de $p$-valor $< 2.2e-16$ nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podiamos intuir dado que sospechamos que las dos variables estaban **altamente correlacionadas**.
+Como obtenemos un valor de $p$-valor $< 2.2e-16$ nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podíamos intuir dado que sospechamos que las dos variables estaban **altamente correlacionadas**.
 
 # Relaciones entre variables
 
@@ -932,7 +953,7 @@ El test nos devuelve un valor de $p$-valor muy por debajo del valor de significa
 
 ## Interacción entre las horas de sueño y la calidad del descanso
 
-El diagrama de caja manifiesta una progresión directamente proporcional entre la duración media del descanso (`Sleep_Duration_Hours`) y la puntuación de calidad percibida (`Sleep_Quality_Score`). Aquellos estudiantes que reportan una calidad de sueño deficiente (puntuación de 1) presentan una mediana de descanso cercana a las 5 horas diarias, mientras que en el grupo con una calidad excelente (puntuación de 5) la mediana asciende prograsivamente hasta aproximarse a las 8,5 horas. Esta clara tendencia confirma una fuerte asociación positiva entre ambas métricas, evidenciando que la cantidad de tiempo dormido es un condicionante principal de la percepción subjetiva del descanso. A efectos del modelado predictivo, este hallazgo ratifica la presencia de redundancia informativa en el bloque de variables de descanso, lo que respalda la necesidad de aplicar técnicas de selección de características.
+El diagrama de caja manifiesta una progresión directamente proporcional entre la duración media del descanso (`Sleep_Duration_Hours`) y la puntuación de calidad percibida (`Sleep_Quality_Score`). Aquellos estudiantes que reportan una calidad de sueño deficiente (puntuación de 1) presentan una mediana de descanso cercana a las 5 horas diarias, mientras que en el grupo con una calidad excelente (puntuación de 5) la mediana asciende progresivamente hasta aproximarse a las 8,5 horas. Esta clara tendencia confirma una fuerte asociación positiva entre ambas métricas, evidenciando que la cantidad de tiempo dormido es un condicionante principal de la percepción subjetiva del descanso. A efectos del modelado predictivo, este hallazgo ratifica la presencia de redundancia informativa en el bloque de variables de descanso, lo que respalda la necesidad de aplicar técnicas de selección de características.
 
 ```{r}
 
@@ -961,11 +982,11 @@ test_kruskal <- kruskal.test(Sleep_Duration_Hours ~ Sleep_Quality_Score, data = 
 mostrar_test(test_kruskal,"Duración del sueño vs la calidad del sueño")
 ```
 
-Las pruebas no paramétricas de Kruskal-Wallis nos confirman que existen diferencias altamente significativas en la duración del sueño entre los distintos niveles de calidad del descanso ($\chi^2 = 1646.39$, $p$-valor $< 2.2 \times 10^{-16}$), permitiendonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que la cantidad de horas dormidas es un factor determinante en la percepción de la calidad del descanso.
+Las pruebas no paramétricas de Kruskal-Wallis nos confirman que existen diferencias altamente significativas en la duración del sueño entre los distintos niveles de calidad del descanso ($\chi^2 = 1646.39$, $p$-valor $< 2.2 \times 10^{-16}$), permitiéndonos rechazar la hipótesis nula de igualdad entre grupos. En consecuencia, concluimos que la cantidad de horas dormidas es un factor determinante en la percepción de la calidad del descanso.
 
 ## Uso nocturno de las redes sociales y su impacto en el descanso
 
-Para analizar de qué modo el hábito de conexión nocturna (`Late_Night_Usage`) condiciona el descanso de los alumnos, evaluamos conjuntamente su efecto sobre la duración del sueño (`Sleep_Duration_Hours`) y la calidad percibida del mismo (`Sleep_Quality_Score`). A través de los diagramas de caja, se observa que la consulta de redes sociales a altas horas de la noche se asocia co un claro deterioro de ambos indicadores: los estudiantes que declaran realizar uso nocturno presentan una mediana de descando sensiblemente menor (6.5 aproximadamente frente a las 7.0 horas del grupo sin hábito nocturno), así como una distribución de la calidad del sueño desplazada hacia las puntuaciones inferiores de escala.
+Para analizar de qué modo el hábito de conexión nocturna (`Late_Night_Usage`) condiciona el descanso de los alumnos, evaluamos conjuntamente su efecto sobre la duración del sueño (`Sleep_Duration_Hours`) y la calidad percibida del mismo (`Sleep_Quality_Score`). A través de los diagramas de caja, se observa que la consulta de redes sociales a altas horas de la noche se asocia con un claro deterioro de ambos indicadores: los estudiantes que declaran realizar uso nocturno presentan una mediana de descanso sensiblemente menor (6.5 aproximadamente frente a las 7.0 horas del grupo sin hábito nocturno), así como una distribución de la calidad del sueño desplazada hacia las puntuaciones inferiores de escala.
 
 ```{r}
 #| fig-width: 10
@@ -1171,7 +1192,7 @@ test_chisq <- chisq.test(train$Device_Type, train$Late_Night_Usage)
 mostrar_test(test_chisq, "Comparación de Device_Type con Late_Night_Usage")
 ```
 
-Obtenemos un $p$-valor que claramente esta por encima de nuestro nivel de significancia de $\alpha = 0.05$. Como consecuencia, confirmamos nuestra deducción sobre el gráfico anterior, las variables no parecen estar correlacionadas. Por tanto, el uso nocturno de un dispositivo no está relacionado con la elección de dispositivo.
+Obtenemos un $p$-valor que claramente está por encima de nuestro nivel de significancia de $\alpha = 0.05$. Como consecuencia, confirmamos nuestra deducción sobre el gráfico anterior, las variables no parecen estar correlacionadas. Por tanto, el uso nocturno de un dispositivo no está relacionado con la elección de dispositivo.
 
 # Análisis de multicolinealidad entre predictores
 
@@ -1340,7 +1361,7 @@ tabla_seleccion %>%
 
 ## Comparación de la capacidad discriminante
 
-Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación $Z$-score, $\mu = 0, \sigma = 1$) sobre el conjunto `train`. Esta proyección permite comparar en una misma escala la magnitud de la sepación entre el grupo de Rendimiento_alto y el de Rendimiento_medio_bajo.
+Para visualizar de manera conjunta como se comportan los predictores cuantitativos seleccionados respecto a la variable objetivo, procedemos a estandarizar los datos (transformación $Z$-score, $\mu = 0, \sigma = 1$) sobre el conjunto `train`. Esta proyección permite comparar en una misma escala la magnitud de la separación entre el grupo de Rendimiento_alto y el de Rendimiento_medio_bajo.
 
 ```{r}
 #| fig-width: 9.5
