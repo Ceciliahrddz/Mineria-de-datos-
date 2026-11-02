@@ -1168,15 +1168,19 @@ ggplot(train, aes(x = Overall_Impact, fill = target)) +
   )
 ```
 
-El análisis visual pone de manifiesto una clara asimetría en la distribución del rendimiento académico según el impacto percibido (`Overall_Impact`). En la categoría de impacto *Negativo*, la totalidad de los registros (100 %) corresponde a estudiantes del grupo de rendimiento bajo o medio, evidenciando que una percepción perjudicial del entorno digital es incompatible con el alto desempeño en la muestra.De forma análoga, en el nivel *Neutro* la presencia de alumnos con notas elevadas es casi residual. Por el contrario, la categoría *Beneficioso* es donde se concentra la inmensa mayoría del grupo de rendimiento alto.  Sin embargo, no se trata de una relación determinista ya que dentro de este grupo que percibe un impacto positivo del entorno digital, la mayor parte del alumnado (aproximadamente un 65-70%) sigue perteneciendo a la categoría de rendimiento bajo o medio, correspondiendo al alto unicamente el 30-35% restante. Esta distribución implica que recibir un impacto beneficioso actúa como una condición fuertemente asociada al éxito escolar, pero no resulta una condición suficiente por sí sola. Por lo tanto, vamos a utilizar el test de Chi-cuadrado pero consilidar si `Overall_Impact` es un predictor estadísticamente muy significativo y con una capacidad discriminante alta, rozando el comportamiento de una variable "chivato", pero sin llegar a actuar como un separados perfecto de las clases que genere una fuga de información total.  
 
+El análisis visual pone de manifiesto un desequilibrio evidente en la distribución del rendimiento académico según el impacto percibido (`Overall_Impact`). En la categoría de impacto *Negativo*, la totalidad de los registros corresponde a estudiantes del grupo de rendimiento bajo/medio, evidenciando que una percepción perjudicial del entorno digital es incompatible con el alto desempeño. De forma análoga, en el nivel *Neutro* la presencia de alumnos con notas elevadas es casi residual. Por el contrario, la categoría *Beneficioso* es donde se concentra la inmensa mayoría del grupo de rendimiento alto. Sin embargo, no se trata de una relación determinista perfecta, dentro de este grupo que percibe un impacto positivo, el 44,9% de los alumnos sigue perteneciendo a la categoría de rendimiento bajo/medio, frenet al 55,1% que logra un rendimiento alto. Esta distribución implica que percibir un impacto beneficioso actúa como una condición fuertemente asociada al éxito escolar, per no resulta una condición suficiente por sí sola. Una variable que identifica prácticamente una clase en dos de sus tres niveles lo consideramos un candidato a *target leakage*. 
 
 ```{r}
 test_chisq <- chisq.test(table(train$Overall_Impact, train$target))
 mostrar_test(test_chisq, "Overall_Impact")
 ```
 
-Como obtenemos un valor de $p$-valor $< 2.2e-16$ nos cercioramos de que la diferencia estadística es significativa entre ambas variables. Es algo que podíamos intuir dado que sospechamos que las dos variables estaban **altamente correlacionadas**.
+
+Aunque la variable cumple formalmente el criterío de inclusión estadística ($p$-valor $< 2.2e-16$) y presenta una elevada correlación con la variable objetivo, existe la posibilidad de que actúe como un indicador indirecto de esta. Por este motivo, hemos decidido que la incluiremos inicialmente en el modelo de predicción, teniendo en cuenta que su posible efecto de filtración de información podría sobreestimar el rendimiento predictivo. En consecuencia, realizaremos también una segunda predicción excluyendo esta variable, con el objetivo de aislar y evaluar la capacidad predictiva del resto de los factores. 
+
+
+
 
 
 # Relaciones entre variables
