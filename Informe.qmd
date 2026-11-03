@@ -99,7 +99,7 @@ El análisis exploratorio se aborda principalmente desde una perspectiva bivaria
 
 - **Análisis Visual:**
   - Para las **variables cuantitativas y continuas**, empleamos diagramas de cajas combinados y la representación explícita de la media estadística, lo que permite observar la forma de la distribución y las diferencias centrales entre grupos.
-  - Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
+  - Para las **variables categóricas, ordinales y binarias**, utilizamos gráficos de barras apiladas o agrupadas y tablas de contingencia que facilitan la comparación visual de las proporciones relativas frente a la variable objetivo.
 - **Contraste de Hipótesis Estadísticas:** Complementamos la inspección visual con pruebas formales de significación, estableciendo un nivel de significación estándar de $\alpha = 0.05$ ($p\text{-valor} < 0.05$):
   - **Test de Wilcoxon-Mann-Whitney (`wilcox.test`):** Aplicado para evaluar si existen diferencias estadísticamente significativas en las distribuciones o medianas de las variables cuantitativas según los grupos del *target*.
   - **Test de** $\chi^2$ (Chi-cuadrado) de Independencia (`chisq.test`): Utilizado para determinar la existencia de una asociación no aleatoria entre variables categóricas.
@@ -285,8 +285,9 @@ Por tanto, obtenemos `r prob_bajo_medio` para **Rendimiento_bajo_medio** y `r pr
 En este apartado debemos crear una división de nuestros datos. Como hemos nombrado anteriormente vamos a dividir el conjunto en **tres** partes, explicadas anteriormente en la metodología.
 
 - **Train**: La gran mayoría de los datos caerán aquí, aproximadamente el 65%.
-- **Valid**: Con este conjunto comprobaremos que nuestros modelos son certeros, acapararán el 14% de los datos.
-- **Test**: Con estos datos ejecutaremos el examen final de nuestro modelo, aproximadamente el 21% de los datos.
+- **Test**: Con este cojunto iremos evaluando la capacidad de generalización de los modelos entrenados en train, aproximadamente el 21% de los datos.
+- **Valid**: Se mantendrá aislado hasta el final del proyecto y nos permitirá evaluar el modelo seleccionado ante datos nunca vistos, acapararán el 14% de los datos.
+
 
 ```{r}
 set.seed(54685)
@@ -401,7 +402,7 @@ En todos los casos, tomaremos como criterio general de decisión el $p$-valor ge
 
 ## Comparación de Edad y Target
 
-Este diagrama de caja muestra una distribución de la variable edad (`Age`) prácticamente idéntica entre los estudiantes con rendimiento académico bajo/ medio y aquellos que con un rendimiento alto. En ambos grupos, la mediana de edad se sitúa en torno a los 19 años.
+Este diagrama de caja permite comparar la distribución de la edad (`Age`) entre los estudiantes con rendimiento bajo/medio y aquellos con rendimiento alto. Se observa que ambos grupos presentan distribuciones similares, co una mediana superior en el grupo de rendimiento bajo/medio (19 años) respecto al rendimiento alto (18 años). Asimismo, la dispersión de edades es muy parecida en ambos grupos, con rangos intercuartílicos similares y algunos valores atípicos en las edades superiores. En conjunto, las diferenicas visuales entre abmos grupos parecen reducidas. 
 
 
 ```{r}
@@ -452,7 +453,8 @@ test_age <- wilcox.test(Age ~ target, data = train)
 mostrar_test(test_age, "Age")
 ```
 
-Observamos que obtenemos los valores `r sprintf("%.2f", test_age$statistic)` para el estadístico W y para el $p$-valor `r format.pval(test_age$p.value, digits = 4)`. Como el $p$-valor es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no podemos rechazar la hipótesis nula $H_0$, lo que indica que **no existen diferencias estadísticamente significativas** en la edad entre los alumnos de alto rendimiento y los de rendimiento bajo o medio. Por lo tanto, la edad no presenta un comportamiento diferencial respecto al rendimiento académico, por lo que no muestra capacidad explicativa sobre el target.
+Observamos que obtenemos los valores `r sprintf("%.2f", test_age$statistic)` para el estadístico W y para el $p$-valor `r format.pval(test_age$p.value, digits = 4)`. Como el $p$-valor es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no se rechaza la hipótesis nula $H_0$, lo que indica que **no se encuentran diferencias estadísticas suficientes** para afirmar que existan diferencias significativas en  distribución de la edad entre los estudiantes con rendimiento académico alto y aquellos con rendimiento bajo/medio. Este resultado es coherente con lo observado en el diagrama de caja, donde ambos grupos presentan distribuciones similares.Como consecuencia, la edad no parece ser una variable que permita diferenciar significativamente ambos niveles de rendimiento académico en esta muestra.
+
 
 ## Comparación de Uso diario de redes sociales y Target
 
@@ -509,17 +511,30 @@ Obtenemos un estadístico W = `r sprintf("%.2f", test_usodiario$statistic)` y un
 
 ## Comparación de Tipo de dispositivo y Target
 
-Exploramos la distribución bivariante cruzando el tipo de dispositivo (`Device_Type`, variable categórica) con la variable respuesta a través de barras apiladas.Podemos ver que el *smartphone* es el dispositivo predominante utilizado tanto en el grupo de rendimiento bajo/medio como en el alto (alrededor del 85%), seguido de *Laptop/PC* (\~12-13 %) y por último la *tablet* (\~2-3%). Destacamos que la proporción de alumnos con alto rendimiento frente a bajo o medio resulta prácticamente idéntica en las tres categorías de dispositivos.
-
+Evaluamos si el tipo de dispositivo principal (`Device_Type`) influye en el rendimiento académico mediante la inspección visual de sus proporciones internas de notas. Al analizar las distribuciones en el gráfico, constatamos que la estructura es prácticamente idéntica independientemente del terminal empleado. Tanto en los usuarios de *Smartphone*, como en los de *Laptop/PC* o *Tablet*, la proporción de alumnos con rendimiento bajo/medio frente a alto se mantiene estable (en torno a un 54% vs. 46%).
 ```{r}
-ggplot(train, aes(x = Device_Type, fill = target)) +
-  geom_bar(
-    aes(y = after_stat(prop), group = target),
+# 1. Calcular proporciones de notas DENTRO de cada tipo de dispositivo
+train_prop_dev <- train %>%
+  count(Device_Type, target) %>%
+  group_by(Device_Type) %>%
+  mutate(porcentaje = n / sum(n))
+
+# 2. Gráfico de barras agrupadas con estética unificada y etiquetas
+ggplot(train_prop_dev, aes(x = Device_Type, y = porcentaje, fill = target)) +
+  geom_col(
     position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  geom_text(
+    aes(label = percent(porcentaje, accuracy = 0.1)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    fontface = "bold",
+    size = 4,
+    color = "#1C2833"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1.1)) +
   scale_fill_manual(
     values = c(
       "Rendimiento_bajo_medio" = "skyblue", 
@@ -535,18 +550,16 @@ ggplot(train, aes(x = Device_Type, fill = target)) +
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    # Título centrado (hjust = 0.5) y destacado (size = 16)
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
-    # Nombre de las variables en los ejes bien visibles y destacados
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "black", margin = margin(b = 12)),
     axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
-    # Etiquetas de las categorías en los ejes
     axis.text.x = element_text(face = "bold", size = 11),
     axis.text.y = element_text(size = 10),
     legend.position = "bottom",
     legend.title = element_text(face = "bold")
   )
 ```
+
 
 
 Con el fin de verificar si las variaciones observadas en las proporciones alcanzan significación estadística, contrastamos la independencia de ambos factores mediante el test de $\chi^2$
@@ -606,25 +619,40 @@ Con el propósito de verificar formalmente la existencia de una asociación esta
 
 ```{r}
 #Test estadístico (Wilcoxon)
-test_puntsueño<-wilcox.test(Sleep_Quality_Score ~ target, data = train)
-mostrar_test(test_puntsueño, "Sleep_Quality_Score")
+test_puntsueno<-wilcox.test(Sleep_Quality_Score ~ target, data = train)
+mostrar_test(test_puntsueno, "Sleep_Quality_Score")
 ```
 
-Con este test nos proporciona un estadístico $W=$ `r sprintf("%.2f", test_puntsueño$statistic)` y un $p-valor<2.2 \times 10^{-16}$. Puesto que el $p$-valor es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupos, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
+Con este test nos proporciona un estadístico $W=$ `r sprintf("%.2f", test_puntsueno$statistic)` y un $p-valor<2.2 \times 10^{-16}$. Puesto que el $p$-valor es ampliamente inferior al nivel de significación habitual $(\alpha = 0.05)$, se rechaza la hipótesis nula. Por consiguiente, se confirma que **existen diferencias significativas** en la calidad del sueño entre ambos grupos, concluyendo que `Sleep_Quality_Score` es un predictor relevante y positivamente asociado al rendimiento académico.
 
 ## Comparación de Uso nocturno de redes sociales y Target
 
-Este gráfico de barras muestra la relación entre el uso nocturno de redes sociales (`Late_Night_Usage`) y el target. Podemos ver que hay un patrón entre ambos grupos: entre los alumnos que si utilizan las redes sociales a altas horas de la noche, predomina ampliamente el grupo de rendimiento bajo/medio, aproximadamente un 68% frente a un 32% de rendimiento alto. Por el contrario, aquellos estudiantes que declaran no realizar uso nocturno, las proporciones se invierten, alcanzando el rendimiento alto cerca del 53%.
-
-
+Este gráfico de barras muestra la relación entre el uso nocturno de redes sociales (`Late_Night_Usage`) y el target. Podemos ver que hay un patrón entre ambos grupos: entre los alumnos que si utilizan las redes sociales a altas horas de la noche, predomina ampliamente el grupo de rendimiento bajo/medio, aproximadamente un 64,1% frente a un 35,9% de rendimiento alto. Por el contrario, aquellos estudiantes que declaran no realizar uso nocturno, las proporciones se invierten, alcanzando el rendimiento alto cerca del 59,1 frentre a un 40,9% de rendimiento bajo/medio.
 
 ```{r}
-ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
-  geom_bar(
-    aes(y = after_stat(prop), group = target),
+
+
+# 1. Calcular proporciones internamente en cada grupo de 'Late_Night_Usage'
+train_prop <- train %>%
+  count(Late_Night_Usage, target) %>%
+  group_by(Late_Night_Usage) %>%
+  mutate(porcentaje = n / sum(n))
+
+# 2. Gráfico de barras agrupadas con estética unificada
+ggplot(train_prop, aes(x = Late_Night_Usage, y = porcentaje, fill = target)) +
+  geom_col(
     position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
+  ) +
+  # Etiquetas de porcentaje sobre las barras para evitar confusiones
+  geom_text(
+    aes(label = percent(porcentaje, accuracy = 0.1)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    fontface = "bold",
+    size = 4,
+    color = "#1C2833"
   ) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_fill_manual(
@@ -642,18 +670,16 @@ ggplot(train, aes(x = Late_Night_Usage, fill = target)) +
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    # Título centrado (hjust = 0.5), más grande (size = 16) y en color NEGRO
     plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "black", margin = margin(b = 12)),
-    # Nombres de variables en los ejes destacados
     axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
-    # Etiquetas de categorías
     axis.text.x = element_text(face = "bold", size = 11),
     axis.text.y = element_text(size = 10),
     legend.position = "bottom",
     legend.title = element_text(face = "bold")
   )
 ```
+
 
 
 Confirmamos formalmente la significación estadística de esta posible relación mediante el test de Chi-cuadrado ($\chi^2)$.
@@ -668,22 +694,36 @@ El test nos devuelve $\chi^2 =$ `r sprintf("%.2f", test_usonoc$statistic)` con 1
 
 ## Comparación de Frecuencia de comparación social y Target
 
-La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) exhibe su mayor densidad en *Sometimes* (alrededor del 35%), seguida de *Frequently* (\~28%), *Rarely* (\~16-17%), *Always* (\~14-15%) y *Never* (\~5-6%). En todas las categorías, la relación entre estudiantes de rendimiento alto y de rendimiento bajo/medio se conserva prácticamente constante.
-
+La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) muestra que la estructura del rendimiento se mantiene prácticamente idéntica en cada uno de los niveles analizados, ya sea que los estudiantes se comparan de forma constante (*Always*) o nunca lo hagan (*Never*). La distribución interna entre rendimiento alto y bajo/medio apenas sufre alteraciones, situándose en torno a un 52% vs 48% en todas las categorías. 
 
 ```{r}
-ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
-  geom_bar(
-    aes(y = after_stat(prop), group = target),
+
+# 1. Calcular proporciones internamente en cada grupo de 'Social_Comparison_Frequency'
+train_prop_scf <- train %>%
+  count(Social_Comparison_Frequency, target) %>%
+  group_by(Social_Comparison_Frequency) %>%
+  mutate(porcentaje = n / sum(n))
+
+# 2. Gráfico de barras agrupadas con estética unificada
+ggplot(train_prop_scf, aes(x = Social_Comparison_Frequency, y = porcentaje, fill = target)) +
+  geom_col(
     position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  geom_text(
+    aes(label = percent(porcentaje, accuracy = 0.1)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    fontface = "bold",
+    size = 4,
+    color = "#1C2833"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1.1)) +
   scale_fill_manual(
     values = c(
-      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
-      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
     ),
     labels = c("Bajo / Medio", "Alto")
   ) +
@@ -695,18 +735,16 @@ ggplot(train, aes(x = Social_Comparison_Frequency, fill = target)) +
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    # Título centrado (hjust = 0.5) y más grande que los ejes (size = 16)
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "#1C2833", margin = margin(b = 11)),
-    # Nombres de variables en los ejes destacados
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14, color = "black", margin = margin(b = 11)),
     axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
-    # Etiquetas de categorías con rotación para evitar solapamientos
     axis.text.x = element_text(face = "bold", size = 11, angle = 30, hjust = 1),
     axis.text.y = element_text(size = 10),
     legend.position = "bottom",
     legend.title = element_text(face = "bold")
   )
 ```
+
 
 
 Comprobamos la relación mediante el test de $\chi^2$.
@@ -865,42 +903,56 @@ Para determinar si estas diferencias en la calidad de descanso resultan estadís
 
 ```{r}
 #Test estadístico (Wilcoxon)
-test_horassueño<-wilcox.test(Sleep_Duration_Hours ~ target, data = train)
-mostrar_test(test_horassueño, "Sleep_Duration_Hours")
+test_horassueno<-wilcox.test(Sleep_Duration_Hours ~ target, data = train)
+mostrar_test(test_horassueno, "Sleep_Duration_Hours")
 ```
 
 Al obtener un $p$-valor$<2.2 \times 10^{-16}$ que está por debajo del umbral de significación $(\alpha = 0.05)$ se rechaza la hipótesis nula $H_0$. De este modo, afirmamos que la duración del sueño constituye una **variable significativamente asociada** al desempeño estudiantil, actuando la variable `Sleep_Duration_Hours` como un predictor del rendimiento académico.
 
 ## Comparación de Género y Target
 
-Analizamos la relación entre el género del estudiante (variable categórica, `Gender`) y la variable target mediante un diagrama de barras apiladas. Para confirmar si las diferencias observadas son estadísticamente relevantes, aplicamos la prueba de independencia de Chi-cuadrado $(\chi^2)$
-
+Analizamos la relación entre el género del estudiante (variable categórica, `Gender`) y la variable target mediante un diagrama de barras agrupado. Para confirmar si las diferencias observadas son estadísticamente relevantes, aplicamos la prueba de independencia de Chi-cuadrado $(\chi^2)$
 
 ```{r}
-ggplot(train, aes(x = Gender, fill = target, group = target)) +
-  geom_bar(
-    aes(y = after_stat(prop)),
+
+# 1. Calcular proporciones de notas DENTRO de cada género
+train_prop_gen <- train %>%
+  count(Gender, target) %>%
+  group_by(Gender) %>%
+  mutate(porcentaje = n / sum(n))
+
+# 2. Gráfico de barras agrupadas con estética unificada y etiquetas
+ggplot(train_prop_gen, aes(x = Gender, y = porcentaje, fill = target)) +
+  geom_col(
     position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  geom_text(
+    aes(label = percent(porcentaje, accuracy = 0.1)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    fontface = "bold",
+    size = 4,
+    color = "#1C2833"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1.1)) +
   scale_fill_manual(
     values = c(
-      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
-      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
     ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
     title = "Rendimiento académico según el género",
     x = "Género",
-    y = "Porcentaje dentro de cada género",
+    y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "black", margin = margin(b = 12)),
     axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
     axis.text.x = element_text(face = "bold", size = 11),
@@ -910,10 +962,9 @@ ggplot(train, aes(x = Gender, fill = target, group = target)) +
   )
 ```
 
+Evaluamos la distribución bivariante del rendimiento académico según la categoría de género del estudiante (`Gender`). Al examinar las proporciones internas, constatamos que la estructura de notas se mantiene altamente simétrica y equilibrada, la proporción de alumnos con rendimiento bajo/medio frente a rendimiento alto se mantiene estable, sin que ninguna identidad muestre una prevalencia destacable. Este equilibrio visual lo confirmaremos mediante la prueba de independencia de Chi-Cuadrado de Pearson.
+respalda la independencia estadística confirmada previamente por las pruebas de hipótesis, ratificando el descarte de esta variable.
 
-El gráfico de barras estandarizada muestra la proporción del rendimiento académico (`target`) desglosada por las distintas categorías de género del estudiante (`Gender`). Tanto en los grupos mayoritarios (*Female* y *Male*) como en las categorías *Non-Binary* y *Prefer not to say*, la distribución interna entre alumnos de rendimiento alto y rendimiento bajo/medio se mantiene prácticamente simétrica y equilibrada, sin que ninguna identidad muestre una prevalencia destacable sobre el rendimiento académico.
-
-Para evaluar inicialmente la relación global entre ambas variables categóricas, usamos la prueba de independencia de Chi-Cuadrado de Pearson.
 
 ```{r}
 #Test Estadístico (Chi cuadrado)
@@ -980,47 +1031,62 @@ resultados_proporciones %>%
   )
 ```
 
-Los resultados confirman que las probabilidades estimadas de rendimiento alto son prácticamente idénticas entre categorías: **44.9%** en mujeres ($\text{IC}_{95\%} = [0.416, 0.468]$) y **46.1%** en hombres ($\text{IC}_{95\%} = [0.445, 0.500]$), arrojando $p$-valores ajustados de $1.0000$ en la totalidad de los subgrupos. Dado que ningún intervalo de confianza muestra variaciones significativas respecto a la tasa global y que todos los contrastes resultan no significativos, concluimos que la variable `Gender` **carece de capacidad explicativa o discriminante** para predecir el rendimiento académico.
+Los resultados muestran que las proporciones estimadas de estudiantes con rendimiento académico alto presentan ciertas diferencias entre las categorías de género: un  **44.2%** en mujeres ($\text{IC}_{95\%} = [0.416, 0.468]$), **47.3%** en hombres ($\text{IC}_{95\%} = [0.445, 0.500]$), un **50.6%** en la categoría *Non-Binary* ($\text{IC}_{95\%} = [0.392, 0.620]$)y un **41,8 %** entre quieren prefirieron no identificar su género ($\text{IC}_{95\%} = [0.289, 0.559]$).No obstante, los contrastes individuales, tras el ajuste por comparaciones múltiples, no muestran diferencias estadísticamente significativas ($p$-valores ajustados superiores a 0,05). Estos resultados son coherentes con la prueba chi-cuadrado global, que tampoco detecta una asociación estadísticamente significativa entre el género y el rendimiento académico ($\chi^2$ = 3,71; gl = 3; $p$-valor = 0,2941). Por tanto, **no encontramos evidencia estadística suficiente** para afirmar que el género esté asociado al rendimiento académico en esta muestra.
 
 ## Comparación de Nivel Académico y Target
 
-El gráfico de barras refleja el volumen de estudiantes distribuido según su nivel educativo (`Academic_Level`) y clasificado en función del `target`. Aunque hay un volumen marcadamente superior en el nivel universitario (*Undergraduate*), seguido de la educación secundaria (*High School*) y, de forma minoritaria los estudios de posgrado (*Postgraduate*), la proporción interna entre los estudiantes de rendimiento *alto* y *bajo/medio* guarda un patrón uniforme y constante en los tres estratos.
+Analizamos la relación entre el nivel educativo del estudiante (`Academic_Level`) y su rendimiento académico. A partir del estudio de las proporciones internas mediante un gráfico de barras agrupadas, observamos una distribución muy similar en los distintos niveles formativos. Tanto en *High School* como en *Undergraduate* y *Postgraduate*, la proporción de estudiantes con rendimiento bajo/medio frente a rendimiento alto se mantiene prácticamente constante, en torno al 52% y 48%, respectivamente. Estos resultados sugieren que no existen diferencias significativas en el desempeño académico asociadas al nivel educativo, por lo que esta variable presenta una escasa capacidad para discriminar entre los distintos niveles de rendimiento.
 
 
 ```{r}
-ggplot(train, aes(x = Academic_Level, fill = target)) +
-  geom_bar(
-    position = position_dodge(width = 0.8), 
+
+# 1. Calcular proporciones de notas DENTRO de cada nivel académico
+train_prop_acad <- train %>%
+  count(Academic_Level, target) %>%
+  group_by(Academic_Level) %>%
+  mutate(porcentaje = n / sum(n))
+
+# 2. Gráfico de barras agrupadas con estética unificada y etiquetas
+ggplot(train_prop_acad, aes(x = Academic_Level, y = porcentaje, fill = target)) +
+  geom_col(
+    position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
+  geom_text(
+    aes(label = percent(porcentaje, accuracy = 0.1)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    fontface = "bold",
+    size = 4,
+    color = "#1C2833"
+  ) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1.1)) +
   scale_fill_manual(
     values = c(
-      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
-      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+      "Rendimiento_bajo_medio" = "skyblue", 
+      "Rendimiento_alto"       = "steelblue"
     ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
     title = "Rendimiento académico según el nivel académico",
     x = "Nivel académico",
-    y = "Número de estudiantes",
+    y = "Porcentaje dentro de cada categoría",
     fill = "Rendimiento"
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    # Título centrado, en negrita y más grande que los ejes
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
-    # Nombres de los ejes destacados
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "black", margin = margin(b = 12)),
     axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
     axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
-    # Etiquetas de las categorías con rotación para legibilidad
     axis.text.x = element_text(face = "bold", size = 11, angle = 20, hjust = 1),
     axis.text.y = element_text(size = 10),
     legend.position = "bottom",
     legend.title = element_text(face = "bold")
   )
 ```
+
 
 
 Con el propósito de evaluar formalmente si el nivel académico alcanzado condiciona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson.
@@ -1035,46 +1101,71 @@ Del contraste resulta un estadístico de prueba $\chi^2 =$ `r sprintf("%.2f", te
 
 ## Comparación de Plataforma principal y Target
 
-El gráfico de barras agrupadas ilustra la proporción de estudiantes clasificados según su rendimiento académico en relación con la plataforma digital que utilizan como red social principal (`Primary_Platform`). Podemos apreciar que *Instagram* y *Tiktok* concentran la mayor cuota de uso del alumnado, alcanzando individualmente cerca del 30% del total, seguidas por *YouTube* (\~18%) y *Snapchat* (\~10-12%), mientras que redes como *LinkedLn*, *Reddit* y *X* presentan una presencia minoritaria. Sin embargo, al comparar la distribución del éxito académico dentro de cada plataforma, las proporciones entre estudiantes de rendimiento alto y bajo/medio resultan prácticamente idénticas en todas las categorías analizadas.
-
-
+El gráfico de barras agrupadas muestra la distribución del rendimiento académico de los estudiantes dentro de cada plataforma digital utilizada como red social principal (`Primary_Platform`). Se observa que, en todas las plataformas analizadas, el porcentaje de estudiantes con rendimiento bajo/medio es superior al de aquellos con rendimiento alto. Esta diferencia se mantiene relativamente constante, aunque presenta algunas variaciones entre plataformas. En concreto, *X (Twitter)* registra la mayor proporción de estudiantes con rendimiento bajo/medio (56,7 %), seguida de *Snapchat* (56,1 %), mientras que *Instagram* presenta el porcentaje más elevado de estudiantes con rendimiento alto (46,5 %). Por el contrario, *X* muestra la menor proporción de rendimiento alto (43,3 %). En conjunto, las diferencias entre plataformas son reducidas, lo que sugiere que no existe una relación especialmente marcada entre la plataforma principal utilizada y el nivel de rendimiento académico de los estudiantes.
 ```{r}
+# 1. Calcular proporciones DENTRO de cada plataforma
+train_prop_platform <- train %>%
+  count(Primary_Platform, target) %>%
+  group_by(Primary_Platform) %>%
+  mutate(porcentaje = n / sum(n))
 
-ggplot(train, aes(x = Primary_Platform, fill = target, group = target)) +
-  geom_bar(
-    aes(y = after_stat(prop)),
+# 2. Gráfico de barras agrupadas
+ggplot(train_prop_platform,
+       aes(x = Primary_Platform, y = porcentaje, fill = target)) +
+  geom_col(
     position = position_dodge(width = 0.8),
     width = 0.7,
     color = "darkblue"
   ) +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  geom_text(
+    aes(label = scales::percent(porcentaje, accuracy = 0.1)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    fontface = "bold",
+    size = 4,
+    color = "#1C2833"
+  ) +
+  scale_y_continuous(
+    labels = scales::percent,
+    limits = c(0, 1.1)
+  ) +
   scale_fill_manual(
     values = c(
-      "Rendimiento_bajo_medio" = "skyblue",  # Azul celeste claro
-      "Rendimiento_alto"       = "steelblue"   # Azul marino oscuro
+      "Rendimiento_bajo_medio" = "skyblue",
+      "Rendimiento_alto" = "steelblue"
     ),
     labels = c("Bajo / Medio", "Alto")
   ) +
   labs(
     title = "Rendimiento académico según la plataforma principal",
     x = "Plataforma principal",
-    y = "Porcentaje dentro de cada categoría",
+    y = "Porcentaje dentro de cada plataforma",
     fill = "Rendimiento"
   ) +
   theme_minimal(base_size = 13) +
   theme(
-    # Título centrado, en negrita y más grande que los ejes
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 16, color = "#1C2833", margin = margin(b = 12)),
-    # Nombres de los ejes destacados
-    axis.title.x = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(t = 10)),
-    axis.title.y = element_text(face = "bold", size = 12, color = "#1C2833", margin = margin(r = 10)),
-    # Etiquetas de las categorías con rotación para legibilidad
-    axis.text.x = element_text(face = "bold", size = 11, angle = 30, hjust = 1),
+    plot.title = element_text(
+      face = "bold", hjust = 0.5, size = 16,
+      color = "#1C2833", margin = margin(b = 12)
+    ),
+    axis.title.x = element_text(
+      face = "bold", size = 12, color = "#1C2833",
+      margin = margin(t = 10)
+    ),
+    axis.title.y = element_text(
+      face = "bold", size = 12, color = "#1C2833",
+      margin = margin(r = 10)
+    ),
+    axis.text.x = element_text(
+      face = "bold", size = 11, angle = 30, hjust = 1
+    ),
     axis.text.y = element_text(size = 10),
     legend.position = "bottom",
     legend.title = element_text(face = "bold")
   )
 ```
+
+
 
 
 Para evaluar si la elección de la red social predominante está vinculada al desempeño académico, aplicamos la prueba de independencia de Chi-Cuadrado de Pearson.
@@ -1295,8 +1386,8 @@ p1 <- ggplot(train, aes(x = Late_Night_Usage, y = Sleep_Duration_Hours, fill = L
   scale_fill_manual(values = c("Sí" = "#E57373", "No" = "#81C784")) +
   labs(
     title = "Duración del Sueño",
-    x = "Uso Nocturno (Late_Night_Usage)",
-    y = "Horas de Sueño (Sleep_Duration_Hours)"
+    x = "Uso Nocturno ",
+    y = "Horas de Sueño "
   ) +
   theme_minimal(base_size = 12) +
   theme(
@@ -1580,7 +1671,7 @@ tabla_seleccion <- data.frame(
     "0.2941",
     "0.7333",
     "0.9800",
-    "0.7354"
+    "0.9518"
   ),
   Decision = c(
     "SELECCIONADA",
