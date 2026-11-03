@@ -170,7 +170,9 @@ print(
 En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar. Por tanto proseguimos a la siguiente parte.
 
 # Preparación del target
-Como no tenemos un target y tenemos dudas entre dos posibles candidatos, estudiamos la relación entre `Academic_Performance_GPA` y `Overall_Impact`. 
+
+Como no tenemos un target y tenemos dudas entre dos posibles candidatos, estudiamos la relación entre `Academic_Performance_GPA` y `Overall_Impact`.
+
 ```{r}
 # Las observaciones sin GPA no pueden tener target, así que se eliminan antes de binarizar.
 NAs_TARGET <- round(mean(is.na(datos$Academic_Performance_GPA)) * 100, 2)
@@ -208,8 +210,7 @@ ggplot(datos, aes(x = Overall_Impact, y = Academic_Performance_GPA, fill = Overa
   )
 ```
 
-
-Como podemos observar, ambas colas se solapan, por tanto, una no es una categorización de la otra. Ya hemos solventado la duda que teníamos sobre si `Overall_Impact` podría ser una categorización de `Academic_Performance_GPA` . Aunque no sea una categorización una de otra, el boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral. 
+Como podemos observar, ambas colas se solapan, por tanto, una no es una categorización de la otra. Ya hemos solventado la duda que teníamos sobre si `Overall_Impact` podría ser una categorización de `Academic_Performance_GPA` . Aunque no sea una categorización una de otra, el boxplot de arriba revela que claramente son variables que están relacionadas: notas mayores están más asociadas a la categoría de impacto beneficioso y peores notas están más asociadas a la categoría de impacto negativo. Del mismo modo, notas intermedias se asocian más con un impacto neutral.
 
 Decidimos que nuestro target será `Academic_Performance_GPA`. Como es una variable continua y queremos trabajar con un target binario, debemos binarizarla.
 
@@ -238,8 +239,6 @@ ggplot(datos, aes(x = Academic_Performance_GPA)) +
     panel.grid.minor = element_blank()
   )
 ```
-
-
 
 Binarizamos la variable `Academic_Performance_GPA` mediante un punto de corte en 3.5. para diferenciar a los alumnos de rendimiento excelente del resto de calificaciones.
 
@@ -288,7 +287,6 @@ En este apartado debemos crear una división de nuestros datos. Como hemos nombr
 - **Test**: Con este cojunto iremos evaluando la capacidad de generalización de los modelos entrenados en train, aproximadamente el 21% de los datos.
 - **Valid**: Se mantendrá aislado hasta el final del proyecto y nos permitirá evaluar el modelo seleccionado ante datos nunca vistos, acapararán el 14% de los datos.
 
-
 ```{r}
 set.seed(54685)
 idx_train <- createDataPartition(datos$target, p=0.65)
@@ -323,8 +321,8 @@ kable(
 
 A partir de ahora trabajamos únicamente con train. Sobre train haremos todo el análisis exploratorio de datos. Usaremos test para ir evaluando y estudiando la capacidad de generalización de los modelos que entrenemos en train. Por último, dejaremos la partición de validación para el final del todo del proyecto: una vez tengamos un modelo final seleccionado estudiaremos su rendimiento en esta partición de validación. Esto nos permitirá simular un caso real en el que podamos estudiar cómo funciona nuestro modelo final ante datos nunca vistos.
 
-
 # Análisis exploratorio de datos
+
 Realizamos una exploración exclusivamente sobre el conjunto de entrenamientos (train) para evitar la fuga de información hacia los conjuntos de evaluación (test y validation).
 
 ```{r}
@@ -336,19 +334,13 @@ NAs_PERSTR = round(
 n_antes <- c(nrow(train), nrow(test), nrow(valid))
 ```
 
-Como sabemos de la exploración inicial de nuestro datos, `Perceived_Stress_Score` presenta una cantidad de NA's en porcentaje de  **`r NAs_PERSTR`%** en train. Dado que la proporción de datos ausentes es mínima, decidimos no trabajar con dichas observaciones. 
-
+Como sabemos de la exploración inicial de nuestro datos, `Perceived_Stress_Score` presenta una cantidad de NA's en porcentaje de **`r NAs_PERSTR`%** en train. Dado que la proporción de datos ausentes es mínima, decidimos no trabajar con dichas observaciones.
 
 ```{r}
 train <- na.omit(train)
 ```
 
-
-
 En el siguiente apartado, estudiaremos la relación entre todas las variables y nuestro objetivo en este informe. Recapitulando, ya tenemos una descripción de todas las variables y nuestro target bien definido en una variable categórica que distingue entre las notas de los alumnos.
-
-
-
 
 # Relaciones entre el target y el resto de variables.
 
@@ -402,8 +394,7 @@ En todos los casos, tomaremos como criterio general de decisión el $p$-valor ge
 
 ## Comparación de Edad y Target
 
-Este diagrama de caja permite comparar la distribución de la edad (`Age`) entre los estudiantes con rendimiento bajo/medio y aquellos con rendimiento alto. Se observa que ambos grupos presentan distribuciones similares, co una mediana superior en el grupo de rendimiento bajo/medio (19 años) respecto al rendimiento alto (18 años). Asimismo, la dispersión de edades es muy parecida en ambos grupos, con rangos intercuartílicos similares y algunos valores atípicos en las edades superiores. En conjunto, las diferenicas visuales entre abmos grupos parecen reducidas. 
-
+Este diagrama de caja permite comparar la distribución de la edad (`Age`) entre los estudiantes con rendimiento bajo/medio y aquellos con rendimiento alto. Se observa que ambos grupos presentan distribuciones similares, co una mediana superior en el grupo de rendimiento bajo/medio (19 años) respecto al rendimiento alto (18 años). Asimismo, la dispersión de edades es muy parecida en ambos grupos, con rangos intercuartílicos similares y algunos valores atípicos en las edades superiores. En conjunto, las diferenicas visuales entre abmos grupos parecen reducidas.
 
 ```{r}
 ggplot(train, aes(x = target, y = Age, fill = target)) +
@@ -443,8 +434,6 @@ ggplot(train, aes(x = target, y = Age, fill = target)) +
   )
 ```
 
-
-
 Para evaluar la relación entre estas dos variables una cuantitativa y la otra binaria, empleamos la prueba no paramétrica de Wilcoxon.
 
 ```{r}
@@ -453,8 +442,7 @@ test_age <- wilcox.test(Age ~ target, data = train)
 mostrar_test(test_age, "Age")
 ```
 
-Observamos que obtenemos los valores `r sprintf("%.2f", test_age$statistic)` para el estadístico W y para el $p$-valor `r format.pval(test_age$p.value, digits = 4)`. Como el $p$-valor es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no se rechaza la hipótesis nula $H_0$, lo que indica que **no se encuentran diferencias estadísticas suficientes** para afirmar que existan diferencias significativas en  distribución de la edad entre los estudiantes con rendimiento académico alto y aquellos con rendimiento bajo/medio. Este resultado es coherente con lo observado en el diagrama de caja, donde ambos grupos presentan distribuciones similares.Como consecuencia, la edad no parece ser una variable que permita diferenciar significativamente ambos niveles de rendimiento académico en esta muestra.
-
+Observamos que obtenemos los valores `r sprintf("%.2f", test_age$statistic)` para el estadístico W y para el $p$-valor `r format.pval(test_age$p.value, digits = 4)`. Como el $p$-valor es notablemente superior al nivel de significación habitual ($\alpha = 0.05$), no se rechaza la hipótesis nula $H_0$, lo que indica que **no se encuentran diferencias estadísticas suficientes** para afirmar que existan diferencias significativas en distribución de la edad entre los estudiantes con rendimiento académico alto y aquellos con rendimiento bajo/medio. Este resultado es coherente con lo observado en el diagrama de caja, donde ambos grupos presentan distribuciones similares.Como consecuencia, la edad no parece ser una variable que permita diferenciar significativamente ambos niveles de rendimiento académico en esta muestra.
 
 ## Comparación de Uso diario de redes sociales y Target
 
@@ -498,7 +486,6 @@ ggplot(train, aes(x = target, y = Daily_Usage_Hours, fill = target)) +
   )
 ```
 
-
 Para corroborar que existe una diferencia estadísticamente significativa entre ambas variables utilizamos la prueba no paramétrica de suma de rangos de Wilcoxon.
 
 ```{r}
@@ -512,6 +499,7 @@ Obtenemos un estadístico W = `r sprintf("%.2f", test_usodiario$statistic)` y un
 ## Comparación de Tipo de dispositivo y Target
 
 Evaluamos si el tipo de dispositivo principal (`Device_Type`) influye en el rendimiento académico mediante la inspección visual de sus proporciones internas de notas. Al analizar las distribuciones en el gráfico, constatamos que la estructura es prácticamente idéntica independientemente del terminal empleado. Tanto en los usuarios de *Smartphone*, como en los de *Laptop/PC* o *Tablet*, la proporción de alumnos con rendimiento bajo/medio frente a alto se mantiene estable (en torno a un 54% vs. 46%).
+
 ```{r}
 # 1. Calcular proporciones de notas DENTRO de cada tipo de dispositivo
 train_prop_dev <- train %>%
@@ -559,8 +547,6 @@ ggplot(train_prop_dev, aes(x = Device_Type, y = porcentaje, fill = target)) +
     legend.title = element_text(face = "bold")
   )
 ```
-
-
 
 Con el fin de verificar si las variaciones observadas en las proporciones alcanzan significación estadística, contrastamos la independencia de ambos factores mediante el test de $\chi^2$
 
@@ -613,7 +599,6 @@ ggplot(train, aes(x = target, y = Sleep_Quality_Score, fill = target)) +
     panel.grid.major.x = element_blank()
   )
 ```
-
 
 Con el propósito de verificar formalmente la existencia de una asociación estadísticamente relevante, aplicamos el test de Wilcoxon como contraste de hipótesis.
 
@@ -680,8 +665,6 @@ ggplot(train_prop, aes(x = Late_Night_Usage, y = porcentaje, fill = target)) +
   )
 ```
 
-
-
 Confirmamos formalmente la significación estadística de esta posible relación mediante el test de Chi-cuadrado ($\chi^2)$.
 
 ```{r}
@@ -694,7 +677,7 @@ El test nos devuelve $\chi^2 =$ `r sprintf("%.2f", test_usonoc$statistic)` con 1
 
 ## Comparación de Frecuencia de comparación social y Target
 
-La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) muestra que la estructura del rendimiento se mantiene prácticamente idéntica en cada uno de los niveles analizados, ya sea que los estudiantes se comparan de forma constante (*Always*) o nunca lo hagan (*Never*). La distribución interna entre rendimiento alto y bajo/medio apenas sufre alteraciones, situándose en torno a un 52% vs 48% en todas las categorías. 
+La distribución de la frecuencia de comparación social (`Social_Comparison_Frequency`) respecto al rendimiento académico (target) muestra que la estructura del rendimiento se mantiene prácticamente idéntica en cada uno de los niveles analizados, ya sea que los estudiantes se comparan de forma constante (*Always*) o nunca lo hagan (*Never*). La distribución interna entre rendimiento alto y bajo/medio apenas sufre alteraciones, situándose en torno a un 52% vs 48% en todas las categorías.
 
 ```{r}
 
@@ -745,8 +728,6 @@ ggplot(train_prop_scf, aes(x = Social_Comparison_Frequency, y = porcentaje, fill
   )
 ```
 
-
-
 Comprobamos la relación mediante el test de $\chi^2$.
 
 ```{r}
@@ -755,12 +736,11 @@ test_freqsocial <- chisq.test(table(train$Social_Comparison_Frequency, train$tar
 mostrar_test(test_freqsocial, "Social_Comparison_Frequency")
 ```
 
-En el análisis obtuvimos un estadístico de prueba $\chi^2 =$ `r sprintf("%.2f", test_freqsocial$statistic)` con 4 grados de libertad y un $p$-valor = $0.5992$, por lo que como $p$-valor $\ge \alpha$, no existe evidencia estadística para rechazar la hipótesis nula de independencia. Por lo tanto, concluimos que entre la frecuencia de comparación social y el rendimiento académico  **no hay evidencia de asociación**, lo que indica que `Social_Comparison_Frequency` no aporta capacidad predictiva ni discriminante sobre nuestro target.
+En el análisis obtuvimos un estadístico de prueba $\chi^2 =$ `r sprintf("%.2f", test_freqsocial$statistic)` con 4 grados de libertad y un $p$-valor = $0.5992$, por lo que como $p$-valor $\ge \alpha$, no existe evidencia estadística para rechazar la hipótesis nula de independencia. Por lo tanto, concluimos que entre la frecuencia de comparación social y el rendimiento académico **no hay evidencia de asociación**, lo que indica que `Social_Comparison_Frequency` no aporta capacidad predictiva ni discriminante sobre nuestro target.
 
 ## Comparación de Puntuación de estrés percibido y Target
 
 El diagrama de caja refleja una clara diferencia en la puntuación de estrés percibido (`Perceived_Stress_Score`) según el rendimiento académico del estudiante. En el grupo de rendimiento bajo/medio, la mediana de estrés se sitúa en torno a los 16 punto con un rango intercuartílico aproximado de 12 a 21, mientras que en el grupo de rendimiento alto, la mediana desciende a los 10 puntos con un rango de 6 a 14, mostrando además valores máximos sensiblemente menores.
-
 
 ```{r}
 ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
@@ -796,7 +776,6 @@ ggplot(train, aes(x = target, y = Perceived_Stress_Score, fill = target)) +
   )
 ```
 
-
 A continuación, se presentan los resultados obtenidos de la prueba estadística de Wilcoxon que permite evaluar las diferencias entre las dos variables.
 
 ```{r}
@@ -810,7 +789,6 @@ El contraste muestra un estadístico de prueba $W=$ `r sprintf("%.2f", test_estr
 ## Comparación de Índice de salud mental y Target
 
 El diagrama de caja manifiesta una clara brecha en el índice de salud mental (`Mental_Health_Index`) en función del rendimiento académico de los estudiantes. Quienes se encuentran en el grupo de rendimiento alto presentan niveles sensiblementes superiores, con una mediana que ronda los 87 puntos y un rango intercuartílico concentrado en su mayoría entre los 81 y 94 puntos. Sin embargo, los alumnos con rendimiento bajo/medio exhiben puntuaciones de bienestar psicológico sensiblemente inferiores y más dispersas, situando su mediana en torno a los 76 puntos y registrando numerosos valores atípicos en la zona inferior de la escala.
-
 
 ```{r}
 ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
@@ -847,7 +825,6 @@ ggplot(train, aes(x = target, y = Mental_Health_Index, fill = target)) +
   )
 ```
 
-
 Estos son los resultados obtenidos tras aplicar la prueba de Wilcoxon para ver si existe una relación de dependencia o asociación.
 
 ```{r}
@@ -856,12 +833,11 @@ test_saludment<-wilcox.test(Mental_Health_Index ~ target, data = train)
 mostrar_test(test_saludment, "Mental_Health_Index")
 ```
 
-Con este análisis obtenemos $W =$ `r sprintf("%.2f", test_saludment$statistic)` y un $p$-valor$<2.2 \times 10^{-16}$. Al ser el $p$-valor infinitamente menor que el nivel de significación prefijado $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$ de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y **altamente significativa** con el desempeño estudiantil, convirtiendo a `Mental_Health_Index` en un predictor clave e inversamente condicionado por el malestar psicológico para la clasificación del target.
+Con este análisis obtenemos $W =$ `r sprintf("%.2f", test_saludment$statistic)` y un $p$-valor$<2.2 \times 10^{-16}$. Al ser el $p$-valor infinitamente menor que el nivel de significación prefijado $(\alpha = 0.05)$, se rechaza la hipótesis nula $(H_0)$ de igualdad entre grupos. Por lo tanto, podemos confirmar que el estado de salud mental se vincula de manera directa y **altamente significativa** con el desempeño estudiantil, convirtiendo a `Mental_Health_Index` en un predictor clave.
 
 ## Comparación de Horas de Sueño y Target
 
 El diagrama de caja permite evaluar la distribución de la duración del descanso nocturno (`Sleep_Duration_Hours`) en función de la categoría de rendimiento académico (`target`). En la representación gráfica apreciamos que los estudiantes del grupo con rendimiento alto presentan, en general, un promedio de horas de sueño más elevado y constante, mientras que los alumnos con rendimiento bajo/medio registra periodos de descanso sensiblemente más reducidos y con mayor variabilidad.
-
 
 ```{r}
 ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
@@ -898,8 +874,7 @@ ggplot(train, aes(x = target, y = Sleep_Duration_Hours, fill = target)) +
   )
 ```
 
-
-Para determinar si estas diferencias en la calidad de descanso resultan estadísticamente significativas entre ambos grupos, se aplica la prueba no paramétrica de suma de rangos de Wilcoxon.
+Para determinar si estas diferencias en la duración del descanso resultan estadísticamente significativas entre ambos grupos, se aplica la prueba no paramétrica de suma de rangos de Wilcoxon.
 
 ```{r}
 #Test estadístico (Wilcoxon)
@@ -963,16 +938,13 @@ ggplot(train_prop_gen, aes(x = Gender, y = porcentaje, fill = target)) +
 ```
 
 Evaluamos la distribución bivariante del rendimiento académico según la categoría de género del estudiante (`Gender`). Al examinar las proporciones internas, constatamos que la estructura de notas se mantiene altamente simétrica y equilibrada, la proporción de alumnos con rendimiento bajo/medio frente a rendimiento alto se mantiene estable, sin que ninguna identidad muestre una prevalencia destacable. Este equilibrio visual lo confirmaremos mediante la prueba de independencia de Chi-Cuadrado de Pearson.
-respalda la independencia estadística confirmada previamente por las pruebas de hipótesis, ratificando el descarte de esta variable.
-
-
 ```{r}
 #Test Estadístico (Chi cuadrado)
 test_genero <- chisq.test(table(train$Gender, train$target))
 mostrar_test(test_genero, "Gender")
 ```
 
-El análisis devuelve un estadístico de contraste $\chi^2 =$ `r sprintf("%.2f", test_genero$statistic)` con 3 grados de libertad y un $p$-valor $= 0.2941$. Al ser este $p$-valor claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$. 
+El análisis devuelve un estadístico de contraste $\chi^2 =$ `r sprintf("%.2f", test_genero$statistic)` con 3 grados de libertad y un $p$-valor $= 0.2941$. Al ser este $p$-valor claramente superior al umbral de significación estándar $(\alpha = 0.05)$, no existe evidencia estadística para rechazar la hipótesis nula $(H_0)$.
 
 Para profundizar en el análisis intrínseco de cada subgrupo y evaluar si la probabilidad de obtener un rendimiento alto en una categoría concreta difiere de manera significativa respecto al resto del alumnado, realizamos un test de dos proporciones independientes (`prop.test`) comparando cada género frente al subconjunto complementario, calculando además los intervalos de confianza al 95% para la probabilidad de rendimiento alto.
 
@@ -1031,12 +1003,11 @@ resultados_proporciones %>%
   )
 ```
 
-Los resultados muestran que las proporciones estimadas de estudiantes con rendimiento académico alto presentan ciertas diferencias entre las categorías de género: un  **44.2%** en mujeres ($\text{IC}_{95\%} = [0.416, 0.468]$), **47.3%** en hombres ($\text{IC}_{95\%} = [0.445, 0.500]$), un **50.6%** en la categoría *Non-Binary* ($\text{IC}_{95\%} = [0.392, 0.620]$)y un **41,8 %** entre quieren prefirieron no identificar su género ($\text{IC}_{95\%} = [0.289, 0.559]$).No obstante, los contrastes individuales, tras el ajuste por comparaciones múltiples, no muestran diferencias estadísticamente significativas ($p$-valores ajustados superiores a 0,05). Estos resultados son coherentes con la prueba chi-cuadrado global, que tampoco detecta una asociación estadísticamente significativa entre el género y el rendimiento académico ($\chi^2$ = 3,71; gl = 3; $p$-valor = 0,2941). Por tanto, **no encontramos evidencia estadística suficiente** para afirmar que el género esté asociado al rendimiento académico en esta muestra.
+Los resultados muestran que las proporciones estimadas de estudiantes con rendimiento académico alto presentan ciertas diferencias entre las categorías de género: un **44.2%** en mujeres ($\text{IC}_{95\%} = [0.416, 0.468]$), **47.3%** en hombres ($\text{IC}_{95\%} = [0.445, 0.500]$), un **50.6%** en la categoría *Non-Binary* ($\text{IC}_{95\%} = [0.392, 0.620]$)y un **41,8 %** entre quieren prefirieron no identificar su género ($\text{IC}_{95\%} = [0.289, 0.559]$).No obstante, los contrastes individuales, tras el ajuste por comparaciones múltiples, no muestran diferencias estadísticamente significativas ($p$-valores ajustados superiores a 0,05). Estos resultados son coherentes con la prueba chi-cuadrado global, que tampoco detecta una asociación estadísticamente significativa entre el género y el rendimiento académico ($\chi^2$ = 3,71; gl = 3; $p$-valor = 0,2941). Por tanto, **no encontramos evidencia estadística suficiente** para afirmar que el género esté asociado al rendimiento académico en esta muestra.
 
 ## Comparación de Nivel Académico y Target
 
 Analizamos la relación entre el nivel educativo del estudiante (`Academic_Level`) y su rendimiento académico. A partir del estudio de las proporciones internas mediante un gráfico de barras agrupadas, observamos una distribución muy similar en los distintos niveles formativos. Tanto en *High School* como en *Undergraduate* y *Postgraduate*, la proporción de estudiantes con rendimiento bajo/medio frente a rendimiento alto se mantiene prácticamente constante, en torno al 52% y 48%, respectivamente. Estos resultados sugieren que no existen diferencias significativas en el desempeño académico asociadas al nivel educativo, por lo que esta variable presenta una escasa capacidad para discriminar entre los distintos niveles de rendimiento.
-
 
 ```{r}
 
@@ -1087,8 +1058,6 @@ ggplot(train_prop_acad, aes(x = Academic_Level, y = porcentaje, fill = target)) 
   )
 ```
 
-
-
 Con el propósito de evaluar formalmente si el nivel académico alcanzado condiciona de alguna manera el desempeño estudiantil, aplicamos una prueba de independencia de Chi-cuadrado de Pearson.
 
 ```{r}
@@ -1102,6 +1071,7 @@ Del contraste resulta un estadístico de prueba $\chi^2 =$ `r sprintf("%.2f", te
 ## Comparación de Plataforma principal y Target
 
 El gráfico de barras agrupadas muestra la distribución del rendimiento académico de los estudiantes dentro de cada plataforma digital utilizada como red social principal (`Primary_Platform`). Se observa que, en todas las plataformas analizadas, el porcentaje de estudiantes con rendimiento bajo/medio es superior al de aquellos con rendimiento alto. Esta diferencia se mantiene relativamente constante, aunque presenta algunas variaciones entre plataformas. En concreto, *X (Twitter)* registra la mayor proporción de estudiantes con rendimiento bajo/medio (56,7 %), seguida de *Snapchat* (56,1 %), mientras que *Instagram* presenta el porcentaje más elevado de estudiantes con rendimiento alto (46,5 %). Por el contrario, *X* muestra la menor proporción de rendimiento alto (43,3 %). En conjunto, las diferencias entre plataformas son reducidas, lo que sugiere que no existe una relación especialmente marcada entre la plataforma principal utilizada y el nivel de rendimiento académico de los estudiantes.
+
 ```{r}
 # 1. Calcular proporciones DENTRO de cada plataforma
 train_prop_platform <- train %>%
@@ -1165,9 +1135,6 @@ ggplot(train_prop_platform,
   )
 ```
 
-
-
-
 Para evaluar si la elección de la red social predominante está vinculada al desempeño académico, aplicamos la prueba de independencia de Chi-Cuadrado de Pearson.
 
 ```{r}
@@ -1181,7 +1148,6 @@ El contraste nos devuelve un estadístico $\chi^2$ = `r sprintf("%.2f", test_pla
 ## Comparación entre Horas extra en fin de semana de uso de redes sociales y el target.
 
 Comparamos la distribución del tiempo adicional dedicado a las redes sociales durante el fin de semana (`Weekend_Extra_Hours`) en función de la categoría de rendimiento académico (target) mediante el siguiente gráfico. Ambas distribuciones resultan visualmente simétricas e indistinguibles, tanto en el grupo de rendimiento bajo/medio como en el de alto, la mediana de uso extraordinario se sitúa en torno a las 1.8 horas, compartiendo un rango intercuartílico equivalente (de 1.3 a 2.3. horas aproximadamente) y un patrón similar de valores atípicos en la zona superior.
-
 
 ```{r}
 ggplot(train, aes(x = target, y = Weekend_Extra_Hours, fill = target)) +
@@ -1268,18 +1234,14 @@ ggplot(train, aes(x = Overall_Impact, fill = target)) +
   )
 ```
 
-
-El análisis visual pone de manifiesto un desequilibrio evidente en la distribución del rendimiento académico según el impacto percibido (`Overall_Impact`). En la categoría de impacto *Negativo*, la totalidad de los registros corresponde a estudiantes del grupo de rendimiento bajo/medio. Este resultado evidencia una asociación muy marcada entre la percepción negativa del impacto de las redes sociales y un menor rendimiento académico dentro de los datos analizados. De forma análoga, en el nivel *Neutro* la presencia de alumnos con notas elevadas es casi residual. Por el contrario, la categoría *Beneficioso* es donde se concentra la inmensa mayoría del grupo de rendimiento alto. Sin embargo, no se trata de una relación determinista perfecta, dentro de este grupo que percibe un impacto positivo, el 44,9% de los alumnos sigue perteneciendo a la categoría de rendimiento bajo/medio, frenet al 55,1% que logra un rendimiento alto. Esta distribución implica que percibir un impacto beneficioso actúa como una condición fuertemente asociada al éxito escolar, per no resulta una condición suficiente por sí sola. Una variable que identifica prácticamente una clase en dos de sus tres niveles lo consideramos un candidato a *target leakage*. Esta posibilidad no puede afirmarse únicamente con un estudio bivariante, por lo que evaluaremos su efecto sobre el rendimiento de los modelos predictivos. 
+El análisis visual pone de manifiesto un desequilibrio evidente en la distribución del rendimiento académico según el impacto percibido (`Overall_Impact`). En la categoría de impacto *Negativo*, la totalidad de los registros corresponde a estudiantes del grupo de rendimiento bajo/medio. Este resultado evidencia una asociación muy marcada entre la percepción negativa del impacto de las redes sociales y un menor rendimiento académico dentro de los datos analizados. De forma análoga, en el nivel *Neutro* la presencia de alumnos con notas elevadas es casi residual. Por el contrario, la categoría *Beneficioso* es donde se concentra la inmensa mayoría del grupo de rendimiento alto. Sin embargo, no se trata de una relación determinista perfecta, dentro de este grupo que percibe un impacto positivo, el 44,9% de los alumnos sigue perteneciendo a la categoría de rendimiento bajo/medio, frenet al 55,1% que logra un rendimiento alto. Esta distribución implica que percibir un impacto beneficioso actúa como una condición fuertemente asociada al éxito escolar, per no resulta una condición suficiente por sí sola. Una variable que identifica prácticamente una clase en dos de sus tres niveles lo consideramos un candidato a *target leakage*. Esta posibilidad no puede afirmarse únicamente con un estudio bivariante, por lo que evaluaremos su efecto sobre el rendimiento de los modelos predictivos.
 
 ```{r}
 test_impact <- chisq.test(table(train$Overall_Impact, train$target))
 mostrar_test(test_impact, "Overall_Impact")
 ```
 
-
-Mediante el test Chi-cuadrado vemos que aunque la variable cumple formalmente el criterío de inclusión estadística ($p$-valor $< 2.2e-16$) y presenta una elevada correlación con la variable objetivo, existe la posibilidad de que actúe como un indicador indirecto de esta. Por este motivo, hemos decidido que la incluiremos inicialmente en el modelo de predicción, teniendo en cuenta que su posible efecto de filtración de información podría sobreestimar el rendimiento predictivo. En consecuencia, realizaremos también una segunda predicción excluyendo esta variable, con el objetivo de aislar y evaluar la capacidad predictiva del resto de los factores. 
-
-
+Mediante el test Chi-cuadrado vemos que aunque la variable cumple formalmente el criterío de inclusión estadística ($p$-valor $< 2.2e-16$) y presenta una elevada correlación con la variable objetivo, existe la posibilidad de que actúe como un indicador indirecto de esta. Por este motivo, hemos decidido que la incluiremos inicialmente en el modelo de predicción, teniendo en cuenta que su posible efecto de filtración de información podría sobreestimar el rendimiento predictivo. En consecuencia, realizaremos también una segunda predicción excluyendo esta variable, con el objetivo de aislar y evaluar la capacidad predictiva del resto de los factores.
 
 # Relaciones entre variables
 
@@ -1295,7 +1257,7 @@ Para abordar este análisis, nos planteamos las siguientes preguntas e hipótesi
   - *¿Por qué es interesante?:* Ayuda a aislar el efecto específico del hábito nocturno: queremos ver si el uso tardío desplaza el horario de sueño (reduciendo horas totales) o si distorsiona directamente la calidad del descanso.
 - **¿Cómo se relaciona el nivel de estrés percibido (`Perceived_Stress_Score`) con el índice general de salud mental (`Mental_Health_Index`)?**
   - *¿Por qué es interesante?:* Permite medir el grado de solapamiento entre ambos indicadores y verificar si actúan como dimensiones independientes o si existe una fuerte redundancia entre ellas.
-- **¿Existe relación entre la edad del estudiante (`Age`) y las horas de uso diario (`Social_Media_Hours`)?**
+- **¿Existe relación entre la edad del estudiante (`Age`) y las horas de uso diario (`Daily_Usage_Hours`)?**
   - *¿Por qué es interesante?:* Nos ayuda a identificar si los hábitos de consumo cambian conforme avanza la etapa académica y la madurez del estudiante, o si la exposición a redes es homogénea en todo el rango de edad.
 - **¿Existe algún tipo de relación entre el uso nocturno (`Late_Night_Usage`) y el tipo de dispositivo utilizado (`Device_Type`)?**
   - *¿Por qué es interesante?:* Resulta curioso observar si la portabilidad y la ergonomía del hardware (por ejemplo, *smartphones* o *tablets* frente a portátiles) favorecen que el usuario consuma contenido desde la cama a altas horas de la noche.
@@ -1529,8 +1491,6 @@ ggplot(train, aes(x = Device_Type, fill = Late_Night_Usage)) +
   )
 ```
 
-
-
 Ahora aplicamos el test $\chi^2$ ( Chi-cuadrado) para verificarlo formalmente.
 
 ```{r}
@@ -1603,7 +1563,7 @@ Dado un nivel de significación estadística fijado en $\alpha = 0.05$, adoptamo
 
 - **Inclusión** $(p<0.05)$: se mantienen aquellos predictores cuyas pruebas de hipótesis (suma de rangos de Wilcoxon o Chi-cuadrado de independencia ) demostraron diferencias o asociaciones estadísticamente significativas con la variable objeto (`target`).
 
-- **Exclusión** $(p \ge 0.05)$: se descartan las variables descriptivas donde no existe evidencia estadística en contra de la hipótesis nula $(H_0)$. 
+- **Exclusión** $(p \ge 0.05)$: se descartan las variables descriptivas donde no existe evidencia estadística en contra de la hipótesis nula $(H_0)$.
 
 ```{r}
 
@@ -1628,10 +1588,10 @@ tabla_seleccion <- data.frame(
   Tipo_Variable = c(
     "Cuantitativa (continua)", # Daily_Usage_Hours
     "Cuantitativa (continua)", # Sleep_Duration_Hours
-    "Categórica (ordinal)",    # Sleep_Quality_Score
+    "Cuantitaiva (discreta)",    # Sleep_Quality_Score
     "Categórica (binaria)",    # Late_Night_Usage
     "Cuantitativa (continua)", # Perceived_Stress_Score
-    "Cuantitativa (continua)", # Mental_Health_Index
+    "Cuantitativa (discreta)", # Mental_Health_Index
     "Categórica (ordinal)",    # Overall_Impact
     "Cuantitativa (discreta)", # Age
     "Categórica (nominal)",    # Device_Type
