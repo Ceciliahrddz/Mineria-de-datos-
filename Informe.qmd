@@ -31,7 +31,9 @@ pacman::p_load(summarytools,
                kableExtra,
                dplyr,
                scales,
-               tidyr)
+               tidyr,
+               ggcorrplot,
+               psych)
 
 #library(summarytools)
 #library(ggplot2)
@@ -1710,6 +1712,186 @@ El perfil de distribución estandarizada evidencia una separación clara entre l
 <!-- -->
 
 - **Predictores de impacto negativo/desfavorables:** Por el contrario, la categoría de Rendimiento_bajo_medio se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
+
+# Análisis de Componentes Principales
+
+Tengo que escribir aqui cosas. 
+
+## Matriz Factorizable
+
+Creo una tabla que tenga la correlacion de las variables continuas e inicialmente age y sleep score aunque son discretas
+
+```{r}
+vars_continuas <- c(
+  "Daily_Usage_Hours",
+  "Sleep_Duration_Hours",
+  "Sleep_Quality_Score",
+  "Perceived_Stress_Score",
+  "Weekend_Extra_Hours",
+  "Mental_Health_Index",
+  "Age"
+)
+
+# Función de escalado 0-100 (Min-Max)
+min_max_100 <- function(x) {
+  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) * 100
+}
+
+# Creación de la tabla independiente con las variables escaladas
+train_scaled_100 <- as.data.frame(lapply(train[, vars_continuas], min_max_100))
+
+# 2. Cálculo de la matriz de correlación de Pearson
+mat_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
+
+# 3. Visualización con ggcorrplot
+ggcorrplot(
+  mat_cor,
+  type = "lower",
+  hc.order = TRUE,
+  lab = TRUE,       
+  lab_size = 3.5,
+  outline.col = "white",
+  colors = c("#6D9EC1", "white", "#E46726"),
+  ggtheme = ggplot2::theme_minimal(),
+  title = "Matriz de Correlación de Variables Continuas"
+)
+```
+
+Podemos observar como las variables **Age** y **Weekend_Extra_Hours** no tienen prácticamente correlación con ninguna variable, por tanto, podemos deducir que son independientes de este conjunto y no tiene sentido aplicar análisis factorial sobre ellas, así que las eliminamos.
+
+```{r}
+vars_continuas <- c(
+  "Daily_Usage_Hours",
+  "Sleep_Duration_Hours",
+  "Sleep_Quality_Score",
+  "Perceived_Stress_Score",
+  "Mental_Health_Index"
+)
+
+# Función de escalado 0-100 (Min-Max)
+min_max_100 <- function(x) {
+  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) * 100
+}
+
+# Creación de la tabla independiente con las variables escaladas
+train_scaled_100 <- as.data.frame(lapply(train[, vars_continuas], min_max_100))
+
+# 2. Cálculo de la matriz de correlación de Pearson
+mat_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
+```
+
+
+Ahora aplico ciertos tests para ver si el análisis factorial tiene sentido en este conjunto de datos
+
+```{r}
+# 1. Test de Esfericidad de Bartlett
+# Requiere la matriz de correlación y el número total de observaciones (n)
+bartlett_test <- cortest.bartlett(mat_cor, n = nrow(train_scaled_100))
+
+cat("--- TEST DE ESFERICIDAD DE BARTLETT ---\n")
+print(bartlett_test)
+cat("p-valor:", bartlett_test$p.value, "\n\n")
+
+# 2. Test Kaiser-Meyer-Olkin (KMO)
+kmo_res <- KMO(mat_cor)
+
+cat("--- MEDIDA KMO DE ADECUACIÓN MUESTRAL ---\n")
+cat("KMO Global (Overall MSA):", round(kmo_res$MSA, 3), "\n\n")
+
+cat("KMO por variable (Individual MSA):\n")
+print(round(kmo_res$MSAi, 3))
+```
+
+En el TEST DE ESFERICIDAD DE BARTLETT el p-valor es 0, luego las variables no están correlacionadas en los datos y rechazamos la hipótesis nula.
+Ademas en el KMO el resultado es de $0.863$, un resultado que se considera notable o sobresaliente para la práctica de análisis factorial.
+
+## Elección del número de factores.
+
+Vamos a tener en cuenta tres criterios diferentes para elegir el número de factores. Estos criterios nos dirán un número de factores, si cada test nos diese un número diferente, deberemos decidir nosotros. Empezemos con el primero:
+
+ - Test de Kaiser:
+Este criterio, propuesto originalmente por Guttman (1954) y popularizado por Kaiser, sugiere que deben retenerse únicamente aquellos factores cuyos autovalores (eigenvalues) sean superiores a $1.0$.
+
+La lógica subyacente a esta regla es que cualquier factor extraído debe ser capaz de explicar, al menos, la misma cantidad de varianza que una sola de las variables originales introducidas en el análisis. Dado que en un análisis de componentes principales con variables estandarizadas cada variable tiene una varianza de $1$, un factor con un autovalor inferior a la unidad se considera poco informativo, ya que explica menos variabilidad que una variable individual.
+
+```{r}
+scree(
+  mat_cor, 
+  factors = FALSE, 
+  pc = TRUE, 
+  main = "Criterio de Kaiser (Autovalores > 1)",
+  hline = 1
+)
+```
+
+Observando el gráfico, tenemos que, solo el primer autovalor es claramente superior a $1$. Por tanto, podemos deducir de este criterio que nuestro número de componentes estaría en $1$ 
+
+ - Análisis del ScreePlot:
+ 
+Este método, de carácter visual, actúa como complemento al Criterio de Kaiser y se fundamenta en el examen de la magnitud de los eigenvalues mediante su representación gráfica. El objetivo es identificar un conjunto reducido de factores que presenten una varianza significativamente superior al resto de las dimensiones.
+
+Para su interpretación, es necesario localizar el punto de inflexión en la curva del gráfico (comúnmente denominado "el codo", debido a su similitud morfológica con la articulación de un brazo). Este punto marca la transición donde la pendiente de la curva se reduce drásticamente, transformándose en una línea relativamente plana o recta. Los factores situados antes de esta ruptura son los que poseen relevancia sustancial para el modelo.
+
+```{r}
+scree(
+  mat_cor, 
+  factors = TRUE, 
+  pc = TRUE, 
+  main = "Scree Plot (Sedimentación)"
+)
+```
+
+En este caso, buscando el "codo" del ScreePlot observamos que, el codo se haya definitivamente en el autovalor $2$, es por tanto que, mediante este criterio el valor sugerido de componentes sería $1$.
+
+ - Análisis Paralelo:
+
+El Análisis Paralelo constituye uno de los métodos más robustos y recomendados para la determinación del número de factores, especialmente útil cuando el volumen de variables iniciales es elevado. Este procedimiento se fundamenta en el principio de que los factores retenidos deben explicar una proporción de varianza significativamente mayor a la que se esperaría obtener por puro azar.
+
+El algoritmo opera mediante una técnica de remuestreo: las observaciones de la base de datos original se reordenan de forma aleatoria entre las variables, rompiendo cualquier estructura de correlación real pero manteniendo la dimensionalidad del conjunto. A partir de estos datos aleatorios, se recalculan los eigenvalues. El criterio de decisión consiste en retener únicamente aquellos factores cuyos autovalores originales superen a los obtenidos mediante la simulación aleatoria.
+
+```{r}
+fa.parallel(
+  mat_cor, 
+  n.obs = 200, 
+  fa = "both", 
+  fm = "minres",
+  main = "Análisis Paralelo de Horn",
+  show.legend = TRUE
+)
+```
+
+En este caso, el gráfico es claro, nos indica que solo debemos escoger $1$ componente principal.
+
+Por ende, ya que los $3$ criterios usados nos indican $(1) \;\; (1) \;\; (1)$ respectivamente. Decidimos escoger una única componente principal.
+
+```{r}
+# 1. Ajuste del PCA sobre tus datos escalados (train_scaled_100)
+pca_res <- prcomp(train_scaled_100, scale. = TRUE)
+
+# 2. Varianza explicada por el Componente 1
+varianza_explicada <- (pca_res$sdev^2) / sum(pca_res$sdev^2)
+pct_var_pc1 <- round(varianza_explicada[1] * 100, 2)
+
+# 3. Extraer y ordenar las cargas (loadings) del Componente 1
+loadings_pc1 <- pca_res$rotation[, 1]
+
+df_loadings <- data.frame(
+  Variable = names(loadings_pc1),
+  Carga_PC1 = round(loadings_pc1, 3)
+)
+
+# Ordenar de mayor a menor contribución (en valor absoluto)
+df_loadings <- df_loadings[order(abs(df_loadings$Carga_PC1), decreasing = TRUE), ]
+
+# 4. Mostrar la tabla formateada para Quarto / RMarkdown
+kable(
+  df_loadings, 
+  col.names = c("Variable", "Carga Factorial (PC1)"),
+  caption = paste0("Cargas del Componente Principal 1 (Varianza explicada: ", pct_var_pc1, "%)"),
+  row.names = FALSE
+)
+```
+
 
 # Uso de Inteligencia Artificial {.unnumbered}
 
