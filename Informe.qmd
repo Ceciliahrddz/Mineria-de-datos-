@@ -33,7 +33,8 @@ pacman::p_load(summarytools,
                scales,
                tidyr,
                ggcorrplot,
-               psych)
+               psych,
+               gt)
 
 #library(summarytools)
 #library(ggplot2)
@@ -1502,58 +1503,7 @@ mostrar_test(test_chisq, "Comparación de Device_Type con Late_Night_Usage")
 
 Obtenemos un $p$-valor que claramente está por encima de nuestro nivel de significancia de $\alpha = 0.05$. Como consecuencia, confirmamos nuestra deducción sobre el gráfico anterior, las variables no parecen estar correlacionadas. Por tanto, el uso nocturno de un dispositivo no está relacionado con la elección de dispositivo.
 
-# Análisis de multicolinealidad entre predictores
 
-La matriz de correlación de Pearson evalúa cuantitativamente la intensidad y direción de la relación lineal entre cada par de variables continuas predictoras del conjunto de datos. Los valores oscilan en el intervalo $[-1, 1]$:
-
-El análisis de la matriz de correlación evidencia fuertes dependencias entre los predictores cuantitativos, destacando los siguientes hallazgos principales:
-
-- **Efecto crítico del uso diario de redes sociales (`Daily_Usage_Hours`)**: muestra una **correlación negativa muy elevada** con la salud mental $(r = -0.85)$, así como un efecto adverso directo sobre la duración del sueño $(r = -0.72)$ y la calidad de descando $(r = -0.68)$. Asimismo, se asocia fuertemente a un mayor estrés percibido $(r = 0.76)$.
-
-- **Estrés y salud mental**: podemos confirmar una relación inversa muy marcada entre `Perceived_Stress_Score` y `Mental_Health_Index` $(r = -0.77)$, indicando que el incremento en la percepción del estrés se traduce como un deterioro proporcional del bienestar psicológico.
-
-- **Interrelación del descanso y bienestar**: la duración y la calidad del sueño están estrechamente alineadas entre sí $(r = 0.74)$, y ambas actúan como factores protectores vinculados a un mejor índice de salud mental $(r = 0.78$ y $r = 0.66$ , respectivamente).
-
-La presencia de coeficientes superiores a $|r| \ge 0.75$ señala una alta multicolinealidad y redundancia de información entre las variables explicativas.
-
-```{r}
-#| fig-width: 7
-#| fig-height: 6
-
-
-# Selección de predictores cuantitativos continuos
-var_num <- train %>%
-  select(
-    Daily_Usage_Hours,
-    Sleep_Duration_Hours,
-    Sleep_Quality_Score,
-    Perceived_Stress_Score,
-    Mental_Health_Index
-  )
-
-# Cálculo de la matriz de correlación de Pearson
-matriz_cor <- cor(var_num, use = "complete.obs")
-
-# Definición de paleta de colores personalizada (Rojo -> Blanco -> Azul)
-paleta_estetica <- colorRampPalette(c("#C0392B", "#FADBD8", "#FFFFFF", "#AED6F1", "#2980B9"))(200)
-
-# Renderizado gráfico de la matriz
-corrplot(
-  matriz_cor,
-  method = "color",
-  type = "upper",
-  addCoef.col = "#1C2833",
-  number.cex = 0.85,
-  number.digits = 2,
-  tl.col = "#2C3E50",
-  tl.srt = 45,
-  tl.cex = 0.9,
-  diag = FALSE,
-  col = paleta_estetica,
-  mar = c(0, 0, 2, 0),
-  title = "Matriz de Correlación entre Variables"
-)
-```
 
 # Síntesis y selección de variables
 
@@ -1713,23 +1663,58 @@ El perfil de distribución estandarizada evidencia una separación clara entre l
 
 - **Predictores de impacto negativo/desfavorables:** Por el contrario, la categoría de Rendimiento_bajo_medio se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
 
-# Análisis de Componentes Principales
+# Análisis Factorial
 
-Tengo que escribir aqui cosas. 
+El análisis factorial es una forma de reducir la dimensionalidad de los problemas. Su principal objetivo es descubrir cuál es la cantidad mínima de variables que explican el conjunto de datos para su estudio. Las nuevas variables que surgen al intentar explicar el conjunto de datos original se denominaran factores.
 
-## Matriz Factorizable
+El Análisis Factorial se centra en el estudio de la varianza común compartida por un conjunto de variables. Utiliza la matriz de correlaciones como punto de partida para simplificar la estructura de los datos, operando específicamente con los coeficientes de determinación ($r^2$). Estos valores permiten identificar qué proporción de la variabilidad es compartida, facilitando la reducción de la información hacia dimensiones subyacentes más manejables.
 
-Creo una tabla que tenga la correlacion de las variables continuas e inicialmente age y sleep score aunque son discretas
+En el caso de esta práctica, las variables de interés (que son continuas o con muchos factores) son:
+
+    
+  - **Daily_Usage_Hours**
+    
+  - **Sleep_Duration_Hours**
+    
+  - **Sleep_Quality_Score**
+    
+  - **Perceived_Stress_Score**
+    
+  - **Mental_Health_Index**
+    
+  - **Age**
+    
+  - **Weekend_Extra_Hours**
+
+
+
+## Análisis de multicolinealidad entre variables.
+
+La matriz de correlación de Pearson evalúa cuantitativamente la intensidad y direción de la relación lineal entre cada par de variables continuas predictoras del conjunto de datos. Los valores oscilan en el intervalo $[-1, 1]$:
+
+El análisis de la matriz de correlación evidencia fuertes dependencias entre los predictores cuantitativos, destacando los siguientes hallazgos principales:
+
+- **Efecto crítico del uso diario de redes sociales (`Daily_Usage_Hours`)**: muestra una **correlación negativa muy elevada** con la salud mental $(r = -0.85)$, así como un efecto adverso directo sobre la duración del sueño $(r = -0.72)$ y la calidad de descando $(r = -0.68)$. Asimismo, se asocia fuertemente a un mayor estrés percibido $(r = 0.76)$.
+
+- **Estrés y salud mental**: podemos confirmar una relación inversa muy marcada entre `Perceived_Stress_Score` y `Mental_Health_Index` $(r = -0.77)$, indicando que el incremento en la percepción del estrés se traduce como un deterioro proporcional del bienestar psicológico.
+
+- **Interrelación del descanso y bienestar**: la duración y la calidad del sueño están estrechamente alineadas entre sí $(r = 0.74)$, y ambas actúan como factores protectores vinculados a un mejor índice de salud mental $(r = 0.78$ y $r = 0.66$ , respectivamente).
+
+La presencia de coeficientes superiores a $|r| \ge 0.75$ señala una alta multicolinealidad y redundancia de información entre las variables explicativas.
 
 ```{r}
+#| fig-width: 7
+#| fig-height: 6
+
+
 vars_continuas <- c(
   "Daily_Usage_Hours",
   "Sleep_Duration_Hours",
   "Sleep_Quality_Score",
+  "Age",
   "Perceived_Stress_Score",
-  "Weekend_Extra_Hours",
   "Mental_Health_Index",
-  "Age"
+  "Weekend_Extra_Hours"
 )
 
 # Función de escalado 0-100 (Min-Max)
@@ -1740,23 +1725,29 @@ min_max_100 <- function(x) {
 # Creación de la tabla independiente con las variables escaladas
 train_scaled_100 <- as.data.frame(lapply(train[, vars_continuas], min_max_100))
 
-# 2. Cálculo de la matriz de correlación de Pearson
-mat_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
+# Cálculo de la matriz de correlación de Pearson
+matriz_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
 
-# 3. Visualización con ggcorrplot
-ggcorrplot(
-  mat_cor,
-  type = "lower",
-  hc.order = TRUE,
-  lab = TRUE,       
-  lab_size = 3.5,
-  outline.col = "white",
-  colors = c("#6D9EC1", "white", "#E46726"),
-  ggtheme = ggplot2::theme_minimal(),
-  title = "Matriz de Correlación de Variables Continuas"
+# Definición de paleta de colores personalizada (Rojo -> Blanco -> Azul)
+paleta_estetica <- colorRampPalette(c("#C0392B", "#FADBD8", "#FFFFFF", "#AED6F1", "#2980B9"))(200)
+
+# Renderizado gráfico de la matriz
+corrplot(
+  matriz_cor,
+  method = "color",
+  type = "upper",
+  addCoef.col = "#1C2833",
+  number.cex = 0.85,
+  number.digits = 2,
+  tl.col = "#2C3E50",
+  tl.srt = 45,
+  tl.cex = 0.9,
+  diag = FALSE,
+  col = paleta_estetica,
+  mar = c(0, 0, 2, 0),
+  title = "Matriz de Correlación entre Variables"
 )
 ```
-
 Podemos observar como las variables **Age** y **Weekend_Extra_Hours** no tienen prácticamente correlación con ninguna variable, por tanto, podemos deducir que son independientes de este conjunto y no tiene sentido aplicar análisis factorial sobre ellas, así que las eliminamos.
 
 ```{r}
@@ -1781,35 +1772,83 @@ mat_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
 ```
 
 
-Ahora aplico ciertos tests para ver si el análisis factorial tiene sentido en este conjunto de datos
+## Tests para comprobar viabilidad de Análisis Factorial
+
+Ahora aplicamos ciertos tests para ver si el análisis factorial tiene sentido en este conjunto de datos:
+
+ - **Test de Esfericidad de Bartlett**
+
+Aplicamos el test de Bartlett que se utiliza para probar la hipótesis nula que afirma que las variables no están correlacionadas en la población.
 
 ```{r}
 # 1. Test de Esfericidad de Bartlett
-# Requiere la matriz de correlación y el número total de observaciones (n)
 bartlett_test <- cortest.bartlett(mat_cor, n = nrow(train_scaled_100))
 
-cat("--- TEST DE ESFERICIDAD DE BARTLETT ---\n")
-print(bartlett_test)
-cat("p-valor:", bartlett_test$p.value, "\n\n")
-
-# 2. Test Kaiser-Meyer-Olkin (KMO)
-kmo_res <- KMO(mat_cor)
-
-cat("--- MEDIDA KMO DE ADECUACIÓN MUESTRAL ---\n")
-cat("KMO Global (Overall MSA):", round(kmo_res$MSA, 3), "\n\n")
-
-cat("KMO por variable (Individual MSA):\n")
-print(round(kmo_res$MSAi, 3))
+data.frame(
+  chi2 = round(bartlett_test$chisq, 3),
+  df   = bartlett_test$df,
+  pval = format.pval(bartlett_test$p.value, digits = 4, eps = 0.001),
+  res  = ifelse(bartlett_test$p.value < 0.05, "Rechaza H0 (Apto)", "No rechaza H0")
+) |> 
+  gt() |> 
+  cols_label(
+    chi2 = md("$\\chi^2$"),
+    df   = "gl",
+    pval = "p-valor",
+    res  = "Conclusión"
+  ) |> 
+  cols_align(align = "center") |> 
+  tab_source_note(source_note = "H0: La matriz de correlación es una matriz identidad.")
 ```
 
-En el TEST DE ESFERICIDAD DE BARTLETT el p-valor es 0, luego las variables no están correlacionadas en los datos y rechazamos la hipótesis nula.
-Ademas en el KMO el resultado es de $0.863$, un resultado que se considera notable o sobresaliente para la práctica de análisis factorial.
+En el **TEST DE ESFERICIDAD DE BARTLETT** el p-valor es 0, luego las variables no están correlacionadas en los datos y rechazamos la hipótesis nula. Por tanto, nuestro conjunto de datos es apto para aplicar análisis factorial.
+
+
+ - **Test de Test Kaiser-Meyer-Olkin (KMO)**
+ 
+ El test mide la adecuación del muestreo para cada variable en el modelo y para el modelo completo. La estadística es una medida de la proporción de varianza entre variables que podrían ser varianza común.
+
+```{r}
+
+# Test de KMO
+kmo_res <- KMO(mat_cor)
+msa_ind <- sort(kmo_res$MSAi, decreasing = TRUE)
+
+interpretar_kmo <- function(valor) {
+  ifelse(valor >= 0.90, "Sobresaliente",
+  ifelse(valor >= 0.80, "Notable",
+  ifelse(valor >= 0.70, "Bien",
+  ifelse(valor >= 0.60, "Mediocre",
+  ifelse(valor >= 0.50, "Miserable", "Inaceptable")))))
+}
+
+data.frame(
+  variable = c("KMO Global (Overall MSA)", names(msa_ind)),
+  msa      = round(c(kmo_res$MSA, as.numeric(msa_ind)), 3),
+  estado   = interpretar_kmo(c(kmo_res$MSA, as.numeric(msa_ind)))
+) |> 
+  gt() |> 
+  cols_label(
+    variable = "Variable",
+    msa      = "Índice MSA",
+    estado   = "Valoración"
+  ) |> 
+  cols_align(align = "center", columns = c(msa, estado)) |> 
+  # Estilo destacado para la fila del KMO Global
+  tab_style(
+    style = list(cell_fill(color = "#e8f0fe"), cell_text(weight = "bold")),
+    locations = cells_body(rows = 1)
+  ) |> 
+  tab_source_note("Criterio de Kaiser (1974): valores >= 0.80 indican una adecuación muestral meritoria.")
+```
+
+El test de **KMO** muestra un valor de $0.863$, que es un valor bueno, es decir, el test nos dice que nuestro conjunto de datos es aceptable para realizar un estudio de análisis factorial sobre ellos.
 
 ## Elección del número de factores.
 
 Vamos a tener en cuenta tres criterios diferentes para elegir el número de factores. Estos criterios nos dirán un número de factores, si cada test nos diese un número diferente, deberemos decidir nosotros. Empezemos con el primero:
 
- - Test de Kaiser:
+ - **Test de Kaiser**:
 Este criterio, propuesto originalmente por Guttman (1954) y popularizado por Kaiser, sugiere que deben retenerse únicamente aquellos factores cuyos autovalores (eigenvalues) sean superiores a $1.0$.
 
 La lógica subyacente a esta regla es que cualquier factor extraído debe ser capaz de explicar, al menos, la misma cantidad de varianza que una sola de las variables originales introducidas en el análisis. Dado que en un análisis de componentes principales con variables estandarizadas cada variable tiene una varianza de $1$, un factor con un autovalor inferior a la unidad se considera poco informativo, ya que explica menos variabilidad que una variable individual.
@@ -1826,7 +1865,7 @@ scree(
 
 Observando el gráfico, tenemos que, solo el primer autovalor es claramente superior a $1$. Por tanto, podemos deducir de este criterio que nuestro número de componentes estaría en $1$ 
 
- - Análisis del ScreePlot:
+ - **Análisis del ScreePlot**:
  
 Este método, de carácter visual, actúa como complemento al Criterio de Kaiser y se fundamenta en el examen de la magnitud de los eigenvalues mediante su representación gráfica. El objetivo es identificar un conjunto reducido de factores que presenten una varianza significativamente superior al resto de las dimensiones.
 
@@ -1843,7 +1882,7 @@ scree(
 
 En este caso, buscando el "codo" del ScreePlot observamos que, el codo se haya definitivamente en el autovalor $2$, es por tanto que, mediante este criterio el valor sugerido de componentes sería $1$.
 
- - Análisis Paralelo:
+ - **Análisis Paralelo**:
 
 El Análisis Paralelo constituye uno de los métodos más robustos y recomendados para la determinación del número de factores, especialmente útil cuando el volumen de variables iniciales es elevado. Este procedimiento se fundamenta en el principio de que los factores retenidos deben explicar una proporción de varianza significativamente mayor a la que se esperaría obtener por puro azar.
 
