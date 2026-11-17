@@ -34,7 +34,8 @@ pacman::p_load(summarytools,
                tidyr,
                ggcorrplot,
                psych,
-               gt)
+               gt,
+               nortest)
 
 #library(summarytools)
 #library(ggplot2)
@@ -1425,6 +1426,40 @@ ggplot(train, aes(x = Perceived_Stress_Score, y = Mental_Health_Index, color = t
 
 ```
 
+Antes de realizar el test de correlación de Pearson, debemos asegurarnos que estamos tratando con distribuciones normales, para ello realizaremos el test de Lilliefors. Es un test diseñado específicamente para comprobar la normalidad. Evalúa si los datos proceden de una distribución normal comparando la función de distribución empírica de los datos con la función de distribución acumulativa normal esperada.
+
+```{r}
+# 1. Ejecutar los tests (requiere librería nortest y knitr)
+test_stress <- lillie.test(train$Perceived_Stress_Score)
+test_mental <- lillie.test(train$Mental_Health_Index)
+
+# Extraer los p-valores en un vector para reutilizarlos fácilmente
+p_valores <- c(test_stress$p.value, test_mental$p.value)
+
+# 2. Organizar resultados en una tabla
+tabla_normalidad <- data.frame(
+  Variable = c("Perceived Stress Score", "Mental Health Index"),
+  Estadistico_D = c(test_stress$statistic, test_mental$statistic),
+  Valor_p = p_valores,
+  Conclusion = ifelse(
+    p_valores > 0.05, 
+    "Normal (p > 0.05)", 
+    "No normal (p <= 0.05)"
+  )
+)
+
+# 3. Renderizar tabla limpia para Quarto
+kable(
+  tabla_normalidad,
+  col.names = c("Variable", "Estadístico (D)", "Valor p", "Distribución"),
+  digits = 4,
+  align = "lccc"
+)
+```
+
+El test nos muestra que no son variables que sigan una distribución normal, aún así, viendo los histogramas de cada función al no diferir en gran medida de una distribución normal, nos parece interesante comparar el test de correlación de Pearson contra el del test de correlación de Spearman (que no necesita normalidad).
+
+
 ```{r}
 #Test de Pearson
 test_pearson <- cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, method = "pearson")
@@ -1432,6 +1467,17 @@ mostrar_test(test_pearson, "Puntuación de estrés vs Índice salud mental")
 ```
 
 El test nos muestra un coeficiente de correlación de Pearson fuertemente negativo ($r=-0.77$, $p$-valor$<2.2 \times 10^{-16})$.
+
+```{r}
+# 2. Test de correlación de Spearman
+test_spearman <- cor.test(train$Perceived_Stress_Score, train$Mental_Health_Index, method = "spearman")
+mostrar_test(test_spearman, "Edad vs Horas de Uso")
+
+```
+
+El test nos muestra un p-valor $p$-valor$<2.2 \times 10^{-16})$. 
+
+Por tanto, ambos tests muestran resultados parecidos, por lo que podemos "coger" con pinzas el valor de $r=-0.77$ como válido.
 
 Además, al segmentar por rendimiento académico (target), observamos claramente que los estudiantes del grupo de alto rendimiento se agrupan de forma prioritaria en la zona de bajo estrés (puntuaciones inferiores a 15) e índices elevados de salud mental (superiores a 80 puntos). Esta acentuada interdependencia evidencia que el malestar psicológico y el estrés actúan como dimensiones altamente conectadas dentro del bienestar estudiantil. Para la fase de ajustes de modelos, esta elevada correlación advierte de una notable redundancia informativa entre ambos predictores.
 
