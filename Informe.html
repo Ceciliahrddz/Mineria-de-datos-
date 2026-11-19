@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,34 +37,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="Informe_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Informe_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Informe_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Informe_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Informe_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Informe_files/libs/bootstrap/bootstrap-62e2d20df198e8a01bb734742f2e28cf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Informe_files/libs/bootstrap/bootstrap-c2e55264ed47ce3b2e0326a2269f9400.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="Informe_files/libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
-
 <script src="Informe_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-
 <link href="Informe_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-
 <script src="Informe_files/libs/datatables-binding-0.34.0/datatables.js"></script>
-
 <script src="Informe_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-
 <link href="Informe_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-
 <link href="Informe_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-
 <script src="Informe_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-
 <link href="Informe_files/libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-
 <script src="Informe_files/libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
-
 <script src="Informe_files/libs/kePrint-0.0.1/kePrint.js"></script>
-
 <link href="Informe_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -151,11 +139,29 @@ window.Quarto = {
   <li><a href="#criterio-de-selección-y-justificación" id="toc-criterio-de-selección-y-justificación" class="nav-link" data-scroll-target="#criterio-de-selección-y-justificación"><span class="header-section-number">9.1</span> Criterio de selección y justificación</a></li>
   <li><a href="#comparación-de-la-capacidad-discriminante" id="toc-comparación-de-la-capacidad-discriminante" class="nav-link" data-scroll-target="#comparación-de-la-capacidad-discriminante"><span class="header-section-number">9.2</span> Comparación de la capacidad discriminante</a></li>
   </ul></li>
-  <li><a href="#análisis-factorial" id="toc-análisis-factorial" class="nav-link" data-scroll-target="#análisis-factorial"><span class="header-section-number">10</span> Análisis Factorial</a>
+  <li><a href="#reducción-de-dimensionalidad-pca" id="toc-reducción-de-dimensionalidad-pca" class="nav-link" data-scroll-target="#reducción-de-dimensionalidad-pca"><span class="header-section-number">10</span> Reducción de dimensionalidad (PCA)</a>
   <ul class="collapse">
-  <li><a href="#análisis-de-multicolinealidad-entre-variables." id="toc-análisis-de-multicolinealidad-entre-variables." class="nav-link" data-scroll-target="#análisis-de-multicolinealidad-entre-variables."><span class="header-section-number">10.1</span> Análisis de multicolinealidad entre variables.</a></li>
-  <li><a href="#tests-para-comprobar-viabilidad-de-análisis-factorial" id="toc-tests-para-comprobar-viabilidad-de-análisis-factorial" class="nav-link" data-scroll-target="#tests-para-comprobar-viabilidad-de-análisis-factorial"><span class="header-section-number">10.2</span> Tests para comprobar viabilidad de Análisis Factorial</a></li>
-  <li><a href="#elección-del-número-de-factores." id="toc-elección-del-número-de-factores." class="nav-link" data-scroll-target="#elección-del-número-de-factores."><span class="header-section-number">10.3</span> Elección del número de factores.</a></li>
+  <li><a href="#matriz-base-del-pca" id="toc-matriz-base-del-pca" class="nav-link" data-scroll-target="#matriz-base-del-pca"><span class="header-section-number">10.1</span> Matriz base del PCA</a>
+  <ul class="collapse">
+  <li><a href="#matriz-de-covarianza" id="toc-matriz-de-covarianza" class="nav-link" data-scroll-target="#matriz-de-covarianza"><span class="header-section-number">10.1.1</span> Matriz de covarianza</a></li>
+  <li><a href="#matriz-de-correlación" id="toc-matriz-de-correlación" class="nav-link" data-scroll-target="#matriz-de-correlación"><span class="header-section-number">10.1.2</span> Matriz de correlación</a></li>
+  </ul></li>
+  <li><a href="#pruebas-de-viabilidad-y-adecuación-muestral-del-pca" id="toc-pruebas-de-viabilidad-y-adecuación-muestral-del-pca" class="nav-link" data-scroll-target="#pruebas-de-viabilidad-y-adecuación-muestral-del-pca"><span class="header-section-number">10.2</span> Pruebas de viabilidad y adecuación muestral del PCA</a>
+  <ul class="collapse">
+  <li><a href="#test-de-esfericidad-de-bartlett" id="toc-test-de-esfericidad-de-bartlett" class="nav-link" data-scroll-target="#test-de-esfericidad-de-bartlett"><span class="header-section-number">10.2.1</span> Test de esfericidad de Bartlett</a></li>
+  <li><a href="#índice-de-adecuación-muestral-kmo" id="toc-índice-de-adecuación-muestral-kmo" class="nav-link" data-scroll-target="#índice-de-adecuación-muestral-kmo"><span class="header-section-number">10.2.2</span> Índice de adecuación muestral KMO</a></li>
+  </ul></li>
+  <li><a href="#elección-del-número-de-componentes-principales" id="toc-elección-del-número-de-componentes-principales" class="nav-link" data-scroll-target="#elección-del-número-de-componentes-principales"><span class="header-section-number">10.3</span> Elección del número de componentes principales</a>
+  <ul class="collapse">
+  <li><a href="#criterio-de-kaiser-y-gráfico-de-sedimentación-scree-plot" id="toc-criterio-de-kaiser-y-gráfico-de-sedimentación-scree-plot" class="nav-link" data-scroll-target="#criterio-de-kaiser-y-gráfico-de-sedimentación-scree-plot">Criterio de Kaiser y Gráfico de sedimentación (Scree Plot)</a></li>
+  <li><a href="#análisis-paralelo-de-horn" id="toc-análisis-paralelo-de-horn" class="nav-link" data-scroll-target="#análisis-paralelo-de-horn">Análisis paralelo de Horn</a></li>
+  <li><a href="#decisión-final-sobre-el-número-de-componentes" id="toc-decisión-final-sobre-el-número-de-componentes" class="nav-link" data-scroll-target="#decisión-final-sobre-el-número-de-componentes">Decisión final sobre el número de componentes</a></li>
+  </ul></li>
+  <li><a href="#interpretación-de-las-componentes-y-proyección-de-los-datos" id="toc-interpretación-de-las-componentes-y-proyección-de-los-datos" class="nav-link" data-scroll-target="#interpretación-de-las-componentes-y-proyección-de-los-datos"><span class="header-section-number">10.4</span> Interpretación de las componentes y proyección de los datos</a>
+  <ul class="collapse">
+  <li><a href="#interpretación-de-las-componentes" id="toc-interpretación-de-las-componentes" class="nav-link" data-scroll-target="#interpretación-de-las-componentes">Interpretación de las componentes</a></li>
+  <li><a href="#proyección-de-las-observaciones" id="toc-proyección-de-las-observaciones" class="nav-link" data-scroll-target="#proyección-de-las-observaciones">Proyección de las observaciones</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#uso-de-inteligencia-artificial" id="toc-uso-de-inteligencia-artificial" class="nav-link" data-scroll-target="#uso-de-inteligencia-artificial">Uso de Inteligencia Artificial</a>
   <ul class="collapse">
@@ -243,8 +249,8 @@ window.Quarto = {
 <p>A continuación, se presenta una tabla interactiva con una vista preliminar de los datos. Esta herramienta permite explorar las primeras filas de forma dinámica, facilitando la verificación inicial de los tipos de variables, la detección de posibles valores ausentes y la comprensión general de la estructura del dataset antes de proceder con los análisis estadísticos y los modelos.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-b422db0db83daade99d7" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b422db0db83daade99d7">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-089ba0e7bdc354d3a0e9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-089ba0e7bdc354d3a0e9">{"x":{"filter":"none","vertical":false,"caption":"<caption>Vista interactiva de los datos<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10"],["STU_2024000","STU_2024001","STU_2024002","STU_2024003","STU_2024004","STU_2024005","STU_2024006","STU_2024007","STU_2024008","STU_2024009"],[19,19,17,16,17,16,20,19,18,18],["Female","Female","Female","Female","Male","Male","Male","Female","Female","Female"],["Undergraduate","Undergraduate","High School","High School","High School","High School","Undergraduate","Undergraduate","Undergraduate","Undergraduate"],["Snapchat","Instagram","TikTok","YouTube","LinkedIn","TikTok","TikTok","TikTok","YouTube","Reddit"],[7.5,4.6,10.9,6,3.3,6.2,5.6,1.2,3.3,4.7],[1.5,1.3,1.7,2.3,2.6,1.6,1.8,2.4,1.8,1.7],["Smartphone","Smartphone","Smartphone","Tablet","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone","Smartphone"],[5.9,7.9,5.2,7.6,7.6,5.9,8.300000000000001,8.1,6.4,7.9],[2,3,1,4,4,1,3,5,2,2],["Sí","Sí","Sí","Sí","Sí","No","No","No","No","No"],["Always","Sometimes","Frequently","Sometimes","Never","Rarely","Sometimes","Always","Frequently","Frequently"],[20,17,18,15,16,10,10,6,23,6],[73,90,70,82,84,66,88,95,88,96],[2.73,3.21,3,3.42,3.41,3.21,3.72,3.37,3.59,3.66],["Neutral","Beneficial","Neutral","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial","Beneficial"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Student_ID<\/th>\n      <th>Age<\/th>\n      <th>Gender<\/th>\n      <th>Academic_Level<\/th>\n      <th>Primary_Platform<\/th>\n      <th>Daily_Usage_Hours<\/th>\n      <th>Weekend_Extra_Hours<\/th>\n      <th>Device_Type<\/th>\n      <th>Sleep_Duration_Hours<\/th>\n      <th>Sleep_Quality_Score<\/th>\n      <th>Late_Night_Usage<\/th>\n      <th>Social_Comparison_Frequency<\/th>\n      <th>Perceived_Stress_Score<\/th>\n      <th>Mental_Health_Index<\/th>\n      <th>Academic_Performance_GPA<\/th>\n      <th>Overall_Impact<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,6,7,9,10,13,14,15]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Student_ID","targets":1},{"name":"Age","targets":2},{"name":"Gender","targets":3},{"name":"Academic_Level","targets":4},{"name":"Primary_Platform","targets":5},{"name":"Daily_Usage_Hours","targets":6},{"name":"Weekend_Extra_Hours","targets":7},{"name":"Device_Type","targets":8},{"name":"Sleep_Duration_Hours","targets":9},{"name":"Sleep_Quality_Score","targets":10},{"name":"Late_Night_Usage","targets":11},{"name":"Social_Comparison_Frequency","targets":12},{"name":"Perceived_Stress_Score","targets":13},{"name":"Mental_Health_Index","targets":14},{"name":"Academic_Performance_GPA","targets":15},{"name":"Overall_Impact","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <section id="descripcion-de-las-variables" class="level2" data-number="3.1">
@@ -316,7 +322,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">12 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAApElEQVRo3u3ZQQ7AEBCFYVfQG5Qb1P3v1gYLUg1mZtHF/xYWI75IhNA6RyTxTY6Qc/rtjLCUAwYGZoaVHRpssJjbCwwMDAzMEquXKSOsjAcDW8F2LglTbGd+YGBgT0Jz+quxbiQYGBiYGlv72LeIlRIYGBgY2KA0O2+3sDiZHxiYHfb910GA1Y7/YoONKsfSezVssLomWqwotaTFulL/ElbGEUluIHZGBQx2aX8AAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -367,7 +373,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFcAAABmBAMAAABMwBBXAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAZElEQVRYw+3UQQrAIAxEUY+gN6jJDer979aN4DIZsKXC/+u3EGFSyplZpmtiH4nAYLCCpQ22TPV1HD+4Lxz/BhgMFrG0wZ/cDfHI9Dz2AQaDN2Npg7H8BJsJ2G8wGLwZSxs8rQe+irM73gMangAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -409,7 +415,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOBAMAAADRBSWHAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAV0lEQVRYw+3UuQ0AIAwEQUqADng6gP57Q0iERsiOeHbzSS44594trwpSfqrS5CoKhfpA2X4jqLpHZVVxs7wcCoU6Vdke4Pxns/9hUquxPAqF+lXZfuPFOgtfml2Hz5QfAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGkAAABOCAQAAACJIvA/AAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqCxMWIB45V50nAAAA0klEQVR42u3awQ3CMBAFURulR4qgHuiBKuFq58JpF+Yzc4uQojxpHSkr5mukdfn2A0j6T9KxXjwaDtZtVtx1ffBj/+laDHoW33+MyMGTREgSIUmEJBGSREgSIUmEJBEKJJ0+1Ds+pKub6yKiZNPR0qoIHLxA0naW7twF+XJmmvd4Ne0vtcDBk0RIEiFJhCQRkkRIEiFJhCQRCiS5x/vV3OPRCiR9WE3W/CGwkXReTTLff4GDJ4mQJEKSCEkiJImQJEKSCEkiFEhKX01mFDh4kgi9AbCpEje7M3wDAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -487,7 +493,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAD0AAACsBAMAAAA6drk8AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAiklEQVRYw+3WUQqAIBBFUZfQ7KB0B+P+9xZCkJLjhKhT8O7v+VF4Us7Z54X2y0OsB4ePcG1/JLQNcu/bHhgOn+fa/ojmenprzfPHyHB4r2v7IqGV+6+dMbtfiuHwHtf2RUKr9593PO9XBIe/dW1fK/bd8vDx7yf83279/1O+vOr57xgOH+va/iw7Adzmz2N9h8ghAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -511,7 +517,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">129 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAsElEQVRo3u3Yyw2AIBBFUVrQDtQOpP/e1FloNPwGJn7ifQsSNiePoJDgHKlJd864Zei0CWOTXwOmx/S7kMD09cDAwMDAbsfk5LfCDsceU11ROUxVDwwMDAwM7KOYXJ5W2DbMYGBgYA9iBYdaOebz9cDAXoilfwMllq73DezypNGGxZyfYtGPrQaL1gNLY6FdqMZC9YywXoq2Yftae5m2YXu9d2KyVivsGP6FjSZxpCYL7+UfjtP2qGkAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -535,7 +541,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">43 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAjElEQVRo3u3ZwQ2AIAxAUVbADcQNZP/dPNgmSiho4cb/FxITHpyEaAjkKdZL0h4/1caOfAcGBgYGtg62yUEyBxNEMT2lpmAynmBgYGBgYGBgYGBgD6xz6/6H5fYOC0yXnoIVs8DAwMDAwMAqWHp/yhvDjFmLY8ZfNx8mIxiYgZU3+SFMHxtvjbECeboAf4pG0terURcAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -577,7 +583,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIoAAABOBAMAAAAN0JP1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAYklEQVRYw+3WsQ3AIAwFUVbICJgNwv67pQkUsZLi44LIdz2vsWRTCr1ls3oI3UrrIxQUFBSUbyVm7ypPMyi2lpu00omCgoLyCyVmY+50A3ZSxCv/UJr240BBQUFJqMTsXfJdCWfi0oUR9CsAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIoAAABOCAQAAABV90ZNAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqCxMWIB45V50nAAABC0lEQVR42u3bUWrCQBRA0aa4RxfR9dQ9dJX604+J3NAoSkpyzp8IIbkwE5hHpusH9z63voH/SJQgSjiNPy6rN5ivaesbf7Xx0U/zv86rLvCz9RO8meUTRAmiBFGCKEGUIEoQJYgSRAmiBFGCKEGUIEoQJYgSRAl3x5F7P2hcZxoPbHd3Gv2AsYPlE0QJsz3l+8iD5WHveGrusz/zF4zlE0QJogRRgihBlCBKECWIEkQJogRRgihBlCBKECWIEkQJ5j7B3OeXuc8fRAmihIVh2P4+cnpEDsOO/g6yfIIoQZQgShAliBJECaIEUYIoQZQgShAliBJECaIEUYIowTAsTEf+cGOJ5RNECaKEG4gmEjc74YR6AAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -601,7 +607,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">73 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAuklEQVRo3u3YDQqEIBCGYa+QN6huUPe/WyobZWq2jrv9vR8UCc1DoGSNUqQkTSa6M2lzdx3FRhOwkzE7o10trDfHAAb2G8yt1VqYM8DAwOpje7vK19i483hgl8bcOqiF9Z4BBgYGBgb2JEzPW2YMS/Rf0thcHsPsCQwMDAxMgHl9KSnmlb8ci7QRyjE3uiumgx9pCRaUg4Ft2utCLKz6L+Z/KX+wRDsqi9mLAEtUgS2j5f29ngBxFCnJBDI8NITbmpexAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -668,7 +674,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEAAAAB9BAMAAADgo3ieAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAbElEQVRYw+3TsQ3AIAxEUVbwCMAGsP9uUaIoEIRzDTYp7tevsXQO4R+lIXm6Qa6vCgGBMYCbFLVlIE3Tr+huISAwAXCT2/7i7OuK6xICAhMAN+n6F3EO2hUEBC4AblLUFv4FALkQELgCuMndHavTjwYiAsUwAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -701,7 +707,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3BAMAAADnFJkAAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAP0lEQVRIx2NgGH5AiQSgANWjbEw8GNUzqmdUz/DWQ04ZIkgCEKCzHgJewKoHf7gZjeoZ1TOqZwTpIacMGU4AAM9RXE6bK1iVAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGUAAAA3CAQAAAC/M0y4AAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqCxMWIB45V50nAAAAoElEQVRo3u3YTQqAIBQAYY3u2B3qPHWHTllbDVr0A46P+XZuxIFnkPlIUQytD2BK7JSxXGzdXZw536SkNLU+2yN7tQo0YKYQmUJkCpEpRKYQmUJkCpEpRKYQXf7t93e7IOTykSW/3qaV8vSBBixQSnVX1oZPesvn6YY86f3xuQk0YKYQmUJkCpEpRKYQmUJkCpEpRKYQRX3S61ugATOF6ASrDwvHwXGkbQAAAD10RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgMjAwNyBBcHBsZSBJbmMuLCBhbGwgcmlnaHRzIHJlc2VydmVkLp5m3CkAAAAjdEVYdGljYzpkZXNjcmlwdGlvbgBHZW5lcmljIFJHQiBQcm9maWxlGqc4jgAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -761,7 +767,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEIAAAB9BAMAAADkVqijAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAbUlEQVRYw+3TsQ2AMAxE0azgEUg2iPffDQpABOV0Ddgp7tevsXQuZZ3q0WbTTtHcXUIiV/CdGu5DUZ/BW666hESK4Ds13F//Mja5ZaxLSAQJvtPEf4G/f18hIREq+E7D/wWI9r5AQiJc8J2u0A5JZ5bLQm/ZUwAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -785,7 +791,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">41 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAjUlEQVRo3u3ZQQqAIBBAUa9gN0hvkPe/WxudhSLKOETK/6tIetQiTXKONPm6K+RuP18XSzkwMDAtVl7JYIHFbDxgYGBgp2EyW1pgcgIMDAwMDAwM7EBMPpwssNhcCwa2Pzaxu5jH0vgWwcDAwPbC+j+RFFg5AAP7AmuX+AVMRv6LyfNaYDJSbyqWcqTpBV2taFx9wQRzAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4454 (99.0%)</td>
 <td style="text-align: center;">46 (1.0%)</td>
 </tr>
@@ -809,7 +815,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">67 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAp0lEQVRo3u3WzQ2AIAyGYVbQEXQD3X83FRNJCH8tTTD6fgcOHJ6Q0lCcI5pM0szLlWhTje1ntp9gUeH6sOh4YGBgI7H7XbTCggMGBgY2Ggu/FwMsHA9sHOav1ArziwyLR2YflnXAwN6HVZpfiJUdMDAwMDCwOtYwmNqxte6A/Q7zLWaFXc4O1oo9tbfAHgcMLNNieizh6LGE8zEsVy4pVnRUWHcc0eQAQfZjFwJrHIUAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%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" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
@@ -833,7 +839,7 @@ window.Quarto = {
 </tbody>
 </table></td>
 <td style="text-align: left; vertical-align: middle;">194 distinct values</td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAmUlEQVRo3u3ZSwqAIBSFYbeQO0h3kPvfW6AOrtiD7nUQ+p+BSHA+HIhkOUc02T7Hh5xdPtNjKQcM7BErey6MwWKeHwqsLmMMVptg82FlmwzCohjBwMDAwMDA1sOaFwsr1jTBwMDAwH6LeXn6m7GLJhgYGNjCmJdfeM3YbRNsWUz+QzBjsgP2gvn+9mzAUteZBQsyQzF1HNHkBAk7a1C9O+egAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuCAQAAABxABKuAAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqCxMWIB45V50nAAABj0lEQVR42u3dUWoCMRRA0U5xj91Dux67h66y/StTMOLpKGP0nj8FRS8kPuKgy/dLxOveL2A2BUMFQ4f1jWXvV3M1xzNb8we/zfWTHfTBs3gb3P+18XlbkqhgqGCoYKhgqGDoYccKdW5yWw+oBft12eQ2dbDjDkctUwe73Tw/1qaPCoYKhgqGCoYm/5T8j23DyBMGOz2KXDqItCRRwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwdAUlwrscWnmyBTBtl4PcU0tSVQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDB0R0fU93RyP3ZHwfb4UQXXkkQFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUMFQwVDBUM7HCDOcbI6ssuJ6/1cE+1akqhgqGCoYKhgqGDoZmPF3NPW2A3nsBm+x3YtSVQwVDC0cQ971K19bPOm/5hb+1hLEhUM/VmSz7cjuWXd6LNgJ72v/sxuqZFpD0MFQwVDP8lAIDJGXe1RAAAAPXRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCAyMDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQunmbcKQAAACN0RVh0aWNjOmRlc2NyaXB0aW9uAEdlbmVyaWMgUkdCIFByb2ZpbGUapziOAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4415 (98.1%)</td>
 <td style="text-align: center;">85 (1.9%)</td>
 </tr>
@@ -875,14 +881,14 @@ window.Quarto = {
 </tr>
 </tbody>
 </table></td>
-<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOBAMAAAD4LhhFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfqCxESGAPgzi1SAAAAX0lEQVRYw+3UsQ3AIAxEUUYgGyTHBrD/bmkioggajCvn/96vsXQp0SxJh7n8IKVVEBAQEJARcdlYuxAX0dtlRkrrgYCAgARBXOZx+fAHiHY6xxevBwICAhIXcdlY+nYD0vrkvdHuVNAAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAIcAAABOCAQAAACgCc39AAAD+mlDQ1BpY2MAADiNjVVdaBxVFD6bubMrJM6D1Kamkg7+NZS0bFLRhNro/mWzbdwsk2y0QZDJ7N2daSYz4/ykaSk+FEEQwajgk+D/W8EnIWqr7YstorRQogSDKPjQ+keh0hcJ67kzs7uTuGu9y9z55pzvfufec+7eC5C4LFuW3iUCLBquLeXT4rPH5sTEOnTBfdANfdAtK46VKpUmARvjwr/a7e8gxt7X9rf3/2frrlBHAYjdhdisOMoi4mUA/hXFsl2ABEH7yAnXYvgJxDtsnCDiEsO1AFcYng/wss+ZkTKIX0UsKKqM/sTbiAfnI/ZaBAdz8NuOPDWorSkiy0XJNquaTiPTvYP7f7ZF3WvE24NPj7MwfRTfA7j2lypyluGHEJ9V5Nx0iK8uabPFEP9luWkJ8SMAXbu8hXIK8T7EY1V7vBzodKmqN9HAK6fUmWcQ34N4dcE8ysbuRPy1MV+cCnV+UpwM5g8eAODiKi2wevcjHrBNaSqIy41XaDbH8oj4uOYWZgJ97i1naTrX0DmlZopBLO6L4/IRVqc+xFepnpdC/V8ttxTGJT2GXpwMdMgwdfz1+nZXnZkI4pI5FwsajCUvVrXxQsh/V7UnpBBftnR/j+LcyE3bk8oBn7+fGuVQkx+T7Vw+xBWYjclAwYR57BUwYBNEkCAPaXxbYKOnChroaKHopWih+NXg7N/CKfn+ALdUav7I6+jRMEKm/yPw0KrC72hVI7wMfnloq3XQCWZwI9QxSS9JkoP4HCKT5DAZIaMgkifJU2SMZNE6Sg41x5Yic2TzudHUeQEjUp83i7yL6HdBxv5nZJjgtM/FSp83ENjP2M9rypXXbl46fW5Xi7tGVp+71nPpdCRnGmotdMja1J1yz//CX+fXsF/nN1oM/gd+A3/r21a3Nes0zFYKfbpvW8RH8z1OZD6lLVVsYbOjolk1VvoCH8sAfbl4uwhnBlv85PfJP5JryfeSHyZ/497kPuHOc59yn3HfgMhd4C5yX3JfcR9zn0dq1HnvNGvur6OxCuZpl1Hcn0Ja2C08KGSFPcLDwmRLT+gVhoQJYS96djerE40XXbsGx7BvZKt9rIAXqXPsbqyz1uE/VEaWBid8puPvMwNObuOEI0k/GSKFbbt6hO31pnZ+Sz3ar4HGc/FsPAVifF98ND4UP8Jwgxnfi75R7PHUcumyyw7ijGmdtLWa6orDyeTjYgqvMioWDOXAoCjruui7HNGmDrWXaOUAsHsyOMJvSf79F9t5pWVznwY4/Cc791q2OQ/grAPQ+2jLNoBn473vAKw+pnj2UngnxGLfAjjVg8PBV08az6sf6/VbeG4l3gDYfL1e//v9en3zA9TfALig/wP/JXgLtNfFGQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfqCxMWIB45V50nAAAA/UlEQVR42u3ZwYkCQRBA0Z3FHA1i49EcjFIvLvYTBlHBkZn/LiJemg/dQtV0/snN79IH+C7lQDmwG78ch4fkb1r6aJ8yvp47f9pfP09Ln3EhXRaUA+VAOVAOlAPlQDlQDpQD5UA5UA6UA+VAOVAOlAN3w8GtDgX/TePgdDPTYowFuiwoB3g7Dk8tbNe4iZnZszy2zke3y4JyoBwoB8qBcqAcKAfKgXKgHCgHyoFyoBwoB8qBcqA9C9qztGeZVw6UA2+snVZjeDJfXjuthf+lXRaUA+VAOVAOlAPlQDlQDpQD5UA5UA6UA+VAOVAOlAOtnTBtc1o8p8uCcqAcuAA/JRI3PkpKwwAAAD10RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgMjAwNyBBcHBsZSBJbmMuLCBhbGwgcmlnaHRzIHJlc2VydmVkLp5m3CkAAAAjdEVYdGljYzpkZXNjcmlwdGlvbgBHZW5lcmljIFJHQiBQcm9maWxlGqc4jgAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
 <td style="text-align: center;">4500 (100.0%)</td>
 <td style="text-align: center;">0 (0.0%)</td>
 </tr>
 </tbody>
 </table>
 
-<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.4 (<a href="https://www.r-project.org/">R</a> version 4.5.2)<br>2026-11-17</p>
+<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.1.5 (<a href="https://www.r-project.org/">R</a> version 4.5.2)<br>2026-11-19</p>
 </div>
 <p>En base a este primer vistazo a los datos no hemos detectado ningún valor claramente erróneo que haya que tratar. Por tanto proseguimos a la siguiente parte.</p>
 </section>
@@ -1148,11 +1154,11 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 22%">
+<col style="width: 23%">
 <col style="width: 16%">
 <col style="width: 7%">
-<col style="width: 22%">
-<col style="width: 31%">
+<col style="width: 21%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1233,8 +1239,8 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 15%">
+<col style="width: 25%">
+<col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 21%">
 <col style="width: 30%">
@@ -1279,7 +1285,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 21%">
+<col style="width: 22%">
 <col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 22%">
@@ -1325,7 +1331,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 34%">
+<col style="width: 35%">
 <col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 11%">
@@ -1374,8 +1380,8 @@ window.Quarto = {
 <col style="width: 27%">
 <col style="width: 15%">
 <col style="width: 7%">
-<col style="width: 21%">
-<col style="width: 29%">
+<col style="width: 20%">
+<col style="width: 28%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1417,8 +1423,8 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 15%">
+<col style="width: 25%">
+<col style="width: 16%">
 <col style="width: 7%">
 <col style="width: 21%">
 <col style="width: 30%">
@@ -1464,10 +1470,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
-<col style="width: 15%">
+<col style="width: 16%">
 <col style="width: 7%">
-<col style="width: 21%">
-<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 29%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1537,12 +1543,12 @@ window.Quarto = {
 <caption>Comparación de proporciones de rendimiento alto e intervalos de confianza por género</caption>
 <colgroup>
 <col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 6%">
 <col style="width: 10%">
 <col style="width: 13%">
 <col style="width: 17%">
-<col style="width: 21%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1619,7 +1625,7 @@ window.Quarto = {
 <col style="width: 19%">
 <col style="width: 8%">
 <col style="width: 13%">
-<col style="width: 36%">
+<col style="width: 35%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1664,8 +1670,8 @@ window.Quarto = {
 <col style="width: 24%">
 <col style="width: 18%">
 <col style="width: 8%">
-<col style="width: 12%">
-<col style="width: 35%">
+<col style="width: 13%">
+<col style="width: 34%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1708,10 +1714,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 27%">
-<col style="width: 17%">
+<col style="width: 18%">
 <col style="width: 8%">
 <col style="width: 12%">
-<col style="width: 34%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1753,10 +1759,10 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 16%">
-<col style="width: 7%">
-<col style="width: 23%">
+<col style="width: 20%">
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 22%">
 <col style="width: 32%">
 </colgroup>
 <thead>
@@ -1830,11 +1836,11 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 35%">
+<col style="width: 36%">
 <col style="width: 13%">
 <col style="width: 6%">
 <col style="width: 18%">
-<col style="width: 26%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1876,10 +1882,10 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 40%">
+<col style="width: 41%">
 <col style="width: 12%">
 <col style="width: 5%">
-<col style="width: 17%">
+<col style="width: 16%">
 <col style="width: 23%">
 </colgroup>
 <thead>
@@ -1925,7 +1931,7 @@ window.Quarto = {
 <col style="width: 44%">
 <col style="width: 11%">
 <col style="width: 5%">
-<col style="width: 16%">
+<col style="width: 15%">
 <col style="width: 22%">
 </colgroup>
 <thead>
@@ -1951,7 +1957,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 45%">
+<col style="width: 46%">
 <col style="width: 11%">
 <col style="width: 5%">
 <col style="width: 15%">
@@ -2032,7 +2038,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 41%">
+<col style="width: 42%">
 <col style="width: 12%">
 <col style="width: 5%">
 <col style="width: 16%">
@@ -2065,10 +2071,10 @@ window.Quarto = {
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 25%">
-<col style="width: 15%">
+<col style="width: 16%">
 <col style="width: 7%">
-<col style="width: 21%">
-<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 29%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2082,7 +2088,7 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Edad vs Horas de Uso</td>
-<td style="text-align: center;">6563856987</td>
+<td style="text-align: center;">6563856986</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">&lt; 2.2 ×10^(−16)</td>
 <td style="text-align: center;">Sí</td>
@@ -2116,7 +2122,7 @@ window.Quarto = {
 <col style="width: 17%">
 <col style="width: 8%">
 <col style="width: 12%">
-<col style="width: 33%">
+<col style="width: 32%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2158,10 +2164,10 @@ window.Quarto = {
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 47%">
-<col style="width: 12%">
-<col style="width: 5%">
-<col style="width: 8%">
+<col style="width: 48%">
+<col style="width: 13%">
+<col style="width: 6%">
+<col style="width: 9%">
 <col style="width: 24%">
 </colgroup>
 <thead>
@@ -2342,48 +2348,141 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="análisis-factorial" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Análisis Factorial</h1>
-<p>El análisis factorial es una forma de reducir la dimensionalidad de los problemas. Su principal objetivo es descubrir cuál es la cantidad mínima de variables que explican el conjunto de datos para su estudio. Las nuevas variables que surgen al intentar explicar el conjunto de datos original se denominaran factores.</p>
-<p>El Análisis Factorial se centra en el estudio de la varianza común compartida por un conjunto de variables. Utiliza la matriz de correlaciones como punto de partida para simplificar la estructura de los datos, operando específicamente con los coeficientes de determinación (<span class="math inline">\(r^2\)</span>). Estos valores permiten identificar qué proporción de la variabilidad es compartida, facilitando la reducción de la información hacia dimensiones subyacentes más manejables.</p>
-<p>En el caso de esta práctica, las variables de interés (que son continuas o con muchos factores) son:</p>
-<ul>
-<li><p><strong>Daily_Usage_Hours</strong></p></li>
-<li><p><strong>Sleep_Duration_Hours</strong></p></li>
-<li><p><strong>Sleep_Quality_Score</strong></p></li>
-<li><p><strong>Perceived_Stress_Score</strong></p></li>
-<li><p><strong>Mental_Health_Index</strong></p></li>
-<li><p><strong>Age</strong></p></li>
-<li><p><strong>Weekend_Extra_Hours</strong></p></li>
-</ul>
-<section id="análisis-de-multicolinealidad-entre-variables." class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="análisis-de-multicolinealidad-entre-variables."><span class="header-section-number">10.1</span> Análisis de multicolinealidad entre variables.</h2>
-<p>La matriz de correlación de Pearson evalúa cuantitativamente la intensidad y direción de la relación lineal entre cada par de variables continuas predictoras del conjunto de datos. Los valores oscilan en el intervalo <span class="math inline">\([-1, 1]\)</span>:</p>
-<p>El análisis de la matriz de correlación evidencia fuertes dependencias entre los predictores cuantitativos, destacando los siguientes hallazgos principales:</p>
-<ul>
-<li><p><strong>Efecto crítico del uso diario de redes sociales (<code>Daily_Usage_Hours</code>)</strong>: muestra una <strong>correlación negativa muy elevada</strong> con la salud mental <span class="math inline">\((r = -0.85)\)</span>, así como un efecto adverso directo sobre la duración del sueño <span class="math inline">\((r = -0.72)\)</span> y la calidad de descando <span class="math inline">\((r = -0.68)\)</span>. Asimismo, se asocia fuertemente a un mayor estrés percibido <span class="math inline">\((r = 0.76)\)</span>.</p></li>
-<li><p><strong>Estrés y salud mental</strong>: podemos confirmar una relación inversa muy marcada entre <code>Perceived_Stress_Score</code> y <code>Mental_Health_Index</code> <span class="math inline">\((r = -0.77)\)</span>, indicando que el incremento en la percepción del estrés se traduce como un deterioro proporcional del bienestar psicológico.</p></li>
-<li><p><strong>Interrelación del descanso y bienestar</strong>: la duración y la calidad del sueño están estrechamente alineadas entre sí <span class="math inline">\((r = 0.74)\)</span>, y ambas actúan como factores protectores vinculados a un mejor índice de salud mental <span class="math inline">\((r = 0.78\)</span> y <span class="math inline">\(r = 0.66\)</span> , respectivamente).</p></li>
-</ul>
-<p>La presencia de coeficientes superiores a <span class="math inline">\(|r| \ge 0.75\)</span> señala una alta multicolinealidad y redundancia de información entre las variables explicativas.</p>
+<section id="reducción-de-dimensionalidad-pca" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Reducción de dimensionalidad (PCA)</h1>
+<p>Para abordar la reducción de la dimensionalidad sobre el bloque de variables cuantitativas de nuestro estudio, optamos por aplicar un <strong>Análisis de Componentes Principales (PCA)</strong> en lugar de un Escalado Multidimensional (MDS). Aunque ambas técnicas persiguen simplificar estructuras multidimensionales, el PCA es más adecuado para nuestro caso por los siguientes motivos:</p>
+<ol type="1">
+<li><p><strong>Estructura de datos de partida:</strong> El PCA trabaja directamente sobre nuestra tabla habitual de datos (donde cada fila es un estudiante y cada columna es una variable medida, como las horas de sueño o el estrés). En cambio, el MDS está pensado para partir de una tabla de distancias o similitudes (cuánto se parecen o diferencian los alumnos entre sí).</p></li>
+<li><p><strong>Eliminación de variables redundantes:</strong> En el análisis exploratorio vimos que varias variables cuantitativas están muy correlacionadas entre sí. Mientras que el MDS se centra principalmente en dibujar mapas visuales en 2D o 3D conservando distancias, el PCA combina las variables originales para crear nuevas variables totalmente independientes entre sí (incorreladas), resolviendo de raíz el problema de la redundancia.</p></li>
+<li><p><strong>Aplicación directa a nuevos datos (<code>test</code> y <code>valid</code>):</strong> El PCA calcula unas fórmulas exactas (cargas) que nos permiten transformar los conjuntos de prueba (<code>test</code>) y validación (<code>valid</code>) usando únicamente lo aprendido en entrenamiento (<code>train</code>), evitando cualquier fuga de información (<em>data leakage</em>). El MDS clásico no permite proyectar datos nuevos de forma directa sin volver a recalcular todas las distancias desde cero.</p></li>
+<li><p><strong>Utilidad para los siguientes pasos de la práctica:</strong> Como después vamos a hacer agrupamiento (<em>clustering</em>) y modelos predictivos, obtener componentes principales limpias y sin redundancia nos facilita mucho entrenar esos algoritmos.</p></li>
+</ol>
+<p>Además, hemos decidido aplicar el PCA sobre la totalidad de las variables cuantitativas (excluyendo únicamente el identificador y la variable objetivo) sin realizar un descarte previo basado en el <code>target</code>. Como el PCA es una técnica no supervisada orientada a preservar la estructura global de variabilidad de los datos, incluir todas las métricas evita perder posibles efectos multivariantes combinados.</p>
+<section id="matriz-base-del-pca" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="matriz-base-del-pca"><span class="header-section-number">10.1</span> Matriz base del PCA</h2>
+<section id="matriz-de-covarianza" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="matriz-de-covarianza"><span class="header-section-number">10.1.1</span> Matriz de covarianza</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Age</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Daily_Usage_Hours</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Weekend_Extra_Hours</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Sleep_Duration_Hours</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Sleep_Quality_Score</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Perceived_Stress_Score</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Mental_Health_Index</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Age</td>
+<td style="text-align: center;">3.93</td>
+<td style="text-align: center;">-0.11</td>
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">0.00</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">-0.21</td>
+<td style="text-align: center;">0.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Daily_Usage_Hours</td>
+<td style="text-align: center;">-0.11</td>
+<td style="text-align: center;">6.85</td>
+<td style="text-align: center;">-0.03</td>
+<td style="text-align: center;">-2.23</td>
+<td style="text-align: center;">-1.84</td>
+<td style="text-align: center;">13.78</td>
+<td style="text-align: center;">-28.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Weekend_Extra_Hours</td>
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">-0.03</td>
+<td style="text-align: center;">0.49</td>
+<td style="text-align: center;">0.02</td>
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">-0.02</td>
+<td style="text-align: center;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Sleep_Duration_Hours</td>
+<td style="text-align: center;">0.00</td>
+<td style="text-align: center;">-2.23</td>
+<td style="text-align: center;">0.02</td>
+<td style="text-align: center;">1.41</td>
+<td style="text-align: center;">0.91</td>
+<td style="text-align: center;">-5.61</td>
+<td style="text-align: center;">11.80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Sleep_Quality_Score</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">-1.84</td>
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">0.91</td>
+<td style="text-align: center;">1.06</td>
+<td style="text-align: center;">-4.17</td>
+<td style="text-align: center;">8.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Perceived_Stress_Score</td>
+<td style="text-align: center;">-0.21</td>
+<td style="text-align: center;">13.78</td>
+<td style="text-align: center;">-0.02</td>
+<td style="text-align: center;">-5.61</td>
+<td style="text-align: center;">-4.17</td>
+<td style="text-align: center;">49.55</td>
+<td style="text-align: center;">-69.75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(244, 246, 247, 1) !important;">Mental_Health_Index</td>
+<td style="text-align: center;">0.21</td>
+<td style="text-align: center;">-28.50</td>
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">11.80</td>
+<td style="text-align: center;">8.73</td>
+<td style="text-align: center;">-69.75</td>
+<td style="text-align: center;">163.79</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>La matriz de covarianzas depende directamente de las unidades de medida originales de cada variable. Como nuestro conjunto de datos combina magnitudes con escalas muy dispares, como el índice de salud mental en un rango de 0 a 100 frente a la calidad del sueño medida de 1 a 5, emplear covarianzas provocaría que las variables con mayor varianza numérica dominasen artificialmente la extracción de las componentes. Como nos podemos fijar en la diagonal principal de la tabla anterior, la varianza de <code>Mental_Health_Index</code> (163.79) es órdenes de magnitud superior a la de <code>Sleep_Quality_Score</code> (1.06), por lo que la primera acapararía casi toda la variabilidad del análisis por el hecho de tener una escala numérica mayor. Al utilizar la matriz de correlaciones, todas las variables contribuyen en igualdad de condiciones al análisis, evitando sesgos derivados de las diferencias de escala.</p>
+</section>
+<section id="matriz-de-correlación" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="matriz-de-correlación"><span class="header-section-number">10.1.2</span> Matriz de correlación</h3>
+<p>Al estandarizar todas las variables cuantitativas (centradas en media <span class="math inline">\(0\)</span> y escaladas a varianza <span class="math inline">\(1\)</span>), la matriz de covarianzas se transforma directamente en la matriz de correlaciones de Pearson. Como se observa en el siguiente gráfico, ahora todas las relaciones quedan acotadas en el intervalo <span class="math inline">\([-1, 1]\)</span> en igualdad de escala, listas para extraer las componentes principales.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Informe_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Podemos observar como las variables <strong>Age</strong> y <strong>Weekend_Extra_Hours</strong> no tienen prácticamente correlación con ninguna variable, por tanto, podemos deducir que son independientes de este conjunto y no tiene sentido aplicar análisis factorial sobre ellas, así que las eliminamos.</p>
-</section>
-<section id="tests-para-comprobar-viabilidad-de-análisis-factorial" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="tests-para-comprobar-viabilidad-de-análisis-factorial"><span class="header-section-number">10.2</span> Tests para comprobar viabilidad de Análisis Factorial</h2>
-<p>Ahora aplicamos ciertos tests para ver si el análisis factorial tiene sentido en este conjunto de datos:</p>
+<p>En la matriz de correlaciones anterior podemos distinguir claramente dos comportamientos entre las variables cuantitativas:</p>
 <ul>
-<li><strong>Test de Esfericidad de Bartlett</strong></li>
+<li><strong>Variables independientes (sin relación):</strong> La edad del estudiante (<code>Age</code>) y las horas extra de uso durante el fin de semana (<code>Weekend_Extra_Hours</code>) presentan coeficientes de correlación prácticamente nulos respecto al resto de variables (en torno a <span class="math inline">\(|r| \le 0.02\)</span>). Esto indica que ambas actúan de forma incorreladas con respecto a los hábitos digitales, de descanso y de bienestar.</li>
+<li><strong>Bloque de variables altamente correlacionadas:</strong> Por el contrario, las cinco variables restantes mantienen interdependencias lineales muy marcadas (<span class="math inline">\(|r|\)</span> entre <span class="math inline">\(0.58\)</span> y <span class="math inline">\(0.85\)</span>). Destaca la fuerte correlación negativa entre el uso diario de redes sociales y el índice de salud mental con <span class="math inline">\(r = -0.85\)</span>. Además hay una elevada asociación entre el estrés percibido y la salud mental (<span class="math inline">\(r = -0.77\)</span>), o entre la duración y la calidad del sueño (<span class="math inline">\(r = 0.74\)</span>).</li>
 </ul>
-<p>Aplicamos el test de Bartlett que se utiliza para probar la hipótesis nula que afirma que las variables no están correlacionadas en la población.</p>
+<p>Esta elevada correlación entre las cinco variables confirma la existencia de redundancia informativa, lo que constituye precisamente el escenario idóneo para aplicar el Análisis de Componentes Principales (PCA) y resumir dicha información en un número menor de dimensiones ortogonales.</p>
+</section>
+</section>
+<section id="pruebas-de-viabilidad-y-adecuación-muestral-del-pca" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="pruebas-de-viabilidad-y-adecuación-muestral-del-pca"><span class="header-section-number">10.2</span> Pruebas de viabilidad y adecuación muestral del PCA</h2>
+<p>Antes de extraer las componentes principales, debemos comprobar estadísticamente si existe suficiente intercorrelación entre las variables cuantitativas como para justificar una reducción de dimensionalidad. Si las variables originales fuesen independientes entre sí (incorreladas), el PCA no lograría comprimir la información y cada componente principal coincidiría prácticamente con una variable original.</p>
+<p>Para verificar la pertinencia del PCA sobre el conjunto de entrenamiento (<code>train</code>), aplicamos dos contrastes formales sobre nuestra matriz de correlaciones.</p>
+<section id="test-de-esfericidad-de-bartlett" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="test-de-esfericidad-de-bartlett"><span class="header-section-number">10.2.1</span> Test de esfericidad de Bartlett</h3>
+<p>Este test contrasta la hipótesis nula (<span class="math inline">\(H_0\)</span>) de que la matriz de correlaciones poblacional es igual a la matriz identidad (<span class="math inline">\(R = I\)</span>), es decir, que todas las variables están incorreladas entre sí. Para que el PCA tenga sentido, necesitamos rechazar <span class="math inline">\(H_0\)</span> (<span class="math inline">\(p\text{-valor} &lt; 0.05\)</span>).</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="qczpqrwtld" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -2840,21 +2939,21 @@ window.Quarto = {
 <thead>
 <tr class="gt_col_headings header">
 <th id="chi2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><span class="math inline">\(\chi^2\)</span></th>
-<th id="df" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">gl</th>
+<th id="df" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Grados de libertad</th>
 <th id="pval" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">p-valor</th>
 <th id="res" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Conclusión</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_center" headers="chi2">11798.89</td>
-<td class="gt_row gt_center" headers="df">10</td>
+<td class="gt_row gt_center" headers="chi2">11802.41</td>
+<td class="gt_row gt_center" headers="df">21</td>
 <td class="gt_row gt_center" headers="pval">&lt; 0.001</td>
-<td class="gt_row gt_center" headers="res">Rechaza H0 (Apto)</td>
+<td class="gt_row gt_center" headers="res" style="background-color: #E8F5E9; color: #1B5E20; font-weight: bold">Rechaza H0 (Apto para PCA)</td>
 </tr>
 </tbody><tfoot>
 <tr class="gt_sourcenotes odd">
-<td colspan="4" class="gt_sourcenote">H0: La matriz de correlación es una matriz identidad.</td>
+<td colspan="4" class="gt_sourcenote">H0: La matriz de correlación es una matriz identidad (ausencia de correlación).</td>
 </tr>
 </tfoot>
 
@@ -2863,522 +2962,83 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>En el <strong>TEST DE ESFERICIDAD DE BARTLETT</strong> el p-valor es 0, luego las variables no están correlacionadas en los datos y rechazamos la hipótesis nula. Por tanto, nuestro conjunto de datos es apto para aplicar análisis factorial.</p>
-<ul>
-<li><strong>Test de Test Kaiser-Meyer-Olkin (KMO)</strong></li>
-</ul>
-<p>El test mide la adecuación del muestreo para cada variable en el modelo y para el modelo completo. La estadística es una medida de la proporción de varianza entre variables que podrían ser varianza común.</p>
+<p>Como el test de esfericidad de Bartlett arroja un <span class="math inline">\(p\)</span>-valor inferior a 0.001, que se encuentra muy por debajo del nivel de significación <span class="math inline">\(\alpha = 0.05\)</span>, podemos rechazar la hipótesis nula de que la matriz de correlaciones sea una matriz identidad. Por lo tanto, confirmamos que existen correlaciones estadísticamente significativas entre las variables cuantitativas del conjunto <code>train</code> y que el conjunto de datos es viable para aplicar el Análisis de Componentes Principales.</p>
+</section>
+<section id="índice-de-adecuación-muestral-kmo" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="índice-de-adecuación-muestral-kmo"><span class="header-section-number">10.2.2</span> Índice de adecuación muestral KMO</h3>
+<p>Mientras que el test de Bartlett comprueba si existen correlaciones globales distintas de cero, el índice Kaiser-Meyer-Olkin (KMO) mide cuánta varianza comparten realmente las variables entre sí en comparación con su varianza específica. Como regla práctica, un KMO global por encima de <span class="math inline">\(0.80\)</span> indica una adecuación muestral notable para realizar un Análisis de Componentes Principales (PCA) sobre las variables estandarizadas.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="wemogxwuwq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wemogxwuwq table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#wemogxwuwq thead, #wemogxwuwq tbody, #wemogxwuwq tfoot, #wemogxwuwq tr, #wemogxwuwq td, #wemogxwuwq th {
-  border-style: none;
-}
-
-#wemogxwuwq p {
-  margin: 0;
-  padding: 0;
-}
-
-#wemogxwuwq .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#wemogxwuwq .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#wemogxwuwq .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#wemogxwuwq .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#wemogxwuwq .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#wemogxwuwq .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#wemogxwuwq .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#wemogxwuwq .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#wemogxwuwq .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#wemogxwuwq .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#wemogxwuwq .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#wemogxwuwq .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#wemogxwuwq .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#wemogxwuwq .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#wemogxwuwq .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wemogxwuwq .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#wemogxwuwq .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#wemogxwuwq .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#wemogxwuwq .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wemogxwuwq .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#wemogxwuwq .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wemogxwuwq .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#wemogxwuwq .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wemogxwuwq .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#wemogxwuwq .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#wemogxwuwq .gt_left {
-  text-align: left;
-}
-
-#wemogxwuwq .gt_center {
-  text-align: center;
-}
-
-#wemogxwuwq .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#wemogxwuwq .gt_font_normal {
-  font-weight: normal;
-}
-
-#wemogxwuwq .gt_font_bold {
-  font-weight: bold;
-}
-
-#wemogxwuwq .gt_font_italic {
-  font-style: italic;
-}
-
-#wemogxwuwq .gt_super {
-  font-size: 65%;
-}
-
-#wemogxwuwq .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#wemogxwuwq .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#wemogxwuwq .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#wemogxwuwq .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#wemogxwuwq .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#wemogxwuwq .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#wemogxwuwq .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#wemogxwuwq .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#wemogxwuwq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
 <thead>
-<tr class="gt_col_headings header">
-<th id="variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Variable</th>
-<th id="msa" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Índice MSA</th>
-<th id="estado" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Valoración</th>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Variable / Indicador</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Índice MSA</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Valoración</th>
 </tr>
 </thead>
-<tbody class="gt_table_body">
+<tbody>
 <tr class="odd">
-<td class="gt_row gt_left" headers="variable" style="background-color: #E8F0FE; font-weight: bold">KMO Global (Overall MSA)</td>
-<td class="gt_row gt_center" headers="msa" style="background-color: #E8F0FE; font-weight: bold">0.863</td>
-<td class="gt_row gt_center" headers="estado" style="background-color: #E8F0FE; font-weight: bold">Notable</td>
+<td style="text-align: left; font-weight: bold; color: rgba(27, 79, 114, 1) !important; background-color: rgba(235, 245, 251, 1) !important;">KMO Global</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 79, 114, 1) !important; background-color: rgba(235, 245, 251, 1) !important;">0.863</td>
+<td style="text-align: center; font-weight: bold; color: rgba(27, 79, 114, 1) !important; background-color: rgba(235, 245, 251, 1) !important;">Notable</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="variable">Perceived_Stress_Score</td>
-<td class="gt_row gt_center" headers="msa">0.920</td>
-<td class="gt_row gt_center" headers="estado">Sobresaliente</td>
+<td style="text-align: left;">Perceived_Stress_Score</td>
+<td style="text-align: center;">0.920</td>
+<td style="text-align: center;">Sobresaliente</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="variable">Sleep_Quality_Score</td>
-<td class="gt_row gt_center" headers="msa">0.869</td>
-<td class="gt_row gt_center" headers="estado">Notable</td>
+<td style="text-align: left;">Sleep_Quality_Score</td>
+<td style="text-align: center;">0.869</td>
+<td style="text-align: center;">Notable</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="variable">Sleep_Duration_Hours</td>
-<td class="gt_row gt_center" headers="msa">0.861</td>
-<td class="gt_row gt_center" headers="estado">Notable</td>
+<td style="text-align: left;">Sleep_Duration_Hours</td>
+<td style="text-align: center;">0.860</td>
+<td style="text-align: center;">Notable</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="variable">Daily_Usage_Hours</td>
-<td class="gt_row gt_center" headers="msa">0.852</td>
-<td class="gt_row gt_center" headers="estado">Notable</td>
+<td style="text-align: left;">Daily_Usage_Hours</td>
+<td style="text-align: center;">0.852</td>
+<td style="text-align: center;">Notable</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="variable">Mental_Health_Index</td>
-<td class="gt_row gt_center" headers="msa">0.828</td>
-<td class="gt_row gt_center" headers="estado">Notable</td>
+<td style="text-align: left;">Mental_Health_Index</td>
+<td style="text-align: center;">0.828</td>
+<td style="text-align: center;">Notable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Weekend_Extra_Hours</td>
+<td style="text-align: center;">0.644</td>
+<td style="text-align: center;">Mediocre</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: center;">0.426</td>
+<td style="text-align: center;">Inaceptable</td>
 </tr>
 </tbody><tfoot>
-<tr class="gt_sourcenotes odd">
-<td colspan="3" class="gt_sourcenote">Criterio de Kaiser (1974): valores &gt;= 0.80 indican una adecuación muestral meritoria.</td>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><span style="font-style: italic;">Nota: </span> <sup></sup> Criterio de Kaiser: valores &gt;= 0.80 indican una adecuación muestral notable.</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 </tfoot>
 
 </table>
-
 </div>
 </div>
 </div>
-<p>El test de <strong>KMO</strong> muestra un valor de <span class="math inline">\(0.863\)</span>, que es un valor bueno, es decir, el test nos dice que nuestro conjunto de datos es aceptable para realizar un estudio de análisis factorial sobre ellos.</p>
+<p>El índice de KMO global alcanza un valor de 0.863, obtenemos una adecuación muestral sólida para extraer componentes principales sobre nuestras 7 variables cuantitaivas. Al revisar los valores individuales (MSA), se aprecia el mismo patrón que en el de la matriz de correlación: las variables vinculadas al descanso, el estrés, el uso diario de redes sociales y la salud mental obtienen puntuaciones altas porque comparten mucha varianza común. Sin embargo, <code>Age</code> y <code>Weekend_Extra_Hours</code> presentan valores cercanos a 0.5 al mantenerse prácticamente desconectadas del resto de variables. Esto nos hace sospechar que la primera componente recogerá el bloque principal y que estas dos últimas variables tendrán un comportamiento más ailadao en las siguientes componentes.</p>
 </section>
-<section id="elección-del-número-de-factores." class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="elección-del-número-de-factores."><span class="header-section-number">10.3</span> Elección del número de factores.</h2>
-<p>Vamos a tener en cuenta tres criterios diferentes para elegir el número de factores. Estos criterios nos dirán un número de factores, si cada test nos diese un número diferente, deberemos decidir nosotros. Empezemos con el primero:</p>
-<ul>
-<li><strong>Test de Kaiser</strong>: Este criterio, propuesto originalmente por Guttman (1954) y popularizado por Kaiser, sugiere que deben retenerse únicamente aquellos factores cuyos autovalores (eigenvalues) sean superiores a <span class="math inline">\(1.0\)</span>.</li>
-</ul>
-<p>La lógica subyacente a esta regla es que cualquier factor extraído debe ser capaz de explicar, al menos, la misma cantidad de varianza que una sola de las variables originales introducidas en el análisis. Dado que en un análisis de componentes principales con variables estandarizadas cada variable tiene una varianza de <span class="math inline">\(1\)</span>, un factor con un autovalor inferior a la unidad se considera poco informativo, ya que explica menos variabilidad que una variable individual.</p>
+</section>
+<section id="elección-del-número-de-componentes-principales" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="elección-del-número-de-componentes-principales"><span class="header-section-number">10.3</span> Elección del número de componentes principales</h2>
+<p>Como ya hemos confirmado la viabilidad del análisis mediante los tests de Bartlett y KMO, ajustamos el PCA sobre las variables cuantitativas estandarizadas de <code>train</code>. Para decidir cuántas componentes principales tenemos, combinamos el criterio de Kaiser (<span class="math inline">\(\text{autovalor} &gt; 1\)</span>) con el gráfico de sedimentación (<em>Scree Plot</em>) y el análisis paralelo.</p>
+<section id="criterio-de-kaiser-y-gráfico-de-sedimentación-scree-plot" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="criterio-de-kaiser-y-gráfico-de-sedimentación-scree-plot">Criterio de Kaiser y Gráfico de sedimentación (Scree Plot)</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -3388,13 +3048,20 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Observando el gráfico, tenemos que, solo el primer autovalor es claramente superior a <span class="math inline">\(1\)</span>. Por tanto, podemos deducir de este criterio que nuestro número de componentes estaría en <span class="math inline">\(1\)</span></p>
+<p>A partir del gráfico de sedimentación (<em>Scree Plot</em>) y de los porcentajes de varianza explicada, observamos lo siguiente:</p>
 <ul>
-<li><strong>Análisis del ScreePlot</strong>:</li>
+<li><p><strong>Concentración de la información en la primera dimensión (<code>PC1</code>):</strong> La primera componente principal absorbe la mayor parte de la variabilidad del conjunto (55.6%), sintetizando el eje principal de bienestar, descanso y uso digital. Tras ella se produce una caída pronunciada hacia las siguientes componentes.</p></li>
+<li><p><strong>Criterio de Kaiser (autovalor &gt; 1):</strong> Como trabajamos con variables estandarizadas donde cada variable original aporta una varianza unitaria igual a <span class="math inline">\(1\)</span>, el criterio de Kaiser establece retener únicamente aquellas componentes cuyo autovalor supere la unidad, es decir, aquellas que están marcadas por encima de la línea discontinua roja, ya que explican más varianza que una variable original por sí sola. En este caso, únicamente las dos primeras componentes superan estrictamente la unidad (<code>PC1</code> <span class="math inline">\(= 3,89\)</span> y <code>PC2</code> <span class="math inline">\(= 1,01\)</span>, quedando <code>PC3</code> en el límite con <span class="math inline">\(0,99\)</span>).</p></li>
+<li><p><strong>Regla del “codo” (Scree Test):</strong> Este método de carácter visual se basa en representar gráficamente los autovalores en orden decreciente para identificar qué componentes concentran una varianza significativamente superior al resto. Para interpretarlo, buscamos un punto de inflexión de la curva, lo que se conoce como el codo, donde la pendiente cae de forma brusca y la línea pasa a estabilizarse en un tramo casi plano. Las componentes situadas antes de esa ruptura son las que aportan información relevante. En nuestro gráfico observamos un primer punto de inflexión claro tras <code>PC1</code>, donde la pendiente cae bruscamente hacia la segunda componente (<code>PC2</code>), donde se halla el punto de inflexión o codo. A partir de ese punto, la pendiente se suaviza y forma una zona casi plana. Si retenemos <code>PC1</code> y <code>PC2</code> se conserva el 70,0 % de la variabilidad total del conjunto original, logrando un equilibrio óptimo entre síntesis dimensional y preservación de la información.</p></li>
 </ul>
-<p>Este método, de carácter visual, actúa como complemento al Criterio de Kaiser y se fundamenta en el examen de la magnitud de los eigenvalues mediante su representación gráfica. El objetivo es identificar un conjunto reducido de factores que presenten una varianza significativamente superior al resto de las dimensiones.</p>
-<p>Para su interpretación, es necesario localizar el punto de inflexión en la curva del gráfico (comúnmente denominado “el codo”, debido a su similitud morfológica con la articulación de un brazo). Este punto marca la transición donde la pendiente de la curva se reduce drásticamente, transformándose en una línea relativamente plana o recta. Los factores situados antes de esta ruptura son los que poseen relevancia sustancial para el modelo.</p>
+</section>
+<section id="análisis-paralelo-de-horn" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="análisis-paralelo-de-horn">Análisis paralelo de Horn</h3>
+<p>El análisis paralelo contrasta los autovalores reales de nuestra muestra (línea azul) frente a los obtenidos mediante simulaciones aleatorias (línea roja discontinua). Como vemos en la imagen, únicamente <code>PC1</code> se sitúa claramente por encima del umbral aleatorio, mientras que <code>PC2</code> y <code>PC3</code>quedan prácticamente solapadas con la curva simulada.</p>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  NA  and the number of components =  1 </code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3403,61 +3070,99 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>En este caso, buscando el “codo” del ScreePlot observamos que, el codo se haya definitivamente en el autovalor <span class="math inline">\(2\)</span>, es por tanto que, mediante este criterio el valor sugerido de componentes sería <span class="math inline">\(1\)</span>.</p>
+</section>
+<section id="decisión-final-sobre-el-número-de-componentes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="decisión-final-sobre-el-número-de-componentes">Decisión final sobre el número de componentes</h3>
+<p>Al contrastar los tres criterios de selección aplicados sobre las variables cuantitativas estandarizadas de <code>train</code>, observamos que cada método aporta un matiz distinto sobre la dimensionalidad óptima.</p>
 <ul>
-<li><strong>Análisis Paralelo</strong>:</li>
+<li><p><strong>Análisis paralelo de Horn:</strong> Al ser el criterio más estricto, sugiere retener únicamente una componente principal (<code>PC1</code>), ya que es la única cuyo autovalor (<span class="math inline">\(3,89\)</span>) supera con claridad el umbral aleatorio simulado, mientras que <code>PC2</code> queda prácticamente sobre dicha línea de referencia.</p></li>
+<li><p><strong>Criterio de Kaiser (autovalor &gt; 1) y Gráfico de Sedimentación (Scree Plot):</strong> El criterio de Kaiser sugiere retener 2 componentes principales (<code>PC1</code> <span class="math inline">\(= 3,89\)</span> y <code>PC2</code> <span class="math inline">\(= 1,01\)</span>, siendo las únicas que superan estrictamente la unidad), lo que permite alcanzar un 70,0 % de varianza explicada acumulada antes de que la curva descienda hacia la zona de sedimentación.</p></li>
 </ul>
-<p>El Análisis Paralelo constituye uno de los métodos más robustos y recomendados para la determinación del número de factores, especialmente útil cuando el volumen de variables iniciales es elevado. Este procedimiento se fundamenta en el principio de que los factores retenidos deben explicar una proporción de varianza significativamente mayor a la que se esperaría obtener por puro azar.</p>
-<p>El algoritmo opera mediante una técnica de remuestreo: las observaciones de la base de datos original se reordenan de forma aleatoria entre las variables, rompiendo cualquier estructura de correlación real pero manteniendo la dimensionalidad del conjunto. A partir de estos datos aleatorios, se recalculan los eigenvalues. El criterio de decisión consiste en retener únicamente aquellos factores cuyos autovalores originales superen a los obtenidos mediante la simulación aleatoria.</p>
+<p>Ante esta ligera discrepancia entre el análisis paralelo (1 componente) y el criterio de Kaiser junto con la varianza acumulada (2 componentes), <strong>decidimos retener las dos primeras componentes principales (<code>PC1</code> y <code>PC2</code>)</strong>. De este modo, no solo capturamos el eje principal de bienestar, descanso y uso digital (<code>PC1</code>, <span class="math inline">\(55,6\%\)</span>), sino que incorporamos una segunda dimensión ortogonal (<code>PC2</code>, <span class="math inline">\(14,4\%\)</span>) que eleva la varianza explicada al <span class="math inline">\(70,0\%\)</span> y permite representar e interpretar los datos en un plano bidimensional.</p>
+</section>
+</section>
+<section id="interpretación-de-las-componentes-y-proyección-de-los-datos" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="interpretación-de-las-componentes-y-proyección-de-los-datos"><span class="header-section-number">10.4</span> Interpretación de las componentes y proyección de los datos</h2>
+<p>Una vez retenidas <code>PC1</code> y <code>PC2</code>, inspeccionamos la matriz de rotación para identificar qué variables originales dominan cada eje.</p>
+<section id="interpretación-de-las-componentes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="interpretación-de-las-componentes">Interpretación de las componentes</h3>
+<p>Al examinar los pesos (<em>loadings</em>) de las variables estandarizadas en la matriz de rotación, observamos una separación estructural muy clara entre las dos componentes retenidas.</p>
+<ul>
+<li><p><strong>Primera Componente Principal <code>PC1</code>:</strong> Concentra de forma equilibrada las cinco variables correlacionadas del conjunto con cargas de magnitud muy similar (entre <span class="math inline">\(0,419\)</span> y <span class="math inline">\(0,469\)</span> en valor absoluto), pero con signos opuestos.</p>
+<p>Por un lado, <code>Daily_Usage_Hours</code> (<span class="math inline">\(0,462\)</span>) y <code>Perceived_Stress_Score</code> (<span class="math inline">\(0,434\)</span>) puntúan en positivo. Sin embargo, <code>Mental_Health_Index</code> (<span class="math inline">\(-0,469\)</span>), <code>Sleep_Duration_Hours</code> (<span class="math inline">\(-0,450\)</span>) y <code>Sleep_Quality_Score</code> (<span class="math inline">\(-0,419\)</span>) lo hacen en negativo. <code>Age</code> y <code>Weekend_Extra_Hours</code> tienen un peso prácticamente nulo (<span class="math inline">\(-0,010\)</span>). Así, valores altos en <code>PC1</code> representan perfiles de alto consumo digital, mayor estrés y peor descanso/salud mental.</p></li>
+<li><p><strong>Segunda Componente Principal <code>PC2</code>:</strong> Recoge casi en exclusiva la variabilidad de las dos variables que resultaron independientes en el análisis previo: <code>Age</code> (<span class="math inline">\(0,710\)</span>) y <code>Weekend_Extra_Hours</code> (<span class="math inline">\(0,703\)</span>), mientras que el resto de variables presentan cargas cercanas a cero (entre <span class="math inline">\(-0,014\)</span> y <span class="math inline">\(0,015\)</span>). Esto confirma que <code>PC2</code> actúa como un eje puramente demográfico y de uso extra de fin de semana, completamente ortogonal al bloque principal de bienestar.</p></li>
+</ul>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Informe_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Parallel analysis suggests that the number of factors =  1  and the number of components =  1 </code></pre>
-</div>
-</div>
-<p>En este caso, el gráfico es claro, nos indica que solo debemos escoger <span class="math inline">\(1\)</span> componente principal.</p>
-<p>Por ende, ya que los <span class="math inline">\(3\)</span> criterios usados nos indican <span class="math inline">\((1) \;\; (1) \;\; (1)\)</span> respectivamente. Decidimos escoger una única componente principal.</p>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Cargas del Componente Principal 1 (Varianza explicada: 77.77%)</caption>
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: right;">Carga Factorial (PC1)</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">Variable</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">PC1</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; color: rgba(28, 40, 51, 1) !important; background-color: rgba(212, 230, 241, 1) !important;">PC2</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Mental_Health_Index</td>
-<td style="text-align: right;">-0.470</td>
+<td style="text-align: left;">Age</td>
+<td style="text-align: center;">-0.010</td>
+<td style="text-align: center;">0.710</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Daily_Usage_Hours</td>
-<td style="text-align: right;">0.462</td>
+<td style="text-align: center;">0.462</td>
+<td style="text-align: center;">-0.001</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sleep_Duration_Hours</td>
-<td style="text-align: right;">-0.450</td>
+<td style="text-align: left;">Weekend_Extra_Hours</td>
+<td style="text-align: center;">-0.010</td>
+<td style="text-align: center;">0.703</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Perceived_Stress_Score</td>
-<td style="text-align: right;">0.434</td>
+<td style="text-align: left;">Sleep_Duration_Hours</td>
+<td style="text-align: center;">-0.450</td>
+<td style="text-align: center;">-0.011</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sleep_Quality_Score</td>
-<td style="text-align: right;">-0.419</td>
+<td style="text-align: center;">-0.419</td>
+<td style="text-align: center;">0.009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Perceived_Stress_Score</td>
+<td style="text-align: center;">0.434</td>
+<td style="text-align: center;">0.015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mental_Health_Index</td>
+<td style="text-align: center;">-0.469</td>
+<td style="text-align: center;">-0.014</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</div>
+</section>
+<section id="proyección-de-las-observaciones" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="proyección-de-las-observaciones">Proyección de las observaciones</h3>
+<p>Al proyectar las observaciones de entrenamiento en el plano bidimensional formado por <code>PC1</code> y <code>PC2</code> y colorearlas según la variable objetivo (<code>target</code>), observamos:</p>
+<ul>
+<li><p><strong>Separación a lo largo del eje horizontal (<code>PC1</code>):</strong> Los estudiantes con Rendimiento alto (puntos verdes) se concentran mayoritariamente en la mitad izquierda del gráfico (<code>PC1</code> <span class="math inline">\(&lt; 0\)</span>, aproximadamente entre <span class="math inline">\(-3,5\)</span> y <span class="math inline">\(0,5\)</span>), lo que corresponde a menor uso diario de redes, menor estrés y mejor descanso y salud mental. Por el contrario, los estudiantes con Rendimiento bajo o medio (puntos rojos) se desplazan hacia la derecha (<code>PC1</code> <span class="math inline">\(&gt; 0\)</span>, llegando hasta valores superiores a <span class="math inline">\(5,0\)</span>).</p></li>
+<li><p><strong>Ausencia de discriminación en el eje vertical (<code>PC2</code>):</strong> Ambos grupos de rendimiento se distribuyen de manera prácticamente simétrica y superpuesta a lo largo de todo el rango vertical de <code>PC2</code> (entre <span class="math inline">\(-2,5\)</span> y <span class="math inline">\(3,5\)</span>). Esto confirma visualmente que <code>Age</code> y <code>Weekend_Extra_Hours</code> no aportan capacidad separadora respecto al rendimiento académico.</p></li>
+<li><p><strong>Existencia de una zona de solapamiento central:</strong> Aunque existe una tendencia global muy marcada de izquierda a derecha, en la franja central cercana a <code>PC1</code> <span class="math inline">\(\approx 0\)</span> ambas clases se entremezclan, lo que indica que las variables cuantitativas explican gran parte del comportamiento, pero existen matices adicionales fuera de este espacio numérico que ayudan a afinar la frontera entre ambos niveles de rendimiento.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Informe_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 <section id="uso-de-inteligencia-artificial" class="level1 unnumbered">

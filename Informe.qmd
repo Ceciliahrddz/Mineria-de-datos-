@@ -1709,77 +1709,78 @@ El perfil de distribución estandarizada evidencia una separación clara entre l
 
 - **Predictores de impacto negativo/desfavorables:** Por el contrario, la categoría de Rendimiento_bajo_medio se desplaza hacia valores estandarizados positivos en `Daily_Usage_Hours` y `Perceived_Stress_Score`, confirmando que el uso intensivo de plataformas digitales y los altos niveles de estrés percibido actúan como los principales condicionantes de riesgo.
 
-# Análisis Factorial
 
-El análisis factorial es una forma de reducir la dimensionalidad de los problemas. Su principal objetivo es descubrir cuál es la cantidad mínima de variables que explican el conjunto de datos para su estudio. Las nuevas variables que surgen al intentar explicar el conjunto de datos original se denominaran factores.
+# Reducción de dimensionalidad (PCA)
 
-El Análisis Factorial se centra en el estudio de la varianza común compartida por un conjunto de variables. Utiliza la matriz de correlaciones como punto de partida para simplificar la estructura de los datos, operando específicamente con los coeficientes de determinación ($r^2$). Estos valores permiten identificar qué proporción de la variabilidad es compartida, facilitando la reducción de la información hacia dimensiones subyacentes más manejables.
+Para abordar la reducción de la dimensionalidad sobre el bloque de variables cuantitativas de nuestro estudio, optamos por aplicar un **Análisis de Componentes Principales (PCA)** en lugar de un Escalado Multidimensional (MDS). Aunque ambas técnicas persiguen simplificar estructuras multidimensionales, el PCA es más adecuado para nuestro caso por los siguientes motivos: 
 
-En el caso de esta práctica, las variables de interés (que son continuas o con muchos factores) son:
+1. **Estructura de datos de partida:** El PCA trabaja directamente sobre nuestra tabla habitual de datos (donde cada fila es un estudiante y cada columna es una variable medida, como las horas de sueño o el estrés). En cambio, el MDS está pensado para partir de una tabla de distancias o similitudes (cuánto se parecen o diferencian los alumnos entre sí). 
 
-    
-  - **Daily_Usage_Hours**
-    
-  - **Sleep_Duration_Hours**
-    
-  - **Sleep_Quality_Score**
-    
-  - **Perceived_Stress_Score**
-    
-  - **Mental_Health_Index**
-    
-  - **Age**
-    
-  - **Weekend_Extra_Hours**
+2. **Eliminación de variables redundantes:** En el análisis exploratorio vimos que varias variables cuantitativas están muy correlacionadas entre sí. Mientras que el MDS se centra principalmente en dibujar mapas visuales en 2D o 3D conservando distancias, el PCA combina las variables originales para crear nuevas variables totalmente independientes entre sí (incorreladas), resolviendo de raíz el problema de la redundancia.
+
+3. **Aplicación directa a nuevos datos (`test` y `valid`):** El PCA calcula unas fórmulas exactas (cargas) que nos permiten transformar los conjuntos de prueba (`test`) y validación (`valid`) usando únicamente lo aprendido en entrenamiento (`train`), evitando cualquier fuga de información (*data leakage*). El MDS clásico no permite proyectar datos nuevos de forma directa sin volver a recalcular todas las distancias desde cero.
+
+4. **Utilidad para los siguientes pasos de la práctica:** Como después vamos a hacer agrupamiento (*clustering*) y modelos predictivos, obtener componentes principales limpias y sin redundancia nos facilita mucho entrenar esos algoritmos.
 
 
+Además, hemos decidido aplicar el PCA sobre la totalidad de las variables cuantitativas (excluyendo únicamente el identificador y la variable objetivo) sin realizar un descarte previo basado en el `target`. Como el PCA es una técnica no supervisada orientada a preservar la estructura global de variabilidad de los datos, incluir todas las métricas evita perder posibles efectos multivariantes combinados.
 
-## Análisis de multicolinealidad entre variables.
 
-La matriz de correlación de Pearson evalúa cuantitativamente la intensidad y direción de la relación lineal entre cada par de variables continuas predictoras del conjunto de datos. Los valores oscilan en el intervalo $[-1, 1]$:
+## Matriz base del PCA
+### Matriz de covarianza
 
-El análisis de la matriz de correlación evidencia fuertes dependencias entre los predictores cuantitativos, destacando los siguientes hallazgos principales:
-
-- **Efecto crítico del uso diario de redes sociales (`Daily_Usage_Hours`)**: muestra una **correlación negativa muy elevada** con la salud mental $(r = -0.85)$, así como un efecto adverso directo sobre la duración del sueño $(r = -0.72)$ y la calidad de descando $(r = -0.68)$. Asimismo, se asocia fuertemente a un mayor estrés percibido $(r = 0.76)$.
-
-- **Estrés y salud mental**: podemos confirmar una relación inversa muy marcada entre `Perceived_Stress_Score` y `Mental_Health_Index` $(r = -0.77)$, indicando que el incremento en la percepción del estrés se traduce como un deterioro proporcional del bienestar psicológico.
-
-- **Interrelación del descanso y bienestar**: la duración y la calidad del sueño están estrechamente alineadas entre sí $(r = 0.74)$, y ambas actúan como factores protectores vinculados a un mejor índice de salud mental $(r = 0.78$ y $r = 0.66$ , respectivamente).
-
-La presencia de coeficientes superiores a $|r| \ge 0.75$ señala una alta multicolinealidad y redundancia de información entre las variables explicativas.
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 6
 
-
-vars_continuas <- c(
+# 1. Selección de las variables cuantitativas de train
+vars_cuantitativas <- c(
+  "Age",
   "Daily_Usage_Hours",
+  "Weekend_Extra_Hours",
   "Sleep_Duration_Hours",
   "Sleep_Quality_Score",
-  "Age",
   "Perceived_Stress_Score",
-  "Mental_Health_Index",
-  "Weekend_Extra_Hours"
+  "Mental_Health_Index"
 )
 
-# Función de escalado 0-100 (Min-Max)
-min_max_100 <- function(x) {
-  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) * 100
-}
+train_num <- train[, vars_cuantitativas]
 
-# Creación de la tabla independiente con las variables escaladas
-train_scaled_100 <- as.data.frame(lapply(train[, vars_continuas], min_max_100))
+# 2. Cálculo de la matriz de covarianzas redondeada a 2 decimales
+mat_cov <- round(cov(train_num, use = "complete.obs"), 2)
 
-# Cálculo de la matriz de correlación de Pearson
-matriz_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
+# 3. Renderizado estético en HTML con kableExtra
+mat_cov %>%
+  as.data.frame() %>%
+  kbl(align = "c") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#D4E6F1", color = "#1C2833") %>%
+  column_spec(1, bold = TRUE, background = "#F4F6F7", color = "#1C2833")
+```
 
-# Definición de paleta de colores personalizada (Rojo -> Blanco -> Azul)
+
+La matriz de covarianzas depende directamente de las unidades de medida originales de cada variable. Como nuestro conjunto de datos combina magnitudes con escalas muy dispares, como el índice de salud mental en un rango de 0 a 100 frente a la calidad del sueño medida de 1 a 5, emplear covarianzas provocaría que las variables con mayor varianza numérica dominasen artificialmente la extracción de las componentes. Como nos podemos fijar en la diagonal principal de la tabla anterior, la varianza de `Mental_Health_Index` (`r round(mat_cov["Mental_Health_Index", "Mental_Health_Index"], 2)`) es órdenes de magnitud superior a la de `Sleep_Quality_Score` (`r round(mat_cov["Sleep_Quality_Score", "Sleep_Quality_Score"], 2)`), por lo que la primera acapararía casi toda la variabilidad del análisis por el  hecho de tener una escala numérica mayor. Al utilizar la matriz de correlaciones, todas las variables contribuyen en igualdad de condiciones al análisis, evitando sesgos derivados de las diferencias de escala.
+
+### Matriz de correlación
+
+Al estandarizar todas las variables cuantitativas (centradas en media $0$ y escaladas a varianza $1$), la matriz de covarianzas se transforma directamente en la matriz de correlaciones de Pearson. Como se observa en el siguiente gráfico, ahora todas las relaciones quedan acotadas en el intervalo $[-1, 1]$ en igualdad de escala, listas para extraer las componentes principales.
+
+```{r}
+
+library(corrplot)
+
+# 1. Cálculo de la matriz de correlaciones sobre las 7 variables cuantitativas de train
+matriz_cor_pca <- cor(train_num, use = "complete.obs")
+
+# 2. Paleta de colores unificada con el resto del informe (Rojo -> Blanco -> Azul)
 paleta_estetica <- colorRampPalette(c("#C0392B", "#FADBD8", "#FFFFFF", "#AED6F1", "#2980B9"))(200)
 
-# Renderizado gráfico de la matriz
+# 3. Renderizado gráfico de la matriz de correlaciones
 corrplot(
-  matriz_cor,
+  matriz_cor_pca,
   method = "color",
   type = "upper",
   addCoef.col = "#1C2833",
@@ -1791,191 +1792,310 @@ corrplot(
   diag = FALSE,
   col = paleta_estetica,
   mar = c(0, 0, 2, 0),
-  title = "Matriz de Correlación entre Variables"
+  title = "Matriz de Correlaciones "
 )
 ```
-Podemos observar como las variables **Age** y **Weekend_Extra_Hours** no tienen prácticamente correlación con ninguna variable, por tanto, podemos deducir que son independientes de este conjunto y no tiene sentido aplicar análisis factorial sobre ellas, así que las eliminamos.
+
+En la matriz de correlaciones anterior podemos distinguir claramente dos comportamientos entre las variables cuantitativas: 
+
+- **Variables independientes (sin relación):** La edad del estudiante (`Age`) y las horas extra de uso durante el fin de semana (`Weekend_Extra_Hours`) presentan coeficientes de correlación prácticamente nulos respecto al resto de variables (en torno a $|r| \le 0.02$). Esto indica que ambas actúan de forma incorreladas con respecto a los hábitos digitales, de descanso y de bienestar.
+- **Bloque de variables altamente correlacionadas:** Por el contrario, las cinco variables restantes mantienen interdependencias lineales muy marcadas ($|r|$ entre $0.58$ y $0.85$). Destaca la fuerte correlación negativa entre el uso diario de redes sociales  y el índice de salud mental  con $r = -0.85$. Además hay una elevada asociación entre el estrés percibido  y la salud mental ($r = -0.77$), o entre la duración y la calidad del sueño ($r = 0.74$).
+
+Esta elevada correlación entre las cinco variables confirma la existencia de redundancia informativa, lo que constituye precisamente el escenario idóneo para aplicar el Análisis de Componentes Principales (PCA) y resumir dicha información en un número menor de dimensiones ortogonales.
+
+## Pruebas de viabilidad y adecuación muestral del PCA
+Antes de extraer las componentes principales, debemos comprobar estadísticamente si existe suficiente intercorrelación entre las variables cuantitativas como para justificar una reducción de dimensionalidad. Si las variables originales fuesen independientes entre sí (incorreladas), el PCA no lograría comprimir la información y cada componente principal coincidiría prácticamente con una variable original.
+
+Para verificar la pertinencia del PCA sobre el conjunto de entrenamiento (`train`), aplicamos dos contrastes formales sobre nuestra matriz de correlaciones. 
+
+### Test de esfericidad de Bartlett
+Este test contrasta la hipótesis nula ($H_0$) de que la matriz de correlaciones poblacional es igual a la matriz identidad ($R = I$), es decir, que todas las variables están incorreladas entre sí. Para que el PCA tenga sentido, necesitamos rechazar $H_0$ ($p\text{-valor} < 0.05$).
+
 
 ```{r}
-vars_continuas <- c(
-  "Daily_Usage_Hours",
-  "Sleep_Duration_Hours",
-  "Sleep_Quality_Score",
-  "Perceived_Stress_Score",
-  "Mental_Health_Index"
-)
-
-# Función de escalado 0-100 (Min-Max)
-min_max_100 <- function(x) {
-  (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) * 100
-}
-
-# Creación de la tabla independiente con las variables escaladas
-train_scaled_100 <- as.data.frame(lapply(train[, vars_continuas], min_max_100))
-
-# 2. Cálculo de la matriz de correlación de Pearson
-mat_cor <- cor(train_scaled_100, use = "pairwise.complete.obs")
-```
-
-
-## Tests para comprobar viabilidad de Análisis Factorial
-
-Ahora aplicamos ciertos tests para ver si el análisis factorial tiene sentido en este conjunto de datos:
-
- - **Test de Esfericidad de Bartlett**
-
-Aplicamos el test de Bartlett que se utiliza para probar la hipótesis nula que afirma que las variables no están correlacionadas en la población.
-
-```{r}
-# 1. Test de Esfericidad de Bartlett
-bartlett_test <- cortest.bartlett(mat_cor, n = nrow(train_scaled_100))
+bartlett_test <- cortest.bartlett(matriz_cor_pca, n = nrow(train_num))
 
 data.frame(
   chi2 = round(bartlett_test$chisq, 3),
   df   = bartlett_test$df,
   pval = format.pval(bartlett_test$p.value, digits = 4, eps = 0.001),
-  res  = ifelse(bartlett_test$p.value < 0.05, "Rechaza H0 (Apto)", "No rechaza H0")
+  res  = ifelse(bartlett_test$p.value < 0.05, "Rechaza H0 (Apto para PCA)", "No rechaza H0")
 ) |> 
   gt() |> 
   cols_label(
     chi2 = md("$\\chi^2$"),
-    df   = "gl",
+    df   = "Grados de libertad",
     pval = "p-valor",
     res  = "Conclusión"
   ) |> 
   cols_align(align = "center") |> 
-  tab_source_note(source_note = "H0: La matriz de correlación es una matriz identidad.")
+  tab_style(
+    style = list(cell_fill(color = "#E8F5E9"), cell_text(weight = "bold", color = "#1B5E20")),
+    locations = cells_body(columns = res)
+  ) |> 
+  tab_source_note(source_note = "H0: La matriz de correlación es una matriz identidad (ausencia de correlación).")
 ```
 
-En el **TEST DE ESFERICIDAD DE BARTLETT** el p-valor es 0, luego las variables no están correlacionadas en los datos y rechazamos la hipótesis nula. Por tanto, nuestro conjunto de datos es apto para aplicar análisis factorial.
+Como el test de esfericidad de Bartlett arroja un $p$-valor inferior a 0.001, que se encuentra muy por debajo del nivel de significación $\alpha = 0.05$, podemos rechazar la hipótesis nula de que la matriz de correlaciones sea una matriz identidad. Por lo tanto, confirmamos que existen correlaciones estadísticamente significativas entre las variables cuantitativas del conjunto `train` y que el conjunto de datos es viable para aplicar el Análisis de Componentes Principales.
 
 
- - **Test de Test Kaiser-Meyer-Olkin (KMO)**
- 
- El test mide la adecuación del muestreo para cada variable en el modelo y para el modelo completo. La estadística es una medida de la proporción de varianza entre variables que podrían ser varianza común.
+### Índice de adecuación muestral KMO
+Mientras que el test de Bartlett comprueba si existen correlaciones globales distintas de cero, el índice Kaiser-Meyer-Olkin (KMO) mide cuánta varianza comparten realmente las variables entre sí en comparación con su varianza específica. Como regla práctica, un KMO global por encima de $0.80$ indica una adecuación muestral notable para realizar un Análisis de Componentes Principales (PCA) sobre las variables estandarizadas.
 
 ```{r}
 
-# Test de KMO
-kmo_res <- KMO(mat_cor)
-msa_ind <- sort(kmo_res$MSAi, decreasing = TRUE)
+# 1. Cálculo del índice KMO sobre la matriz de correlaciones base del PCA
+kmo_res <- KMO(matriz_cor_pca)
+msa_ord <- sort(kmo_res$MSAi, decreasing = TRUE)
 
-interpretar_kmo <- function(valor) {
-  ifelse(valor >= 0.90, "Sobresaliente",
-  ifelse(valor >= 0.80, "Notable",
-  ifelse(valor >= 0.70, "Bien",
-  ifelse(valor >= 0.60, "Mediocre",
-  ifelse(valor >= 0.50, "Miserable", "Inaceptable")))))
+valoracion_kmo <- function(x) {
+  ifelse(x >= 0.90, "Sobresaliente",
+  ifelse(x >= 0.80, "Notable",
+  ifelse(x >= 0.70, "Aceptable",
+  ifelse(x >= 0.60, "Mediocre",
+  ifelse(x >= 0.50, "Bajo / Aislado", "Inaceptable")))))
 }
 
-data.frame(
-  variable = c("KMO Global (Overall MSA)", names(msa_ind)),
-  msa      = round(c(kmo_res$MSA, as.numeric(msa_ind)), 3),
-  estado   = interpretar_kmo(c(kmo_res$MSA, as.numeric(msa_ind)))
-) |> 
-  gt() |> 
-  cols_label(
-    variable = "Variable",
-    msa      = "Índice MSA",
-    estado   = "Valoración"
-  ) |> 
-  cols_align(align = "center", columns = c(msa, estado)) |> 
-  # Estilo destacado para la fila del KMO Global
-  tab_style(
-    style = list(cell_fill(color = "#e8f0fe"), cell_text(weight = "bold")),
-    locations = cells_body(rows = 1)
-  ) |> 
-  tab_source_note("Criterio de Kaiser (1974): valores >= 0.80 indican una adecuación muestral meritoria.")
+df_kmo <- data.frame(
+  Indicador  = c("KMO Global", names(msa_ord)),
+  MSA        = sprintf("%.3f", c(kmo_res$MSA, as.numeric(msa_ord))),
+  Valoracion = valoracion_kmo(c(kmo_res$MSA, as.numeric(msa_ord)))
+)
+
+df_kmo %>%
+  kbl(
+    col.names = c("Variable / Indicador", "Índice MSA", "Valoración"),
+    align = c("l", "c", "c")
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#D4E6F1", color = "#1C2833") %>%
+  row_spec(1, bold = TRUE, background = "#EBF5FB", color = "#1B4F72") %>%
+  footnote(
+    general = "Criterio de Kaiser: valores >= 0.80 indican una adecuación muestral notable.",
+    general_title = "Nota: ",
+    footnote_as_chunk = TRUE
+  )
 ```
 
-El test de **KMO** muestra un valor de $0.863$, que es un valor bueno, es decir, el test nos dice que nuestro conjunto de datos es aceptable para realizar un estudio de análisis factorial sobre ellos.
+El índice de KMO global alcanza un valor de `r round(kmo_res$MSA, 3)`, obtenemos una adecuación muestral sólida para extraer componentes principales sobre nuestras 7 variables cuantitaivas. Al revisar los valores individuales (MSA), se aprecia el mismo patrón que en el de la matriz de correlación: las variables vinculadas al descanso, el estrés, el uso diario de redes sociales y la salud mental obtienen puntuaciones altas porque comparten mucha varianza común. Sin embargo, `Age` y `Weekend_Extra_Hours` presentan valores cercanos a 0.5 al mantenerse prácticamente desconectadas del resto de variables. Esto nos hace sospechar que la primera componente recogerá el bloque principal y que estas dos últimas variables tendrán un comportamiento más ailadao en las siguientes componentes. 
 
-## Elección del número de factores.
+## Elección del número de componentes principales 
+Como ya hemos confirmado la viabilidad del análisis mediante los tests de Bartlett y KMO, ajustamos el PCA sobre las variables cuantitativas estandarizadas  de `train`. Para decidir cuántas componentes principales tenemos, combinamos el criterio de Kaiser ($\text{autovalor} > 1$) con el gráfico de sedimentación (*Scree Plot*) y el análisis paralelo.
 
-Vamos a tener en cuenta tres criterios diferentes para elegir el número de factores. Estos criterios nos dirán un número de factores, si cada test nos diese un número diferente, deberemos decidir nosotros. Empezemos con el primero:
-
- - **Test de Kaiser**:
-Este criterio, propuesto originalmente por Guttman (1954) y popularizado por Kaiser, sugiere que deben retenerse únicamente aquellos factores cuyos autovalores (eigenvalues) sean superiores a $1.0$.
-
-La lógica subyacente a esta regla es que cualquier factor extraído debe ser capaz de explicar, al menos, la misma cantidad de varianza que una sola de las variables originales introducidas en el análisis. Dado que en un análisis de componentes principales con variables estandarizadas cada variable tiene una varianza de $1$, un factor con un autovalor inferior a la unidad se considera poco informativo, ya que explica menos variabilidad que una variable individual.
+### Criterio de Kaiser y Gráfico de sedimentación (Scree Plot) {.unnumbered}
 
 ```{r}
-scree(
-  mat_cor, 
-  factors = FALSE, 
-  pc = TRUE, 
-  main = "Criterio de Kaiser (Autovalores > 1)",
-  hline = 1
+
+# 1. Ajuste del PCA estandarizado sobre train_num
+pca_res <- prcomp(train_num, center = TRUE, scale. = TRUE)
+
+# 2. Autovalores y varianza explicada
+autovalores <- pca_res$sdev^2
+var_pct <- (autovalores / sum(autovalores)) * 100
+var_acum <- cumsum(var_pct)
+
+df_scree <- data.frame(
+  Componente = factor(
+    paste0("PC", seq_along(autovalores)),
+    levels = paste0("PC", seq_along(autovalores))
+  ),
+  Autovalor = autovalores,
+  Var_Pct = var_pct,
+  Var_Acum = var_acum
 )
+
+# 3. Gráfico de sedimentación (Scree Plot)
+ggplot(df_scree, aes(x = Componente, y = Autovalor, group = 1)) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "#C0392B", linewidth = 0.9) +
+  geom_line(color = "#2980B9", linewidth = 1) +
+  geom_point(color = "#1C2833", size = 3) +
+  geom_text(
+    aes(label = sprintf("%.2f\n(%.1f%%)", Autovalor, Var_Pct)),
+    vjust = -0.55,
+    size = 3.2,
+    color = "#1C2833"
+  ) +
+  annotate(
+    "text",
+    x = length(autovalores),
+    y = 1.15,
+    label = "Criterio de Kaiser (autovalor = 1)",
+    hjust = 1,
+    color = "#C0392B",
+    size = 3.3
+  ) +
+  ylim(0, max(autovalores) * 1.25) +
+  labs(
+    x = "Componente Principal",
+    y = "Autovalor"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#1C2833", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, color = "#555555")
+  )
 ```
 
-Observando el gráfico, tenemos que, solo el primer autovalor es claramente superior a $1$. Por tanto, podemos deducir de este criterio que nuestro número de componentes estaría en $1$ 
+A partir del gráfico de sedimentación (*Scree Plot*) y de los porcentajes de varianza explicada, observamos lo siguiente:
 
- - **Análisis del ScreePlot**:
- 
-Este método, de carácter visual, actúa como complemento al Criterio de Kaiser y se fundamenta en el examen de la magnitud de los eigenvalues mediante su representación gráfica. El objetivo es identificar un conjunto reducido de factores que presenten una varianza significativamente superior al resto de las dimensiones.
+- **Concentración de la información en la primera dimensión (`PC1`):** La primera componente principal absorbe la mayor parte de la variabilidad del conjunto (55.6%), sintetizando el eje principal de bienestar, descanso y uso digital. Tras ella se produce una caída pronunciada hacia las siguientes componentes.
 
-Para su interpretación, es necesario localizar el punto de inflexión en la curva del gráfico (comúnmente denominado "el codo", debido a su similitud morfológica con la articulación de un brazo). Este punto marca la transición donde la pendiente de la curva se reduce drásticamente, transformándose en una línea relativamente plana o recta. Los factores situados antes de esta ruptura son los que poseen relevancia sustancial para el modelo.
+- **Criterio de Kaiser (autovalor > 1):** Como trabajamos con variables estandarizadas donde cada variable original aporta una varianza unitaria igual a $1$, el criterio de Kaiser establece retener únicamente aquellas componentes cuyo autovalor supere la unidad, es decir, aquellas que están marcadas por encima de la línea discontinua roja, ya que explican más varianza que una variable original por sí sola. En este caso, únicamente las dos primeras componentes superan estrictamente la unidad (`PC1` $= 3,89$ y `PC2` $= 1,01$, quedando `PC3` en el límite con $0,99$).
+
+- **Regla del "codo" (Scree Test):** Este método de carácter visual se basa en representar gráficamente los autovalores en orden decreciente para identificar qué componentes concentran una varianza significativamente superior al resto. Para interpretarlo, buscamos un punto de inflexión de la curva, lo que se conoce como el codo, donde la pendiente cae de forma brusca y la línea pasa a estabilizarse en un tramo casi plano. Las componentes situadas antes de esa ruptura son las que aportan información relevante. En nuestro gráfico observamos un primer punto de inflexión claro tras `PC1`, donde la pendiente cae bruscamente hacia la segunda componente (`PC2`), donde se halla el punto de inflexión o codo. A partir de ese punto, la pendiente se suaviza y forma una zona casi plana. Si retenemos `PC1` y `PC2` se conserva el 70,0 % de la variabilidad total del conjunto original, logrando un equilibrio óptimo entre síntesis dimensional y preservación de la información.
+
+### Análisis paralelo de Horn {.unnumbered}
+El análisis paralelo contrasta los autovalores reales de nuestra muestra (línea azul) frente a los obtenidos mediante simulaciones aleatorias (línea roja discontinua). Como vemos en la imagen, únicamente `PC1` se sitúa claramente por encima del umbral aleatorio, mientras que `PC2` y `PC3`quedan prácticamente solapadas con la curva simulada. 
 
 ```{r}
-scree(
-  mat_cor, 
-  factors = TRUE, 
-  pc = TRUE, 
-  main = "Scree Plot (Sedimentación)"
+
+# 1. Cálculo del análisis paralelo sin imprimir mensajes de consola ni gráfico base
+set.seed(123)
+pa_res <- fa.parallel(
+  train_num,
+  fa = "pc",
+  n.obs = nrow(train_num),
+  plot = FALSE
 )
+
+# 2. Preparación de los datos (reales vs. simulados)
+df_pa_wide <- data.frame(
+  Componente = factor(
+    paste0("PC", seq_along(pa_res$pc.values)),
+    levels = paste0("PC", seq_along(pa_res$pc.values))
+  ),
+  Real = pa_res$pc.values,
+  Simulado = pa_res$pc.sim
+)
+
+df_pa <- df_pa_wide %>%
+  pivot_longer(
+    cols = c("Real", "Simulado"),
+    names_to = "Serie",
+    values_to = "Autovalor"
+  )
+
+# 3. Gráfico idéntico al Scree Plot
+ggplot(df_pa, aes(x = Componente, y = Autovalor, group = Serie, color = Serie, linetype = Serie)) +
+  geom_line(linewidth = 1) +
+  geom_point(aes(shape = Serie), size = 3) +
+  geom_text(
+    data = df_pa_wide,
+    aes(x = Componente, y = Real, label = sprintf("%.2f", Real)),
+    inherit.aes = FALSE,
+    vjust = -0.8,
+    size = 3.3,
+    color = "#1C2833"
+  ) +
+  scale_color_manual(
+    values = c("Real" = "#2980B9", "Simulado" = "#C0392B"),
+    labels = c("Autovalores reales (PCA)", "Umbral aleatorio simulado")
+  ) +
+  scale_linetype_manual(
+    values = c("Real" = "solid", "Simulado" = "dashed"),
+    labels = c("Autovalores reales (PCA)", "Umbral aleatorio simulado")
+  ) +
+  scale_shape_manual(
+    values = c("Real" = 16, "Simulado" = 1),
+    labels = c("Autovalores reales (PCA)", "Umbral aleatorio simulado")
+  ) +
+  ylim(0, max(df_pa_wide$Real) * 1.2) +
+  labs(
+    x = "Componente Principal",
+    y = "Autovalor",
+    color = NULL,
+    linetype = NULL,
+    shape = NULL
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#1C2833", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, color = "#555555"),
+    legend.position = "bottom"
+  )
 ```
 
-En este caso, buscando el "codo" del ScreePlot observamos que, el codo se haya definitivamente en el autovalor $2$, es por tanto que, mediante este criterio el valor sugerido de componentes sería $1$.
+### Decisión final sobre el número de componentes {.unnumbered}
 
- - **Análisis Paralelo**:
+Al contrastar los tres criterios de selección aplicados sobre las variables cuantitativas estandarizadas de `train`, observamos que cada método aporta un matiz distinto sobre la dimensionalidad óptima.
 
-El Análisis Paralelo constituye uno de los métodos más robustos y recomendados para la determinación del número de factores, especialmente útil cuando el volumen de variables iniciales es elevado. Este procedimiento se fundamenta en el principio de que los factores retenidos deben explicar una proporción de varianza significativamente mayor a la que se esperaría obtener por puro azar.
+* **Análisis paralelo de Horn:** Al ser el criterio más estricto, sugiere retener únicamente una componente principal (`PC1`), ya que es la única cuyo autovalor ($3,89$) supera con claridad el umbral aleatorio simulado, mientras que `PC2` queda prácticamente sobre dicha línea de referencia.
 
-El algoritmo opera mediante una técnica de remuestreo: las observaciones de la base de datos original se reordenan de forma aleatoria entre las variables, rompiendo cualquier estructura de correlación real pero manteniendo la dimensionalidad del conjunto. A partir de estos datos aleatorios, se recalculan los eigenvalues. El criterio de decisión consiste en retener únicamente aquellos factores cuyos autovalores originales superen a los obtenidos mediante la simulación aleatoria.
+* **Criterio de Kaiser (autovalor > 1) y Gráfico de Sedimentación (Scree Plot):** El criterio de Kaiser sugiere retener 2 componentes principales (`PC1` $= 3,89$ y `PC2` $= 1,01$, siendo las únicas que superan estrictamente la unidad), lo que permite alcanzar un 70,0 % de varianza explicada acumulada antes de que la curva descienda hacia la zona de sedimentación.
+
+Ante esta ligera discrepancia entre el análisis paralelo (1 componente) y el criterio de Kaiser junto con la varianza acumulada (2 componentes), **decidimos retener las dos primeras componentes principales (`PC1` y `PC2`)**. De este modo, no solo capturamos el eje principal de bienestar, descanso y uso digital (`PC1`, $55,6\%$), sino que incorporamos una segunda dimensión ortogonal (`PC2`, $14,4\%$) que eleva la varianza explicada al $70,0\%$ y permite representar e interpretar los datos en un plano bidimensional.
+
+## Interpretación de las componentes y proyección de los datos 
+Una vez retenidas `PC1` y `PC2`, inspeccionamos la matriz de rotación para identificar qué variables originales dominan cada eje.
+
+### Interpretación de las componentes {.unnumbered}
+Al examinar los pesos (*loadings*) de las variables estandarizadas en la matriz de rotación, observamos una separación estructural muy clara entre las dos componentes retenidas. 
+
+* **Primera Componente Principal `PC1`:** Concentra de forma equilibrada las cinco variables correlacionadas del conjunto con cargas de magnitud muy similar (entre $0,419$ y $0,469$ en valor absoluto), pero con signos opuestos.
+
+  Por un lado, `Daily_Usage_Hours` ($0,462$) y `Perceived_Stress_Score` ($0,434$) puntúan en positivo. Sin embargo, `Mental_Health_Index` ($-0,469$), `Sleep_Duration_Hours` ($-0,450$) y `Sleep_Quality_Score` ($-0,419$) lo hacen en negativo. `Age` y `Weekend_Extra_Hours` tienen un peso prácticamente nulo ($-0,010$). Así, valores altos en `PC1` representan perfiles de alto consumo digital, mayor estrés y peor descanso/salud mental.
+
+* **Segunda Componente Principal `PC2`:** Recoge casi en exclusiva la variabilidad de las dos variables que resultaron independientes en el análisis previo: `Age` ($0,710$) y `Weekend_Extra_Hours` ($0,703$), mientras que el resto de variables presentan cargas cercanas a cero (entre $-0,014$ y $0,015$). Esto confirma que `PC2` actúa como un eje puramente demográfico y de uso extra de fin de semana, completamente ortogonal al bloque principal de bienestar.
 
 ```{r}
-fa.parallel(
-  mat_cor, 
-  n.obs = 200, 
-  fa = "both", 
-  fm = "minres",
-  main = "Análisis Paralelo de Horn",
-  show.legend = TRUE
-)
+
+cargas_pca <- as.data.frame(round(pca_res$rotation[, 1:2], 3)) %>%
+  tibble::rownames_to_column("Variable")
+
+cargas_pca %>%
+  kbl(
+    col.names = c("Variable", "PC1", "PC2"),
+    align = c("l", "c", "c")
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#D4E6F1", color = "#1C2833")
 ```
 
-En este caso, el gráfico es claro, nos indica que solo debemos escoger $1$ componente principal.
+### Proyección de las observaciones {.unnumbered}
 
-Por ende, ya que los $3$ criterios usados nos indican $(1) \;\; (1) \;\; (1)$ respectivamente. Decidimos escoger una única componente principal.
+Al proyectar las observaciones de entrenamiento en el plano bidimensional formado por `PC1` y `PC2` y colorearlas según la variable objetivo (`target`), observamos:
+
+* **Separación a lo largo del eje horizontal (`PC1`):** Los estudiantes con Rendimiento alto (puntos verdes) se concentran mayoritariamente en la mitad izquierda del gráfico (`PC1` $< 0$, aproximadamente entre $-3,5$ y $0,5$), lo que corresponde a menor uso diario de redes, menor estrés y mejor descanso y salud mental. Por el contrario, los estudiantes con Rendimiento bajo o medio (puntos rojos) se desplazan hacia la derecha (`PC1` $> 0$, llegando hasta valores superiores a $5,0$).
+
+* **Ausencia de discriminación en el eje vertical (`PC2`):** Ambos grupos de rendimiento se distribuyen de manera prácticamente simétrica y superpuesta a lo largo de todo el rango vertical de `PC2` (entre $-2,5$ y $3,5$). Esto confirma visualmente que `Age` y `Weekend_Extra_Hours` no aportan capacidad separadora respecto al rendimiento académico.
+
+* **Existencia de una zona de solapamiento central:** Aunque existe una tendencia global muy marcada de izquierda a derecha, en la franja central cercana a `PC1` $\approx 0$ ambas clases se entremezclan, lo que indica que las variables cuantitativas explican gran parte del comportamiento, pero existen matices adicionales fuera de este espacio numérico que ayudan a afinar la frontera entre ambos niveles de rendimiento.
 
 ```{r}
-# 1. Ajuste del PCA sobre tus datos escalados (train_scaled_100)
-pca_res <- prcomp(train_scaled_100, scale. = TRUE)
 
-# 2. Varianza explicada por el Componente 1
-varianza_explicada <- (pca_res$sdev^2) / sum(pca_res$sdev^2)
-pct_var_pc1 <- round(varianza_explicada[1] * 100, 2)
-
-# 3. Extraer y ordenar las cargas (loadings) del Componente 1
-loadings_pc1 <- pca_res$rotation[, 1]
-
-df_loadings <- data.frame(
-  Variable = names(loadings_pc1),
-  Carga_PC1 = round(loadings_pc1, 3)
+df_proj <- data.frame(
+  PC1 = pca_res$x[, 1],
+  PC2 = pca_res$x[, 2],
+  target = train$target
 )
 
-# Ordenar de mayor a menor contribución (en valor absoluto)
-df_loadings <- df_loadings[order(abs(df_loadings$Carga_PC1), decreasing = TRUE), ]
-
-# 4. Mostrar la tabla formateada para Quarto / RMarkdown
-kable(
-  df_loadings, 
-  col.names = c("Variable", "Carga Factorial (PC1)"),
-  caption = paste0("Cargas del Componente Principal 1 (Varianza explicada: ", pct_var_pc1, "%)"),
-  row.names = FALSE
-)
+ggplot(df_proj, aes(x = PC1, y = PC2, color = target)) +
+  geom_point(alpha = 0.55, size = 1.6) +
+  geom_hline(yintercept = 0, linetype = "dotted", color = "#7F8C8D") +
+  geom_vline(xintercept = 0, linetype = "dotted", color = "#7F8C8D") +
+  labs(
+    title = "Proyección de Observaciones en PC1 y PC2",
+    subtitle = "Espacio bidimensional obtenido a partir de train estandarizado",
+    x = sprintf("PC1 (%.1f%% de varianza)", var_pct[1]),
+    y = sprintf("PC2 (%.1f%% de varianza)", var_pct[2]),
+    color = "Rendimiento"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#1C2833", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, color = "#555555"),
+    legend.position = "bottom"
+  )
 ```
+
 
 
 # Uso de Inteligencia Artificial {.unnumbered}
